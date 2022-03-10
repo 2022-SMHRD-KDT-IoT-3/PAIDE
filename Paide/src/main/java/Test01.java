@@ -10,6 +10,8 @@ public class Test01 {
 		
 		System.out.println("윤진관 레알 킹임.");
 		System.out.println("점심요정두둥장");
+		
+		System.out.println("저메추 받습니다");
 	}
 
 }
