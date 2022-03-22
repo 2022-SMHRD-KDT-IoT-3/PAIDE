@@ -36,19 +36,11 @@ public class MemberDTO {
 		this.m_joindate = m_joindate;
 	}
 	
-	// 점수받기 생성자
-	public MemberDTO(String m_id) {
-		this.m_id = m_id;
-	}
 	
-
 
 	public String getM_id() {
 		return m_id;
 	}
-
-
-
 
 	public void setM_id(String m_id) {
 		this.m_id = m_id;

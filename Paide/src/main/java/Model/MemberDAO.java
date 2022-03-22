@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class MemberDAO {
 	Connection conn = null;
@@ -18,9 +19,9 @@ public class MemberDAO {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 
-				String url = "jdbc:oracle:thin:@localhost:1521:xe";
-				String dbid = "hr";
-				String dbpw = "hr";
+				String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
+				String dbid = "campus_b_0310_3";
+				String dbpw = "smhrd3";
 
 				conn = DriverManager.getConnection(url, dbid, dbpw);
 				if(conn != null) {
@@ -44,6 +45,36 @@ public class MemberDAO {
 				}
 			}		
 
+	// 회원목록 전체보기 메소드
+	public ArrayList<MemberDTO> MemberList() {
+		ArrayList<MemberDTO> list = new ArrayList<>();
+		dbconn();
+		try {
+			String sql = "select * from t_member";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				String m_id = rs.getString(1);
+				String m_pw = rs.getString(2);
+				String m_name = rs.getString(3); 
+				String m_phone = rs.getString(4); 
+				int m_score = rs.getInt(5);
+				String m_level = rs.getString(6);
+				String m_email = rs.getString(7);
+				String m_joindate = rs.getString(8);
+				String m_type = rs.getString(9);
+				
+				dto = new MemberDTO(m_id, m_pw, m_name, m_phone, m_score, m_level, m_email, m_joindate, m_type);
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return list;
+	}
+		
 	//회원가입 메소드
 	public int Join(MemberDTO dto) {
 		dbconn();
@@ -96,15 +127,62 @@ public class MemberDAO {
 		}
 		return dto;
 	}
-
+	
+	// 아이디찾기 메소드
+	public String SearchID(String name, String phone, String email) {
+		String m_id = null;
+		dbconn();
+		try {
+			String sql = "select * from t_member where m_name =? and m_phone =? and m_email=?";
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, name);
+			psmt.setString(2, phone);
+			psmt.setString(3, email);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				m_id = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return m_id;
+	}
+	
+	// 비밀번호찾기 메소드
+	public String SearchPW(String id, String email) {
+		String m_pw = null;
+		dbconn();
+		try {
+			String sql = "select * from t_member where m_id =? and m_email=?";
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, id);
+			psmt.setString(2, email);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				m_pw = rs.getString(2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return m_pw;
+	}
+	
 	//'댓글의 좋아요 점수(5점)' 업데이트 메소드 (Likes_score)
-	public int Likes_S(MemberDTO dto) {
+	public int Likes_S(String id) {
 		dbconn();
 		try {
 			String sql = "update t_member set m_score = m_score+5 where m_id = ?";
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setString(1, dto.getM_id());
+			psmt.setString(1, id);
 			cnt = psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,13 +193,13 @@ public class MemberDAO {
 	}
 	
 	//'댓글 점수(1점)' 업데이트 메소드 (Comment_score)
-	public int Comment_S(MemberDTO dto) {
+	public int Comment_S(String id) {
 		dbconn();
 		try {
 			String sql = "update t_member set m_score = m_score+1 where m_id = ?";
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setString(1, dto.getM_id());
+			psmt.setString(1, id);
 			cnt = psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,13 +210,13 @@ public class MemberDAO {
 	}
 	
 	//'농장의 좋아요 점수(10점)' 업데이트 메소드 (Farm_score)
-	public int Farm_S(MemberDTO dto) {
+	public int Farm_S(String id) {
 		dbconn();
 		try {
 			String sql = "update t_member set m_score = m_score+10 where m_id = ?";
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setString(1, dto.getM_id());
+			psmt.setString(1, id);
 			cnt = psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,4 +226,76 @@ public class MemberDAO {
 		return cnt;
 	}
 	
+	// 회원의 레벨 변경 메소드 -> level을 jsp select값으로 주기
+	public int M_Level(int level, MemberDTO dto) {
+		dbconn();
+		try {
+			String sql = "update t_member set m_level = ? where m_id=?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, level);
+			psmt.setString(2, dto.getM_id());
+			
+			cnt = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return cnt;
+	}
+
+	//'댓글의 좋아요 취소점수(-5점)' 업데이트 메소드 (Likes_score)
+		public int Likes_MS(String id) {
+			dbconn();
+			try {
+				String sql = "update t_member set m_score = m_score-5 where m_id = ?";
+				psmt = conn.prepareStatement(sql);
+				
+				psmt.setString(1, id);
+				cnt = psmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				dbclose();
+			}
+			return cnt;
+		}
+	
+	//'농장의 좋아요 취소점수(-10점)' 업데이트 메소드 (Farm_score)
+		public int Farm_MS(String id) {
+			dbconn();
+			try {
+				String sql = "update t_member set m_score = m_score-10 where m_id = ?";
+				psmt = conn.prepareStatement(sql);
+				
+				psmt.setString(1, id);
+				cnt = psmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				dbclose();
+			}
+			return cnt;
+		}
+
+	//회원정보 수정 업데이트 메소드 
+	public int UpdateMember(MemberDTO dto) {
+		dbconn();
+		try {
+			String sql = "update t_member set m_name=?, m_phone=?, m_pw=?, m_email=? where m_id=?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getM_name());
+			psmt.setString(2, dto.getM_phone());
+			psmt.setString(3, dto.getM_pw());
+			psmt.setString(4, dto.getM_email());
+			psmt.setString(5, dto.getM_id());
+			
+			cnt = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return cnt;
+	}
 }

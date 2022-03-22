@@ -16,7 +16,7 @@ public class CommunityDTO {
 	private int likes; //좋아요 수
 	
 	//게시글작성 생성자
-	public CommunityDTO(int article_seq, String article_title, String article_content, String article_file,
+	public CommunityDTO(int article_seq,String article_title, String article_content, String article_file,
 			String article_date, String m_id, String article_category) {
 		this.article_seq = article_seq;
 		this.article_title = article_title;
@@ -28,7 +28,7 @@ public class CommunityDTO {
 	}
 	
 	//댓글 생성자
-	public CommunityDTO(int article_seq, String m_id, int cmt_seq, String cmt_content, String cmt_date, int likes) {
+	public CommunityDTO(int cmt_seq, int article_seq, String cmt_content, String cmt_date, String m_id, int likes) {
 		this.article_seq = article_seq;
 		this.m_id = m_id;
 		this.cmt_seq = cmt_seq;

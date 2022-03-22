@@ -18,9 +18,9 @@ public class ChartDAO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String dbid = "hr";
-			String dbpw = "hr";
+			String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
+			String dbid = "campus_b_0310_3";
+			String dbpw = "smhrd3";
 
 			conn = DriverManager.getConnection(url, dbid, dbpw);
 			if(conn != null) {
@@ -44,4 +44,5 @@ public class ChartDAO {
 			}
 		}		
 
+	
 }
