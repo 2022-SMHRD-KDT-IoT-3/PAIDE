@@ -268,6 +268,7 @@
                               </div>
                               <br>
                               <center>
+                              <!-- 자세히 보기 클릭시 현재 선택한 농장정보 페이지(차트,테이블 있는 곳)로 이동  -->
                                  <a href="myFarm_detail.html"> <button type="button"
                                        class="btn btn-primary">자세히보기</button></a>
                               </center>
