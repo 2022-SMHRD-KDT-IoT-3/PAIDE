@@ -55,7 +55,7 @@ public class FarmDTO {
 	
 	
 	//농장검색 생성자
-	public FarmDTO(int f_seq, String f_owner_id, String name, String f_region, String f_crops, String f_facility) {
+	public FarmDTO(int f_seq, String f_owner_id, String f_name, String f_region, String f_crops, String f_facility) {
 		super();
 		this.f_seq = f_seq;
 		this.f_owner_id = f_owner_id;
@@ -68,7 +68,7 @@ public class FarmDTO {
 	// 농장 상세보기 생성자
 	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility,
 			int env_seq, double temperature, double temperature_outer, double humidity, double humidity_outer,
-			double humidity_soil, double insolation, double window_opened, double co2, double dew_point, String env_date, String name) {
+			double humidity_soil, double insolation, double window_opened, double co2, double dew_point, String env_date, String f_name) {
 		super();
 		this.f_seq = f_seq;
 		this.f_owner_id = f_owner_id;
@@ -123,8 +123,6 @@ public class FarmDTO {
 	public int getF_seq() {
 		return f_seq;
 	}
-
-
 
 
 	public double getDew_point() {

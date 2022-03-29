@@ -15,9 +15,6 @@ public class SubscriptionDTO {
 		this.subscription_date = subscription_date;
 	}
 	
-	
-
-
 
 	public int getSubscription_seq() {
 		return subscription_seq;

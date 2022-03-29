@@ -13,7 +13,7 @@ public class CommunityDTO {
 	private int cmt_seq; //댓글 순번
 	private String cmt_content; //댓글 내용
 	private String cmt_date; //댓글 작성일자
-	private int likes; //좋아요 수
+	private int cmt_like; //좋아요 수
 	
 	//게시글작성 생성자
 	public CommunityDTO(int article_seq,String article_title, String article_content, String article_file,
@@ -28,16 +28,23 @@ public class CommunityDTO {
 	}
 	
 	//댓글 생성자
-	public CommunityDTO(int cmt_seq, int article_seq, String cmt_content, String cmt_date, String m_id, int likes) {
+	public CommunityDTO(int cmt_seq, int article_seq, String cmt_content, String cmt_date, String m_id, int cmt_like) {
 		this.article_seq = article_seq;
 		this.m_id = m_id;
 		this.cmt_seq = cmt_seq;
 		this.cmt_content = cmt_content;
 		this.cmt_date = cmt_date;
-		this.likes = likes;
+		this.cmt_like = cmt_like;
 	}
 	
-	
+	// 왜 있는 건지 모르겠지만 일단 추가(현지)
+	public CommunityDTO(int article_seq, String article_title, String article_date, String m_id, String article_category) {
+		this.article_seq = article_seq;
+		this.article_title = article_title;
+		this.article_date = article_date;
+		this.m_id = m_id;
+		this.article_category = article_category;
+	}
 	
 	
 	public void setArticle_category(String article_category) {
@@ -123,12 +130,12 @@ public class CommunityDTO {
 		this.cmt_date = cmt_date;
 	}
 
-	public int getLikes() {
-		return likes;
+	public int getCmt_like() {
+		return cmt_like;
 	}
 
-	public void setLikes(int likes) {
-		this.likes = likes;
+	public void setCmt_like(int cmt_like) {
+		this.cmt_like = cmt_like;
 	}
 	
 	
