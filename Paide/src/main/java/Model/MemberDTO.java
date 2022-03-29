@@ -10,10 +10,11 @@ public class MemberDTO {
 	private String m_email; //이메일
 	private String m_joindate; //가입일자
 	private String m_type; //유형(운영자인지, 일반사용자인지)
+	private String m_profile;
 	
 	//생성자
 	public MemberDTO(String m_id, String m_pw, String m_name, String m_phone, int m_score, String m_level,
-			String m_email, String m_joindate, String m_type) {
+			String m_email, String m_joindate, String m_type, String m_profile) {
 		this.m_id = m_id;
 		this.m_pw = m_pw;
 		this.m_name = m_name;
@@ -23,6 +24,7 @@ public class MemberDTO {
 		this.m_email = m_email;
 		this.m_joindate = m_joindate;
 		this.m_type = m_type;
+		this.m_profile = m_profile;
 	}
 	
 	
@@ -36,7 +38,27 @@ public class MemberDTO {
 		this.m_joindate = m_joindate;
 	}
 	
+	//정보수정 생성자
+	public MemberDTO(String m_pw, String m_name, String m_phone, String m_email) {
+		super();
+		this.m_pw = m_pw;
+		this.m_name = m_name;
+		this.m_phone = m_phone;
+		this.m_email = m_email;
+	}
 	
+	
+
+
+	public MemberDTO() {
+		super();
+	}
+
+	public MemberDTO(String m_id) {
+		super();
+		this.m_id = m_id;
+	}
+
 
 	public String getM_id() {
 		return m_id;

@@ -7,9 +7,10 @@ public class FarmDTO {
 	private String f_crops;
 	private String f_facility;
 	private String f_date;
+	private String f_name;
 	
 	// 농장등록 생성자 > t_farm
-	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String f_date) {
+	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String f_date, String f_name) {
 		super();
 		this.f_seq = f_seq;
 		this.f_owner_id = f_owner_id;
@@ -17,6 +18,7 @@ public class FarmDTO {
 		this.f_crops = f_crops;
 		this.f_facility = f_facility;
 		this.f_date = f_date;
+		this.f_name = f_name;
 	}
 	
 	private int env_seq;
@@ -28,13 +30,14 @@ public class FarmDTO {
 	private double insolation;
 	private double window_opened;
 	private double co2;
+	private double dew_point;
 	private String env_date;
+	private String m_id;
 	
 	// 농장환경 생성자 > t_env
 	public FarmDTO(int f_seq, int env_seq, double temperature, double temperature_outer, double humidity,
-			double humidity_outer, double humidity_soil, double insolation, double window_opened, double co2,
-			String env_date) {
-		super();
+			double humidity_outer, double humidity_soil, double insolation, double window_opened, double co2, double dew_point,
+			String env_date, String m_id) {
 		this.f_seq = f_seq;
 		this.env_seq = env_seq;
 		this.temperature = temperature;
@@ -45,12 +48,105 @@ public class FarmDTO {
 		this.insolation = insolation;
 		this.window_opened = window_opened;
 		this.co2 = co2;
+		this.dew_point = dew_point;
+		this.env_date = env_date;
+		this.m_id = m_id;
+	}
+	
+	
+	//농장검색 생성자
+	public FarmDTO(int f_seq, String f_owner_id, String name, String f_region, String f_crops, String f_facility) {
+		super();
+		this.f_seq = f_seq;
+		this.f_owner_id = f_owner_id;
+		this.f_name = f_name;
+		this.f_region = f_region;
+		this.f_crops = f_crops;
+		this.f_facility = f_facility;
+	}
+	
+	// 농장 상세보기 생성자
+	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility,
+			int env_seq, double temperature, double temperature_outer, double humidity, double humidity_outer,
+			double humidity_soil, double insolation, double window_opened, double co2, double dew_point, String env_date, String name) {
+		super();
+		this.f_seq = f_seq;
+		this.f_owner_id = f_owner_id;
+		this.f_name = f_name;
+		this.f_region = f_region;
+		this.f_crops = f_crops;
+		this.f_facility = f_facility;
+		this.env_seq = env_seq;
+		this.temperature = temperature;
+		this.temperature_outer = temperature_outer;
+		this.humidity = humidity;
+		this.humidity_outer = humidity_outer;
+		this.humidity_soil = humidity_soil;
+		this.insolation = insolation;
+		this.window_opened = window_opened;
+		this.co2 = co2;
+		this.dew_point = dew_point;
 		this.env_date = env_date;
 	}
 	
+	//꺾은선 그래프 생성자
+	public FarmDTO(double temperature, double temperature_outer, double humidity, double humidity_outer,
+			double humidity_soil, double insolation, double window_opened, double co2, double dew_point,
+			String env_date, String m_id) {
+		super();
+		this.temperature = temperature;
+		this.temperature_outer = temperature_outer;
+		this.humidity = humidity;
+		this.humidity_outer = humidity_outer;
+		this.humidity_soil = humidity_soil;
+		this.insolation = insolation;
+		this.window_opened = window_opened;
+		this.co2 = co2;
+		this.dew_point = dew_point;
+		this.env_date = env_date;
+		this.m_id = m_id;
+	}
+	
+
+
+
+	public String getF_name() {
+		return f_name;
+	}
+
+
+	public void setF_name(String f_name) {
+		this.f_name = f_name;
+	}
+
+
 	public int getF_seq() {
 		return f_seq;
 	}
+
+
+
+
+	public double getDew_point() {
+		return dew_point;
+	}
+
+
+	public void setDew_point(double dew_point) {
+		this.dew_point = dew_point;
+	}
+
+
+	public String getM_id() {
+		return m_id;
+	}
+
+
+	public void setM_id(String m_id) {
+		this.m_id = m_id;
+	}
+
+
 	public void setF_seq(int f_seq) {
 		this.f_seq = f_seq;
 	}

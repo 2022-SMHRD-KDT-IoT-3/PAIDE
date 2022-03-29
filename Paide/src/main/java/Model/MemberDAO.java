@@ -1,11 +1,21 @@
 package Model;
 
 import java.sql.Connection;
+import java.io.UnsupportedEncodingException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class MemberDAO {
 	Connection conn = null;
@@ -19,9 +29,10 @@ public class MemberDAO {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 
-				String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
-				String dbid = "campus_b_0310_3";
-				String dbpw = "smhrd3";
+				String url = "jdbc:oracle:thin:@localhost:1521:xe";
+				// thin이라는 버전
+				String dbid = "hr";
+				String dbpw = "hr";
 
 				conn = DriverManager.getConnection(url, dbid, dbpw);
 				if(conn != null) {
@@ -63,8 +74,9 @@ public class MemberDAO {
 				String m_email = rs.getString(7);
 				String m_joindate = rs.getString(8);
 				String m_type = rs.getString(9);
+				String m_profile = rs.getString(10);
 				
-				dto = new MemberDTO(m_id, m_pw, m_name, m_phone, m_score, m_level, m_email, m_joindate, m_type);
+				dto = new MemberDTO(m_id, m_pw, m_name, m_phone, m_score, m_level, m_email, m_joindate, m_type, m_profile);
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -79,7 +91,7 @@ public class MemberDAO {
 	public int Join(MemberDTO dto) {
 		dbconn();
 		try {
-			String sql = "insert into t_member values(?, ?, ?, ?, 0, 1, ?, sysdate, 'U')";
+			String sql = "insert into t_member values(?, ?, ?, ?, 0, 1, ?, sysdate, 'U', 'basic.jpg')";
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, dto.getM_id());
@@ -117,8 +129,9 @@ public class MemberDAO {
 				String m_email = rs.getString(7);
 				String m_joindate = rs.getString(8);
 				String m_type = rs.getString(9);
+				String m_profile = rs.getString(10);
 		
-				dto = new MemberDTO(m_id, m_pw, m_name, m_phone, m_score, m_level, m_email, m_joindate, m_type);
+				dto = new MemberDTO(m_id, m_pw, m_name, m_phone, m_score, m_level, m_email, m_joindate, m_type, m_profile);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,51 +141,78 @@ public class MemberDAO {
 		return dto;
 	}
 	
-	// 아이디찾기 메소드
-	public String SearchID(String name, String phone, String email) {
-		String m_id = null;
+	// 아이디찾기 본인확인 메소드
+	public ArrayList<String> SearchID(String name, String phone) {
+		ArrayList<String> sendid = new ArrayList<>();
 		dbconn();
 		try {
-			String sql = "select * from t_member where m_name =? and m_phone =? and m_email=?";
+			String sql = "select * from t_member where m_name =? and m_phone =?";
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, name);
 			psmt.setString(2, phone);
-			psmt.setString(3, email);
 			
 			rs = psmt.executeQuery();
 			if(rs.next()) {
-				m_id = rs.getString(1);
+				String m_id = rs.getString(1);
+				String m_email = rs.getString(7);
+
+				sendid.add(m_id);
+				sendid.add(m_email);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		
+		return sendid;
+	}
+	//회원가입시 입력했던 이메일 찾기 메소드
+	public String sendMailID(String id) {
+		String email = null;
+		dbconn();
+		try {
+			String sql = "select m_email from t_member where m_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				email = rs.getString(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			dbclose();
 		}
-		return m_id;
+		return email;
 	}
 	
 	// 비밀번호찾기 메소드
-	public String SearchPW(String id, String email) {
-		String m_pw = null;
+	public ArrayList<String> SearchPW(String id) {
+		ArrayList<String> sendpw = new ArrayList<>();
 		dbconn();
 		try {
-			String sql = "select * from t_member where m_id =? and m_email=?";
+			String sql = "select * from t_member where m_id =?";
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, id);
-			psmt.setString(2, email);
 			
 			rs = psmt.executeQuery();
 			if(rs.next()) {
-				m_pw = rs.getString(2);
+				String m_pw = rs.getString(2);
+				String m_email=rs.getString(7);
+				
+				sendpw.add(m_pw);
+				sendpw.add(m_email);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			dbclose();
 		}
-		return m_pw;
+		return sendpw;
 	}
 	
 	//'댓글의 좋아요 점수(5점)' 업데이트 메소드 (Likes_score)
@@ -227,13 +267,13 @@ public class MemberDAO {
 	}
 	
 	// 회원의 레벨 변경 메소드 -> level을 jsp select값으로 주기
-	public int M_Level(int level, MemberDTO dto) {
+	public int M_Level(int level, String id) {
 		dbconn();
 		try {
 			String sql = "update t_member set m_level = ? where m_id=?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, level);
-			psmt.setString(2, dto.getM_id());
+			psmt.setString(2, id);
 			
 			cnt = psmt.executeUpdate();
 		} catch (Exception e) {
@@ -279,16 +319,17 @@ public class MemberDAO {
 		}
 
 	//회원정보 수정 업데이트 메소드 
-	public int UpdateMember(MemberDTO dto) {
+	public int UpdateMember(String id, String name, String phone, String pw, String email, String profile) {
 		dbconn();
 		try {
-			String sql = "update t_member set m_name=?, m_phone=?, m_pw=?, m_email=? where m_id=?";
+			String sql = "update t_member set m_name=?, m_phone=?, m_pw=?, m_email=?, m_profile=? where m_id=?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, dto.getM_name());
-			psmt.setString(2, dto.getM_phone());
-			psmt.setString(3, dto.getM_pw());
-			psmt.setString(4, dto.getM_email());
-			psmt.setString(5, dto.getM_id());
+			psmt.setString(1, name);
+			psmt.setString(2, phone);
+			psmt.setString(3, pw);
+			psmt.setString(4, email);
+			psmt.setString(5, id);
+			psmt.setString(6, profile);
 			
 			cnt = psmt.executeUpdate();
 		} catch (Exception e) {
@@ -298,4 +339,133 @@ public class MemberDAO {
 		}
 		return cnt;
 	}
+	
+	//아이디찾기 메일보내기 메소드
+	public static boolean SendMailID(ArrayList<String> sendid) {
+		Properties prop = System.getProperties();
+		
+		prop.put("mail.smtp.host", "smtp.gmail.com");
+		prop.put("mail.smtp.port", 465);
+		prop.put("mail.smtp.auth", "true");
+		prop.put("mail.smtp.ssl.enable", "true");
+		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		
+		Authenticator auth = new SendMailToCustomers();
+		Session session = Session.getDefaultInstance(prop, auth);
+		
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("paide0411@gmail.com", "PAIDE"));
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress(sendid.get(1)));
+		
+			message.setSubject("요청하신 PAIDE 회원정보입니다.", "UTF-8");
+			
+			message.setText("아이디 : " + sendid.get(0), "UTF-8");
+			
+			Transport.send(message);
+			System.out.println("Success Message Send");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			System.out.println("check check");
+		}
+		return true;
+	}
+	
+	//비번찾기 메일보내기 메소드
+		public static void SendMailPW(ArrayList<String> sendpw) {
+			Properties prop = System.getProperties();
+			
+			prop.put("mail.smtp.host", "smtp.gmail.com");
+			prop.put("mail.smtp.port", 465);
+			prop.put("mail.smtp.auth", "true");
+			prop.put("mail.smtp.ssl.enable", "true");
+			prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+			
+			Authenticator auth = new SendMailToCustomers();
+			Session session = Session.getDefaultInstance(prop, auth);
+			
+			try {
+				MimeMessage message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("paide0411@gmail.com", "PAIDE"));
+				message.setRecipient(Message.RecipientType.TO, new InternetAddress(sendpw.get(1)));
+			
+				message.setSubject("요청하신 PAIDE 회원정보입니다.", "UTF-8");
+				
+				message.setText("비밀번호 : " + sendpw.get(0), "UTF-8");
+				
+				Transport.send(message);
+				System.out.println("Success Message Send");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				System.out.println("check check");
+			}
+		}
+		
+	//아이디 중복확인 메소드
+	public boolean CheckID(String id) {
+		boolean result = false;
+		dbconn();
+		try {
+			String sql = "select * from t_member where m_id = ?";
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return result;
+		
+		
+	}
+	
+	// 전화번호 중복확인 메소드 
+	public boolean checkPhone(String phone) {
+		boolean checkphone = false;
+		dbconn();
+		try {
+			String sql = "select * from t_member where m_phone = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, phone);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				checkphone = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return checkphone;
+	}
+	
+	// 이메일 중복확인 메소드
+	public boolean checkEmail(String email) {
+		boolean checkEmail = false;
+		dbconn();
+		try {
+			String sql = "select * from t_member where m_phone = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				checkEmail = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return checkEmail;
+	}
+		
 }
