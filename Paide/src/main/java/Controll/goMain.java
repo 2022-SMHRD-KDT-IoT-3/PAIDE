@@ -19,7 +19,7 @@ public class goMain extends HttpServlet {
 		session.getAttribute("info");
 		
 		//foward방식 디스패처
-		RequestDispatcher rd = request.getRequestDispatcher("");
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 		
 	}

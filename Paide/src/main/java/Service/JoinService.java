@@ -21,22 +21,22 @@ public class JoinService implements Command{
 		
 		String nextpage = null;
 		
-		String m_id = request.getParameter("m_id");
-		String m_pw = request.getParameter("m_pw");
-		String m_name = request.getParameter("m_name");
-		String m_phone = request.getParameter("m_phone");
-		String m_email = request.getParameter("m_email");
+		String m_id = request.getParameter("id");
+		String m_pw = request.getParameter("pw1");
+		String m_name = request.getParameter("name");
+		String m_phone = request.getParameter("tel");
+		String m_email = request.getParameter("email");
 		
 		
-		MemberDTO dto = new MemberDTO();
+		MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_phone, m_email);
 		int cnt = new MemberDAO().Join(dto);
 		
 		if(cnt>0) {
 			System.out.println("회원가입 성공");
-			nextpage = "";
+			nextpage = "goMain";
 		}else {
 			System.out.println("회원가입 실패");
-			nextpage = "";
+			nextpage = null;
 		}
 		
 		return nextpage;

@@ -73,7 +73,7 @@
                            <font id="chkNotice" size="2"></font>
 
                         </div>
-                        <button type="submit" id="Join" class="btn btn-primary btn-lg btn-block" onClick="href='index.html'">회원가입</button>
+                        <input type="submit" value="회원가입" id="Join" class="btn btn-primary btn-lg btn-block">
 
                         
                         <!-- <button type="submit" class="btn btn-default">회원가입</button> -->
@@ -105,7 +105,7 @@
 
 <!-- 변경: 여기 js없어서 js불러오는 코드 넣었다. -->
  <!-- Javascript -->
-<script type="text/javascript" src="JS/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="assets/vendor/jquery/jquery.min.js"></script>
  <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
  <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
  <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>

@@ -22,7 +22,7 @@ public class CheckInfoService implements Command{
 			String m_email = request.getParameter("m_email");
 			
 			boolean resPhone = new MemberDAO().checkPhone(m_phone);
-			boolean resEmail = new MemberDAO().checkPhone(m_email);
+			boolean resEmail = new MemberDAO().checkEmail(m_email);
 			
 			PrintWriter out = response.getWriter();
 			if(resPhone == false && resEmail == false) {
