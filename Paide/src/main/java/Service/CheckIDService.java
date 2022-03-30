@@ -17,14 +17,14 @@ public class CheckIDService implements Command{
 			throws ServletException, IOException {
 		System.out.println("[CheckIDService]");
 		
-		String id = request.getParameter("");
-		
+		String id = request.getParameter("id");
+		System.out.println(id);
 		boolean result = new MemberDAO().CheckID(id);
 		
 		PrintWriter out = response.getWriter();
 		out.print(result);
 		out.close();
-		String nextpage = "";
+		String nextpage = null;
 		
 		return nextpage;
 	}

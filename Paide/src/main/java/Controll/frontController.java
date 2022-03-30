@@ -27,7 +27,7 @@ import Service.UpdateMemberService;
 import Service.WriteArticleService;
 import Service.WriteCmtService;
 
-@WebServlet("/frontController")
+@WebServlet("*.do")
 public class frontController extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
