@@ -40,11 +40,10 @@
 								<div class="logo text-center"><a href="index.jsp"><img src="assets/img/pidelogo.png" alt="Klorofil Logo"></a></div>
 								<p class="lead">Login to your account</p>
 							</div>
-
 							<form class="form-auth-small" action="index.jsp">
 								<div class="form-group">
 									<label for="signin-id" class="control-label sr-only">아이디</label>
-									<input type="email" class="form-control" id="signin-email"  placeholder="아이디">
+									<input type="text" class="form-control" id="signin-email"  placeholder="아이디">
 								</div>
 								
 								<div class="form-group">
