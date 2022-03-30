@@ -35,7 +35,7 @@
       <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-             <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+             <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
                      class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -75,9 +75,9 @@
                                  class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
                                  class="icon-submenu lnr lnr-chevron-down"></i></a>
                          <ul class="dropdown-menu">
-                             <li><a href="myFarm.html"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-                             <li><a href="updateMember.html"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                             <li><a href="index.html"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                             <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                             <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
+                             <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                          </ul>
                      </li>
                      <li class="dropdown">
@@ -119,15 +119,15 @@
                          <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                          <ul id='neighbor' class="dropdown-menu notifications">
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                          </ul>
                      </li>
@@ -150,18 +150,18 @@
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav">
-                  <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.html" class="active"><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-				      <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class="active"><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+				      <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
-                           <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                           <li><a href="farmSelect.html" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                           <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                           <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
                   </li>
@@ -222,7 +222,7 @@
                                     <tr>
                                        <td>001</td>
                                        <!-- 선택한 제목(article_title)을 가지고 게시글페이지로이동 -->
-                                       <td><a href="boardSelect.html">수완에서 딸기 직거래 하실 분</a></td>
+                                       <td><a href="boardSelect.jsp">수완에서 딸기 직거래 하실 분</a></td>
                                        <!-- m_id -->
                                        <td>damin0722</td>
                                        <td>2022.03.24</td>

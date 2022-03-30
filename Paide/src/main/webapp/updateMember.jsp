@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
-
 <!doctype html>
 <html lang="en">
 
@@ -33,7 +32,7 @@
       <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-            <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+            <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
                   class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -49,65 +48,115 @@
 
             <div id="navbar-menu">
                <ul class="nav navbar-nav navbar-right">
+
+                  <!-- 변경 로그아웃시 삭제1 start      if 문으로 로그인시 생성하도록 -->
                   <li class="dropdown">
+                     <!-- ?대매니 등록된 프로필 사진 경로 지정 onerror="지정된 경로에 사진이 없을 경우 띄우는 이미지경로"  
+                           프로필 사진을 등록하지 않았을 경우 기본이미지 = 프로필기본이미지.png -->
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
-                           class="icon-submenu lnr lnr-chevron-down"></i></a>
+                           class="img-circle" alt="Avatar" onerror="this.src ='assets/img/프로필기본이미지.png'">
+                        <span> 송다민 </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-                        <li><a href="#"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                        <li><a href="#"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                        <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
+                        <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
+
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="lnr lnr-bubble"></i>
                         <span class="badge bg-danger">5</span>
                      </a>
                      <ul class="dropdown-menu notifications">
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is
+                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System
+                              space is
                               almost full</a></li>
                         <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
                               unfinished tasks</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is
+                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly
+                              report is
                               available</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in
+                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly
+                              meeting in
                               1 hour</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has
+                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your
+                              request has
                               been approved</a></li>
                         <li><a href="#" class="more">See all notifications</a></li>
                      </ul>
                   </li>
+                  <!-- 이웃목록
+                           추가할 기능
+                              1. 구독(이웃추가)을 눌렀을 때, 자동으로 class="dropdown-menu notifications으로 들어가고,
+                              2.  class="dropdown-menu notifications에 있는 다른 농장의 수 만큼 자동으로 class="badge rounded-pill bg-success"에서 count가 들어가야 함.
+                              3. 구독을 다시 한 번 눌렀을 때, 구독이 취소되고, 자동으로 class="badge rounded-pill bg-success"에서 카운트가 내려가고, class="dropdown-menu notifications"에서 목록이 빠져야 함. -->
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                        <i class="lnr lnr-heart"></i>
-                        <span class="badge bg-danger">5</span>
+                        <i class="lnr lnr-users"></i>
+                        <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
+                        <span class="badge rounded-pill bg-success">5</span>
                      </a>
-                     <ul class="dropdown-menu notifications">
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is
-                              almost full</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
-                              unfinished tasks</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is
-                              available</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in
-                              1 hour</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has
-                              been approved</a></li>
-                        <li><a href="#" class="more">See all notifications</a></li>
+                     <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
+                                사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->
+                     <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
+
+                     <ul id='neighbor' class="dropdown-menu notifications">
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                      </ul>
                   </li>
+                  <!-- 로그아웃시 삭제1 end-->
 
+                  <!-- 로그아웃시 추가 start : 로그인버튼 -->
+                  <!-- <div class="navbar-btn navbar-btn-right"> 
+                     <a class="btn btn-primary" href="page-login.html"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+                     </div>  -->
+                  <!--로그아웃시 추가 end-->
 
                </ul>
             </div>
          </div>
       </nav>
-      <!-- END NAVBAR -->ㅐ
+      <!-- END NAVBAR -->
       <!-- LEFT SIDEBAR -->
+      <!-- LEFT SIDEBAR -->
+      <div id="sidebar-nav" class="sidebar">
+         <div class="sidebar-scroll">
+            <nav>
+               <ul class="nav">
+                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+                  <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
+                  <!-- 로그아웃시 삭제2 start -->
+                  <li>
+                     <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-user"></i>
+                        <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                     <div id="subPages" class="collapse in">
+                        <ul class="nav">
+                           <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                        </ul>
+                     </div>
+                  </li>
+                  <!-- 로그아웃시 삭제2 end -->
+               </ul>
+            </nav>
+         </div>
+      </div>
       <!-- END LEFT SIDEBAR -->
-
       <!-- MAIN -->
       <div class="main">
          <!-- MAIN CONTENT -->
@@ -117,7 +166,20 @@
                   <div class="clearfix">
                      <!-- LEFT COLUMN -->
                      <div class="profile-left">
-                        
+                        <div class="profile-header">
+                           <div class="overlay"></div>
+                           <form action="">
+                              <div class="profile-main">
+                                 <span class="label label-success">프로필사진등록</span>
+                                 <!-- ?대매니 서버상에서 등록시 이미지를 보여줄 것인지 아니면 서브밋후 이미지가 변경되게 할것인지  -->
+                                 <div id="preview"> </div>
+                                 <form action="/main/user/image_insert" id="form" name="form" method="post"
+                                    enctype="multipart/form-data" autocomplete="off">
+                                    <input type="file" name="profile" accept="image/*" onchange="previewImage(this)" />
+                                    <button type="submit" class="btn btn-primary">업로드</button>
+                                 </form>
+                              </div>
+                        </div>
                         <!-- PROFILE DETAIL -->
                         <div class="profile-detail">
                            <div class="profile-info">
@@ -126,25 +188,32 @@
                                  <div class="panel-heading">
                                     <h3 class="panel-title">개인정보수정</h3>
                                  </div>
-                                 <div class="panel-body">
-                                    <!-- placeholder에 기존정보넣기 -->
-                                    이름<input type="text" name="m_name" class="form-control" placeholder="송다민">
-                                    <br>
-                                    휴대전화<input type="number" name="m_phone" class="form-control" placeholder="01012341234">
-                                    <br>
-                                    아이디<input type="text" name="m_id" class="form-control" placeholder="damin0722">
-                                    <br>
-                                    비밀번호<input type="password" name="m_pw" class="form-control" value="password">
-                                    <br>
-                                    이메일<input type="email" name="m_email" class="form-control" placeholder="damin@paide.com">
-                                    <br>
-                                    
-                                 </div>
-                                 </div>
+                                 <!-- 변경  -->
+                                 <!-- action 회원정보수정서비스콘으로-->
+                                 <form action="#" method="">
+                                    <div class="panel-body">
+                                       <!--                                     placeholder에 사용자의 기존정보넣기 -->
+                                       이름<input type="text" name="m_name" class="form-control" placeholder="송다민">
+                                       <br>
+                                       휴대전화<input type="number" name="m_phone" class="form-control"
+                                          placeholder="01012341234">
+                                       <br>
+
+                                       비밀번호<input type="password" name="m_pw" class="form-control" value="password">
+                                       <br>
+                                       이메일<input type="email" name="m_email" class="form-control"
+                                          placeholder="damin@paide.com">
+                                       <br>
+                                       <center>
+                                          <button type="submit" class="btn btn-primary">완료</button>
+                                       </center>
+                                       <br><br>
+                                    </div>
+                                 </form>
                               </div>
-                              <!-- END INPUTS -->
                            </div>
-                          
+                           <!-- END INPUTS -->
+                        </div>
                         <!-- END PROFILE DETAIL -->
                      </div>
                      <!-- END LEFT COLUMN -->
@@ -152,69 +221,128 @@
                      <div class="profile-right">
                         <h4 class="heading">농장정보수정</h4>
                         <div class="panel">
-                           <div class="panel-heading">
-                              <h3 class="panel-title">
-                                 <!-- 회원의 농장 option 표시 , 선택한 농장정보 밑에 뜨도록  -->
-                                 <select class="form-control">
-                                    <option value="farm1">농장1</option>
-                                    <option value="farm2">농장2</option>
-                                    <option value="farm3">농장3</option>
-                                 </select>
-                              </h3>
-                              <hr>
-                              <!-- 농장추가 버튼 클릭시 :  농장정보 칸 => 선택해주세요 -->
-                              <div class="text-center"><a href="" class="btn btn-primary">농장추가</a></div>
-                           </div>
                            <div class="panel-body">
-                              농장이름<input type="text" name="" class="form-control" placeholder="농장1 =선택한 농장이름">
-                              <br>
-                              지역선택
-                              <select class="form-control">
-                                 <!-- <option name="f_region" value="">지역을 선택해주세요.</option> -->
-                                 <option name="f_region" value="">농장지역 =선택한 농장의 지역</option>
-                                 <option name="f_region" value="서울특별시">서울특별시</option>
-                                 <option name="f_region" value="경기도">경기도</option>
-                                 <option name="f_region" value="강원도">강원도</option>
-                                 <option name="f_region" value="충청북도">충청북도</option>
-                                 <option name="f_region" value="충청남도">충청남도</option>
-                                 <option name="f_region" value="대전광역시">대전광역시</option>
-                                 <option name="f_region" value="전라북도">전라북도</option>
-                                 <option name="f_region" value="전라남도">전라남도</option>
-                                 <option name="f_region" value="광주광역시">광주광역시</option>
-                                 <option name="f_region" value="경상북도">경상북도</option>
-                                 <option name="f_region" value="경상남도">경상남도</option>
-                                 <option name="f_region" value="부산광역시">부산광역시</option>
-                                 <option name="f_region" value="울산광역시">울산광역시</option>
-                                 <option name="f_region" value="제주특별자치도">제주특별자치도</option>
-                              </select>
-                              <br>
-                              재배작목
-                              <select class="form-control">
-                                 <!-- <option name="f_crops" value="">재배작목을 선택해주세요.</option> -->
-                                 <option name="f_crops" value="">재배작목 =선택한 농장의 작목</option>
-                                 <option name="f_crops" value="딸기">딸기</option>
-                                 <option name="f_crops" value="오이">오이</option>
-                                 <option name="f_crops" value="토마토">토마토</option>
-                                 <option name="f_crops" value="파프리카">파프리카</option>
-                              </select>
-                              <br>
-                              재배시설
-                              <select class="form-control">
-                                 <!-- <option name="f_facility" value="">재배시설을 선택해주세요. </option> -->
-                                 <option name="f_facility" value="">재배시설 =선택한농장의 작목</option>
-                                 <option name="f_facility" value="비닐온실">비닐온실</option>
-                                 <option name="f_facility" value="유리온실">유리온실</option>
-                              </select>
-                              <br>
-                              
-                             
+                              <!-- 변경 
+                                 선택한 농장의 이름값을보내주기 농장서비스로 -->
+                              <form action="" method="">
+                                 <div class="input-group">
+                                    <select class="form-control">
+                                       <!-- 변경 사용자의 등록된 농장 이름 가져오기  -->
+                                       <option value="">농장을선택해주세요.</option>
+                                       <!-- 등록된 회원의 농장이 나와야함  -->
+                                       <option name="f_name" value="대매니의 딸기농장">대매니의 딸기농장</option>
+                                       <option name="f_name" value="">토마토농장 </option>
+                                       <option name="f_name" value="">등록한 농장</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                       <button class="btn btn-primary" type="submit">선택</button></span>
+                                 </div>
+                              </form>
+                              <hr>
+                              <!-- 위에서 선택한 농장의 값이 placeholder에 들어와야함
+                                    농장정보수정서비스로 -->
+                              <form action="" method="">
+                                 <div class="panel-body">
+                                    농장이름<input type="text" name="" class="form-control" placeholder="농장1 =선택한 농장이름">
+                                    <br>
+                                    지역선택
+                                    <select class="form-control">
+                                                              
+                                       <option name="f_region" value="">선택한 농장의 지역</option>
+                                       <option name="f_region" value="서울특별시">서울특별시</option>
+                                       <option name="f_region" value="경기도">경기도</option>
+                                       <option name="f_region" value="강원도">강원도</option>
+                                       <option name="f_region" value="충청북도">충청북도</option>
+                                       <option name="f_region" value="충청남도">충청남도</option>
+                                       <option name="f_region" value="대전광역시">대전광역시</option>
+                                       <option name="f_region" value="전라북도">전라북도</option>
+                                       <option name="f_region" value="전라남도">전라남도</option>
+                                       <option name="f_region" value="광주광역시">광주광역시</option>
+                                       <option name="f_region" value="경상북도">경상북도</option>
+                                       <option name="f_region" value="경상남도">경상남도</option>
+                                       <option name="f_region" value="부산광역시">부산광역시</option>
+                                       <option name="f_region" value="울산광역시">울산광역시</option>
+                                       <option name="f_region" value="제주특별자치도">제주특별자치도</option>
+                                    </select>
+                                    <br>
+                                    재배작목
+                                    <select class="form-control">
+                                       <option name="f_crops" value="">재배작목 =선택한 농장의 작목</option>
+                                       <option name="f_crops" value="딸기">딸기</option>
+                                       <option name="f_crops" value="오이">오이</option>
+                                       <option name="f_crops" value="토마토">토마토</option>
+                                       <option name="f_crops" value="파프리카">파프리카</option>
+                                    </select>
+                                    <br>
+                                    재배시설
+                                    <select class="form-control">
+                                       <option name="f_facility" value="">재배시설 =선택한농장의 작목</option>
+                                       <option name="f_facility" value="비닐온실">비닐온실</option>
+                                       <option name="f_facility" value="유리온실">유리온실</option>
+                                    </select>
+                                 </div>
                            </div>
+                           <center>
+                              <button type="submit" class="btn btn-primary">수정완료</button>
+                              <!-- 변경 
+                                 농장삭제서비스 현재 선택한 농장의 값을 가지고 농장삭제메소드로 가기-->
+                              <a href="#">
+                                 <button type="submit" class="btn btn-primary">농장삭제</button></a>
+                           </center>
+                           <br>
                         </div>
-                        <!-- END AWARDS -->
-                        <!-- TABBED CONTENT -->
-
-                        <!-- END TABBED CONTENT -->
-                        <div class="text-center"><a href="#" class="btn btn-primary">수정완료</a></div>
+                        <h4 class="heading">농장추가</h4>
+                        <!-- 변경 
+                           농장추가하는 곳 으로  -->
+                        <form action="" method="">
+                        <div class="panel">
+                           <div class="panel-body">
+                                 <div class="panel-body">
+                                    농장이름<input type="text" name="" class="form-control" placeholder="농장1 =선택한 농장이름">
+                                    <br>
+                                    지역선택
+                                    <select class="form-control">
+                                       <option name="f_region" value="">지역을 선택해주세요.</option>
+                                       <option name="f_region" value="서울특별시">서울특별시</option>
+                                       <option name="f_region" value="경기도">경기도</option>
+                                       <option name="f_region" value="강원도">강원도</option>
+                                       <option name="f_region" value="충청북도">충청북도</option>
+                                       <option name="f_region" value="충청남도">충청남도</option>
+                                       <option name="f_region" value="대전광역시">대전광역시</option>
+                                       <option name="f_region" value="전라북도">전라북도</option>
+                                       <option name="f_region" value="전라남도">전라남도</option>
+                                       <option name="f_region" value="광주광역시">광주광역시</option>
+                                       <option name="f_region" value="경상북도">경상북도</option>
+                                       <option name="f_region" value="경상남도">경상남도</option>
+                                       <option name="f_region" value="부산광역시">부산광역시</option>
+                                       <option name="f_region" value="울산광역시">울산광역시</option>
+                                       <option name="f_region" value="제주특별자치도">제주특별자치도</option>
+                                    </select>
+                                    <br>
+                                    재배작목
+                                    <select class="form-control">
+                                       <option name="f_crops" value="">재배작목을 선택해주세요.</option>
+                                       <option name="f_crops" value="딸기">딸기</option>
+                                       <option name="f_crops" value="오이">오이</option>
+                                       <option name="f_crops" value="토마토">토마토</option>
+                                       <option name="f_crops" value="파프리카">파프리카</option>
+                                    </select>
+                                    <br>
+                                    재배시설
+                                    <select class="form-control">
+                                       <option name="f_facility" value="">재배시설을 선택해주세요. </option>
+                                       <option name="f_facility" value="비닐온실">비닐온실</option>
+                                       <option name="f_facility" value="유리온실">유리온실</option>
+                                    </select>
+                                 </div>
+                           </div>
+                           <center>
+                              <button type="submit" class="btn btn-primary">농장추가</button>
+                              <input class="btn btn-primary" type="reset">
+                           </center>
+                           <br>
+                        </div>
+                        </form>
                      </div>
                      <!-- END RIGHT COLUMN -->
                   </div>
@@ -242,6 +370,39 @@
    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
    <script src="assets/scripts/klorofil-common.js"></script>
+   <!-- 프로필 이 -->
+   <script type="text/javascript">
+
+      function previewImage(f) {
+
+         let file = f.files;
+
+         // 확장자 체크
+         if (!/\.(gif|jpg|jpeg|png)$/i.test(file[0].name)) {
+            alert('gif, jpg, png 파일만 선택해 주세요.\n\n현재 파일 : ' + file[0].name);
+
+            // 선택한 파일 초기화
+            f.outerHTML = f.outerHTML;
+
+            document.getElementById('preview').innerHTML = '';
+
+         }
+         else {
+
+            // FileReader 객체 사용
+            let reader = new FileReader();
+
+            // 파일 읽기가 완료되었을때 실행
+            reader.onload = function (rst) {
+               document.getElementById('preview').innerHTML = '<img id="profileimg"  src="' + rst.target.result + '">';
+            }
+
+            // 파일을 읽는다
+            reader.readAsDataURL(file[0]);
+
+         }
+      }
+   </script>
    <script>
       $(function () {
          var data, options;
