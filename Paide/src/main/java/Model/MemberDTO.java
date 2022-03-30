@@ -29,23 +29,40 @@ public class MemberDTO {
 	
 	
 	//회원가입 생성자
-	public MemberDTO(String m_id, String m_pw, String m_name, String m_phone, String m_email, String m_joindate) {
+	public MemberDTO(String m_id, String m_pw, String m_name, String m_phone, String m_email, String m_joindate, String m_profile) {
 		this.m_id = m_id;
 		this.m_pw = m_pw;
 		this.m_name = m_name;
 		this.m_phone = m_phone;
 		this.m_email = m_email;
 		this.m_joindate = m_joindate;
+		this.m_profile = m_profile;
 	}
-	
-	//정보수정 생성자
-	public MemberDTO(String m_pw, String m_name, String m_phone, String m_email) {
+	public MemberDTO(String m_id, String m_pw, String m_name, String m_phone, String m_email) {
 		super();
+		this.m_id = m_id;
 		this.m_pw = m_pw;
 		this.m_name = m_name;
 		this.m_phone = m_phone;
 		this.m_email = m_email;
 	}
+	
+	
+	
+
+
+	//정보수정 생성자
+	public MemberDTO(String m_id, String m_pw, String m_name, String m_phone, String m_email, String m_profile) {
+		super();
+		this.m_id = m_id;
+		this.m_pw = m_pw;
+		this.m_name = m_name;
+		this.m_phone = m_phone;
+		this.m_email = m_email;
+		this.m_profile = m_profile;
+	}
+	
+	// 프로필 수정
 	
 	
 
@@ -53,6 +70,16 @@ public class MemberDTO {
 	public MemberDTO() {
 		super();
 	}
+
+	public String getM_profile() {
+		return m_profile;
+	}
+
+
+	public void setM_profile(String m_profile) {
+		this.m_profile = m_profile;
+	}
+
 
 	public MemberDTO(String m_id) {
 		super();

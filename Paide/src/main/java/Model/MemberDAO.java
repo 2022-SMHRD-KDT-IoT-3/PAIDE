@@ -319,17 +319,17 @@ public class MemberDAO {
 		}
 
 	//회원정보 수정 업데이트 메소드 
-	public int UpdateMember(String id, String name, String phone, String pw, String email, String profile) {
+	public int UpdateMember(MemberDTO dto) {
 		dbconn();
 		try {
 			String sql = "update t_member set m_name=?, m_phone=?, m_pw=?, m_email=?, m_profile=? where m_id=?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, name);
-			psmt.setString(2, phone);
-			psmt.setString(3, pw);
-			psmt.setString(4, email);
-			psmt.setString(5, id);
-			psmt.setString(6, profile);
+			psmt.setString(1, dto.getM_name());
+			psmt.setString(2, dto.getM_phone());
+			psmt.setString(3, dto.getM_pw());
+			psmt.setString(4, dto.getM_email());
+			psmt.setString(5, dto.getM_profile());
+			psmt.setString(6, dto.getM_id());
 			
 			cnt = psmt.executeUpdate();
 		} catch (Exception e) {
@@ -453,7 +453,7 @@ public class MemberDAO {
 		boolean checkEmail = false;
 		dbconn();
 		try {
-			String sql = "select * from t_member where m_phone = ?";
+			String sql = "select * from t_member where m_email = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, email);
 			rs = psmt.executeQuery();
@@ -467,5 +467,7 @@ public class MemberDAO {
 		}
 		return checkEmail;
 	}
+	
+	
 		
 }
