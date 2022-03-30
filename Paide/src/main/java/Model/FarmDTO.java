@@ -53,6 +53,25 @@ public class FarmDTO {
 		this.m_id = m_id;
 	}
 	
+	// 농장환경 생성자 (수집기 -> DB)
+	public FarmDTO(int f_seq, double temperature, double temperature_outer, double humidity, double humidity_outer,
+			double humidity_soil, double insolation, double window_opened, double co2, double dew_point,
+			 String m_id) {
+		super();
+
+		this.f_seq = f_seq;
+		this.temperature = temperature;
+		this.temperature_outer = temperature_outer;
+		this.humidity = humidity;
+		this.humidity_outer = humidity_outer;
+		this.humidity_soil = humidity_soil;
+		this.insolation = insolation;
+		this.window_opened = window_opened;
+		this.co2 = co2;
+		this.dew_point = dew_point;
+		this.m_id = m_id;
+	}
+	
 	
 	//농장검색 생성자
 	public FarmDTO(int f_seq, String f_owner_id, String f_name, String f_region, String f_crops, String f_facility) {

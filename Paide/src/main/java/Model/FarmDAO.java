@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 public class FarmDAO {
 
 	// 전역변수 선언
@@ -16,16 +17,17 @@ public class FarmDAO {
 	FarmDTO fdto = null;
 	GraphDTO gdto = null;
 	int cnt = 0;
+	SensorVO vo = new SensorVO();
 	
 	// DB연결 메소드
 	public void dbconn() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
-			String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
+			String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
 			// thin이라는 버전
-			String dbid = "hr";
-			String dbpw = "hr";
+			String dbid = "campus_b_0310_3";
+			String dbpw = "smhrd3";
 
 			conn = DriverManager.getConnection(url, dbid, dbpw);
 		}catch (Exception e){
@@ -551,7 +553,120 @@ public class FarmDAO {
 		return env_HL;
 	}
 	
-	
+	 // 농장 환경 데이터 DB 저장 메소드
+    public int eData(FarmDTO fdto) {
+  	  dbconn();
+  	  
+  	  try {
+  		  String sql = "INSERT INTO t_env VALUES(t_env_seq.nextval,?,?,?,?,?,?,?,?,?,?,sysdate,?)";
+
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println("Fseq : "   + fdto.getF_seq() );
+			System.out.println("Temp : "   + fdto.getTemperature());
+			System.out.println("Otemp : "  + fdto.getTemperature_outer());
+			System.out.println("Humi : "   + fdto.getHumidity());
+			System.out.println("Ohumi : "  + fdto.getHumidity_outer());
+			System.out.println("Soil : "   + fdto.getHumidity_soil());
+			System.out.println("Sol : "    + fdto.getInsolation());
+			System.out.println("Window : " + fdto.getWindow_opened());
+			System.out.println("Co2 : "    + fdto.getCo2());
+			System.out.println("Depo : "   + fdto.getDew_point());
+			System.out.println("Mid : "    + fdto.getM_id());
+
+			psmt.setInt(1, fdto.getF_seq());
+			psmt.setDouble(2, fdto.getTemperature());
+			psmt.setDouble(3, fdto.getTemperature_outer());
+			psmt.setDouble(4, fdto.getHumidity());
+			psmt.setDouble(5, fdto.getHumidity_outer());
+			psmt.setDouble(6, fdto.getHumidity_soil());
+			psmt.setDouble(7, fdto.getInsolation());
+			psmt.setDouble(8, fdto.getWindow_opened());
+			psmt.setDouble(9, fdto.getCo2());
+			psmt.setDouble(10, fdto.getDew_point());
+			psmt.setString(11, fdto.getM_id());
+
+			cnt = psmt.executeUpdate();
+			
+			System.out.println(cnt);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+          dbclose();
+       }
+  	  return cnt;
+  	  
+    }
+    
+    // 농장 환경 데이터 보내기 메소드
+    public SensorVO newData() {
+  	  
+  	  dbconn();
+  	  try {
+  		  String sql = "SELECT * FROM V_T_ENV";
+
+			psmt = conn.prepareStatement(sql);
+
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				double temp = rs.getDouble(1);
+				double otemp = rs.getDouble(2);
+				double humi = rs.getDouble(3);
+				double ohumi = rs.getDouble(4);
+				double soil = rs.getDouble(5);
+				double sol = rs.getDouble(6);
+				double open = rs.getDouble(7);
+				double co2 = rs.getDouble(8);
+				double depo = rs.getDouble(9);
+				
+				
+				//if(temp < 기준temp){ 
+				//led = "1"
+				
+				System.out.println(temp);
+				System.out.println(humi);
+				System.out.println(co2);
+				System.out.println(sol);
+				
+				String temp1 = Double.toString(temp);
+				String otemp1 = Double.toString(otemp);
+				String humi1 = Double.toString(humi);
+				String ohumi1 = Double.toString(ohumi);
+				String co21 = Double.toString(co2);
+				String sol1 = Double.toString(sol);
+				String depo1 = Double.toString(depo);
+				String soil1 = Double.toString(soil);
+				String open1 = Double.toString(open);
+				String led1 = "1";
+				
+				
+				vo.setTEMP(temp1);
+				vo.setOTEMP(otemp1);
+				vo.setHUMI(humi1);
+				vo.setOHUMI(ohumi1);
+				vo.setCO2(co21);
+				vo.setSOL(sol1);
+				vo.setDEPO(depo1);
+				vo.setSOIL(soil1);
+				vo.setOPEN(open1);
+				
+					
+			}
+			
+			System.out.println(cnt);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+          dbclose();
+       }
+  	  return vo;
+  	  
+  	  
+    }
 	
 	
 }
