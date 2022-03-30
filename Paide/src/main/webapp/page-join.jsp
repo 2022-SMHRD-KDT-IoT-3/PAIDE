@@ -155,10 +155,10 @@
     $('#userPwChk').keyup(function(){
 
         if($('#userPw').val() != $('#userPwChk').val()){
-          $('#chkNotice').html('비밀번호 일치하지 않음<br><br>');
+          $('#chkNotice').html('비밀번호 일치하지 않음');
           $('#chkNotice').attr('color', '#f82a2aa3');
         } else{
-          $('#chkNotice').html('비밀번호 일치함<br><br>');
+          $('#chkNotice').html('비밀번호 일치함');
           $('#chkNotice').attr('color', '#199894b3');
         }
 
