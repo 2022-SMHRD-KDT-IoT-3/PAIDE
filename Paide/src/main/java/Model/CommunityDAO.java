@@ -258,7 +258,7 @@ public class CommunityDAO {
 		return cnt;
 	}
 
-	// 생성한 댓글 저장 메소드
+	// 생성한 댓글 저장 메소드(게시판 댓글)
 	public int Insert_Cmt(CommunityDTO dto) {
 		dbconn();
 		try {
@@ -281,8 +281,32 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
+	
+	// 생성한 댓글 저장 메소드(농장댓글)
+	public int Insert_Fcmt(CommunityDTO dto) {
+		dbconn();
+		try {
+			String sql = "insert into t_comment_farm values(t_comment_farm_seq.nextval, ?, ?, sysdate, ?, 0, 1)";
+			psmt = conn.prepareStatement(sql);
 
-	// 댓글 수정 메소드
+			psmt.setInt(1, dto.getArticle_seq());
+			System.out.println("글번호 : " + dto.getArticle_seq());
+			psmt.setString(2, dto.getCmt_content());
+			System.out.println("댓글내용 : " + dto.getCmt_content());
+			psmt.setString(3, dto.getM_id());
+			System.out.println("댓글작성자 : " + dto.getM_id());
+
+			cnt = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+		return cnt;
+	}
+
+	// 댓글 수정 메소드(게시판 댓글)
 	public int updateCmt(int cmt_seq, String cmt_content) {
 		dbconn();
 		try {
@@ -302,14 +326,17 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
-
-	// 댓글 삭제 메소드
-	public int Delete_Cmt(int cmt_seq) {
+	
+	// 댓글 수정 메소드(게시판 댓글)
+	public int updateFcmt(int fcmt_seq, String fcmt_content) {
 		dbconn();
 		try {
-			String sql = "update t_comment set cmtavailable = 0 where cmt_seq = ?";
+
+			String sql = "update t_comment_farm set fcmt_content = ? where fcmt_seq = ?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, cmt_seq);
+
+			psmt.setString(1, fcmt_content);
+			psmt.setInt(2, fcmt_seq);
 
 			cnt = psmt.executeUpdate();
 
@@ -320,8 +347,45 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
+	
+	// 댓글 삭제 메소드(게시판 댓글)
+	public int Delete_Cmt(int cmt_seq) {
+		dbconn();
+		try {
+			String sql = "update t_comment set cmtavailable = 0 where cmt_seq = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, cmt_seq);
+			
+			cnt = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+		return cnt;
+	}
 
-	// 댓글 좋아요 업데이트 메소드
+	// 댓글 삭제 메소드(농장 댓글)
+	public int Delete_Fcmt(int fcmt_seq) {
+		dbconn();
+		try {
+			String sql = "update t_comment_farm set fcmtavailable = 0 where fcmt_seq = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, fcmt_seq);
+
+			cnt = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+		return cnt;
+	}
+	
+
+	// 댓글 좋아요 업데이트 메소드(게시판 댓글)
 	public int Plikes(int article_seq, int cmt_seq) {
 		dbconn();
 		try {
@@ -330,6 +394,26 @@ public class CommunityDAO {
 
 			psmt.setInt(1, article_seq);
 			psmt.setInt(2, cmt_seq);
+
+			cnt = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+		return cnt;
+	}
+	
+	// 댓글 좋아요 업데이트 메소드(농장 댓글)
+	public int Pflikes(int t_farm_seq, int fcmt_seq) {
+		dbconn();
+		try {
+			String sql = "update t_comment_farm set fcmt_like = fcmt_like + 1 where t_farm_seq = ? and fcmt_seq = ?";
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setInt(1, t_farm_seq);
+			psmt.setInt(2, fcmt_seq);
 
 			cnt = psmt.executeUpdate();
 
@@ -415,6 +499,7 @@ public class CommunityDAO {
 		return list;
 	}
 
+	// 특정 댓글번호로 댓글 내용 찾기
 	public String cmt_content(int cmt_seq) {
 		dbconn();
 		String cmt = "";
