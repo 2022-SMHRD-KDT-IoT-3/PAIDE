@@ -1,7 +1,7 @@
 package Model;
 
 public class SensorVO {
-	
+
 	private String TEMP;
 	private String OTEMP;
 	private String HUMI;
@@ -11,9 +11,10 @@ public class SensorVO {
 	private String DEPO;
 	private String SOIL;
 	private String OPEN;
+	private String LED;
 
 	public SensorVO(String tEMP, String oTEMP, String hUMI, String oHUMI, String cO2, String sOL, String dEPO,
-			String sOIL, String oPEN) {
+			String sOIL, String oPEN, String lED) {
 		super();
 		TEMP = tEMP;
 		OTEMP = oTEMP;
@@ -24,10 +25,19 @@ public class SensorVO {
 		DEPO = dEPO;
 		SOIL = sOIL;
 		OPEN = oPEN;
+		LED = lED;
 	}
-	
+
 	public SensorVO() {
-		
+
+	}
+
+	public String getLED() {
+		return LED;
+	}
+
+	public void setLED(String lED) {
+		LED = lED;
 	}
 
 	public String getTEMP() {

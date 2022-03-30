@@ -19,61 +19,61 @@ public class envCheckService {
 				if (crop.equals("토마토")) {
 					if (hour >= 8 && hour <= 19) {
 						if (temp <= tomato[0] && temp >= tomato[1] && humi <= tomato[2] && humi >= tomato[3]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					} else {
 						if (temp <= tomato[4] && temp >= tomato[5] && humi <= tomato[6] && humi >= tomato[7]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					}
 				} else if (crop.equals("파프리카")) {
 					if (hour >= 8 && hour <= 19) {
 						if (temp <= paprika[0] && temp >= paprika[1] && humi <= paprika[2] && humi >= paprika[3]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					} else {
 						if (temp <= paprika[4] && temp >= paprika[5] && humi <= paprika[6] && humi >= paprika[7]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					}
 				} else if (crop.equals("딸기")) {
 					if (hour >= 8 && hour <= 19) {
 						if (temp <= strawberry[0] && temp >= strawberry[1] && humi <= strawberry[2] && humi >= strawberry[3]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					} else {
 						if (temp <= strawberry[4] && temp >= strawberry[5] && humi <= strawberry[6] && humi >= strawberry[7]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					}
 				} else if (crop.equals("오이")) {
 					if (hour >= 8 && hour <= 19) {
 						if (temp <= cucumber[0] && temp >= cucumber[1] && humi <= cucumber[2] && humi >= cucumber[3]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					} else {
 						if (temp <= cucumber[4] && temp >= cucumber[5] && humi <= cucumber[6] && humi >= cucumber[7]) {
-							return "{\"LED\":\"1\"}";
+							return "1";
 						} else {
-							return "{\"LED\":\"0\"}";
+							return "0";
 						}
 					}
 				} else {
-					return "{\"LED\":\"0\"}";
+					return "0";
 				}
 			}
 

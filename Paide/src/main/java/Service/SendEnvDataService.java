@@ -33,10 +33,9 @@ public class SendEnvDataService extends HttpServlet {
 		
 		Gson gson = new Gson();
 		String result1 = gson.toJson(vo);
-		String result2 = dao2.LED();
-		out.print(result1+result2);
+		out.print(result1);
 		
-		System.out.println(result1+result2);
+		System.out.println(result1);
 	}
 
 }
