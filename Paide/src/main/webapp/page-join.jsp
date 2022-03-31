@@ -74,12 +74,7 @@
 
                         </div>
                         <input type="submit" value="회원가입" id="Join" class="btn btn-primary btn-lg btn-block">
-
-                        
                         <!-- <button type="submit" class="btn btn-default">회원가입</button> -->
-                        
-                        
-                        
                      </form>
                   </div>
                </div>

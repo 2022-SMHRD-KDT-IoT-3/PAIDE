@@ -32,7 +32,7 @@
 <body>
    <!-- WRAPPER -->
    <div id="wrapper">
-      <!-- NAVBAR -->
+          <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
             <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
@@ -42,13 +42,28 @@
             <div class="navbar-btn">
                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" method="post" name="search" action="SearchArticleService.do">
                <div class="input-group">
-                  <input type="text" value="" class="form-control" placeholder="Search dashboard...">
-                  <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                  <table>
+                     <tr>
+                        <td>
+                           <select class="form-control" name="searchField">
+                              <option value="0">선택</option>
+                              <option value="article_title">제목</option>
+                              <option value="writer">작성자</option>
+                           </select>
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" placeholder="Search dashboard..." name="searchText"
+                              maxlength="100">
+                        </td>
+                        <td>
+                           <button type="submit" class="btn btn-primary">Go</button>
+                        </td>
+                     </tr>
+                  </table>
                </div>
             </form>
-
             <div id="navbar-menu">
                <ul class="nav navbar-nav navbar-right">
 
@@ -60,7 +75,7 @@
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                        <li><a href="index_logout.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                        <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
                   <li class="dropdown">
@@ -69,44 +84,57 @@
                         <span class="badge bg-danger">5</span>
                      </a>
                      <ul class="dropdown-menu notifications">
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is
+                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System
+                              space is
                               almost full</a></li>
                         <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
                               unfinished tasks</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is
+                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly
+                              report is
                               available</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in
+                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly
+                              meeting in
                               1 hour</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has
+                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your
+                              request has
                               been approved</a></li>
                         <li><a href="#" class="more">See all notifications</a></li>
                      </ul>
                   </li>
+                  <!-- 이웃목록
+                           추가할 기능
+                              1. 구독(이웃추가)을 눌렀을 때, 자동으로 class="dropdown-menu notifications으로 들어가고,
+                              2.  class="dropdown-menu notifications에 있는 다른 농장의 수 만큼 자동으로 class="badge rounded-pill bg-success"에서 count가 들어가야 함.
+                              3. 구독을 다시 한 번 눌렀을 때, 구독이 취소되고, 자동으로 class="badge rounded-pill bg-success"에서 카운트가 내려가고, class="dropdown-menu notifications"에서 목록이 빠져야 함. -->
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                        <i class="lnr lnr-heart"></i>
-                        <span class="badge bg-danger">5</span>
+                        <i class="lnr lnr-users"></i>
+                        <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
+                        <span class="badge rounded-pill bg-success">5</span>
                      </a>
-                     <ul class="dropdown-menu notifications">
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is
-                              almost full</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
-                              unfinished tasks</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is
-                              available</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in
-                              1 hour</a></li>
-                        <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has
-                              been approved</a></li>
-                        <li><a href="#" class="more">See all notifications</a></li>
+                     <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
+                                사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->
+                     <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
+
+                     <ul id='neighbor' class="dropdown-menu notifications">
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                      </ul>
                   </li>
                   <!-- 로그아웃시 삭제1 end-->
 
                   <!-- 로그아웃시 추가 start : 로그인버튼 -->
                   <!-- <div class="navbar-btn navbar-btn-right"> 
-					   <a class="btn btn-primary" href="page-login.html"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
-				      </div>  -->
+                     <a class="btn btn-primary" href="page-login.html"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+                     </div>  -->
                   <!--로그아웃시 추가 end-->
 
                </ul>

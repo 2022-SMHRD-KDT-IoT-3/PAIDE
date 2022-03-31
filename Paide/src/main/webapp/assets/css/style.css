@@ -10,7 +10,22 @@
     margin:0;
     padding:0;
  }
- 
+
+ .myfarm {
+   width: 100px;
+   height: 55px;
+   background: #ececec;
+   position: relative; }
+
+  /* È¸¿øÁ¤º¸¼öÁ¤ ÇÁ·ÎÇÊ »çÁø ¼³Á¤ */
+   .profile-header .profile-main #profileimg {
+      position: relative;
+      padding: 20px;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+   }
+
  /* .thumbnail-wrappper { 
    width: 25%; height: 200px; overflow: hidden;
    text-align: center;
@@ -27,7 +42,7 @@
    margin: auto;
  } */
 
- /* ê²Œì‹œíŒ  (ì¶œì²˜: https://webdir.tistory.com/487 [WEBDIR] ) */
+ /* °Ô½ÃÆÇ  (ÃâÃ³: https://webdir.tistory.com/487 [WEBDIR] ) */
    .thumbnail-wrappper { 
     width: 25%; 
    } 
