@@ -73,7 +73,7 @@
                            <font id="chkNotice" size="2"></font>
 
                         </div>
-                        <input type="submit" value="회원가입" id="Join" class="btn btn-primary btn-lg btn-block">
+                        <input type="submit" value="회원가입" id="Join" class="btn btn-primary btn-lg btn-block" disabled>
                         <!-- <button type="submit" class="btn btn-default">회원가입</button> -->
                      </form>
                   </div>
@@ -110,6 +110,19 @@
 <!-- 변경: 중복확인 불러오는 제이쿼리임. 안되어 있더라.... -->
  <script type="text/javascript">
    //0. 아이디 중복체크 버튼을 클릭했을 때
+   idcheck = false;
+   pwcheck = false;
+   
+   function btn_disabled(){
+	   if(idcheck==true && pwcheck==true){
+		   $('#Join').removeAttr("disabled");
+	   }else{
+		   $('#Join').attr('disabled', 'disabled')
+	   }
+   }
+   
+   
+   
    $('#btn').on('click',function(){
    //1. 입력한 email 가져오기
       let id = $('input[name=id]').val();
@@ -124,9 +137,12 @@
       success : function(result){
          if(result=='false'){
          alert('사용가능한 아이디입니다.', result);
+         idcheck = true;
          }else{
             alert('중복된 아이디입니다.', result);
+            idcheck = false;
          }
+         btn_disabled();
       },
       error : function(){
          alert('실패');
@@ -147,10 +163,13 @@
         if($('#userPw').val() != $('#userPwChk').val()){
           $('#chkNotice').html('비밀번호 일치하지 않음');
           $('#chkNotice').attr('color', '#f82a2aa3');
+          pwcheck=false;
         } else{
           $('#chkNotice').html('비밀번호 일치함');
           $('#chkNotice').attr('color', '#199894b3');
+          pwcheck=true;
         }
+        btn_disabled();
 
     });
 });
