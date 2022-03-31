@@ -50,7 +50,7 @@
                          <!-- 변경 : 이름 값 안 넣어져 있길래 넣음-->
                         <div class="form-group">
                            <label for="signin-id" class="control-label sr-only">이름</label>
-                           <input type="text" class="form-control" name="name"  placeholder="이름">
+                           <input type="text" class="form-control" name="name" id="name" placeholder="이름">
                         </div>
                         
                         <div class="form-group">

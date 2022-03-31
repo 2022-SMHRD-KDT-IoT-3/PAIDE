@@ -181,11 +181,11 @@
                         <div class="profile-header">
                            <div class="profile-main">
                               <!-- 기본이미지 -->
-                              <div id="preview"><img id="profileimg" src="assets/img/farmer.png"> </div>
+                              <div id="preview"><img id="profileimg" name="profile_A" src="assets/img/farmer.png"> </div>
                               <!--변경 action 프로필이미지 넣는 메소드로 -->
-                              <form action="" id="form" name="form" method="post" enctype="multipart/form-data"
+                              <form action="UpdateMemberService.do" id="form" name="form" method="post" enctype="multipart/form-data"
                                  autocomplete="off">
-                                 <input type="file" name="profile" accept="image/*" onchange="previewImage(this)" />
+                                 <input type="file" name="profile_B" accept="image/*" onchange="previewImage(this)" />
                                  <button type="submit" class="btn btn-primary">업로드</button>
                               </form>
                            </div>
@@ -201,24 +201,23 @@
                                  </div>
                                  <!-- 변경  -->
                                  <!-- action 회원정보수정서비스콘으로-->
-                                 <form action="#" method="">
+                                 <form action="UpdateMemberService.do" method="post">
                                     <div class="panel-body">
-                                       <!--                                     placeholder에 사용자의 기존정보넣기 -->
-                                       이름<input type="text" name="m_name" class="form-control" value="송다민">
+                                       <!--아이디 hidden값으로 넘겨달라함.-->
+                                       <input type="hidden" name="id" class="form-control">
+                                       이름<input type="text" name="name" class="form-control" placeholder="이름 입력">
                                        <br>
-                                       휴대전화<input type="text" name="m_phone" class="form-control" value="01071215056">
+                                       휴대전화<input type="text" name="phone" class="form-control" placeholder="전화번호 입력">
                                        <br>
-                                       비밀번호<input id="updatePW" type="password" name="m_pw" class="form-control"
-                                          value="회원비밀번호">
+                                       비밀번호<input id="updatePW" type="password" name="pw" class="form-control" placeholder="비밀번호 입력">
                                        <br>
                                        새 비밀번호 확인 <font id="chkNotice" size="2"></font><input id="updatePwChk"
-                                          type="password" name="m_pw" class="form-control" placeholder="비밀번호확인">
+                                          type="password" name="m_pw" class="form-control" placeholder="비밀번호 확인">
                                        <br>
-                                       이메일<input type="email" name="m_email" class="form-control"
-                                          value="damin0722@naver.com">
+                                       이메일<input type="email" name="email" class="form-control" placeholder="이메일 입력">
                                        <br>
                                        <center>
-                                          <button type="submit" class="btn btn-primary">완료</button>
+                                         <input type="submit" value="완료" id="Update" class="btn btn-primary">
                                        </center>
                                        <br><br>
                                     </div>

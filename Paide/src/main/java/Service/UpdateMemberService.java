@@ -35,13 +35,13 @@ public class UpdateMemberService implements Command{
 		MultipartRequest multi = new MultipartRequest(request, savePath, maxsize, encoding, filePolicy);
 		
 		
-		String nextpage = "";
-		String m_id = request.getParameter("");
-		String m_name = request.getParameter("");
-		String m_phone = request.getParameter("");
-		String m_pw = request.getParameter("");
-		String m_email = request.getParameter("");
-		String m_profile = multi.getFilesystemName("profile");
+		String nextpage = null;
+		String m_id = request.getParameter("id");
+		String m_name = request.getParameter("name");
+		String m_phone = request.getParameter("phone");
+		String m_pw = request.getParameter("pw");
+		String m_email = request.getParameter("email");
+		String m_profile = multi.getFilesystemName("profile_A");
 		
 		
 		MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_phone,m_email, m_profile);
