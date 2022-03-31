@@ -115,7 +115,6 @@
       let id = $('input[name=id]').val();
       console.log(id);
    
-   //2. ajax로 email 보내기(설미누나가 만든 서비스콘 이름으로 지정해야 함.)
    $.ajax({
       url : 'CheckIDService.do', //어디로 보낼지
       data : {//입력한 email data보내기
@@ -124,13 +123,9 @@
       dataType : "text", //중복체크 결과값 text로 받아오기
       success : function(result){
          if(result=='false'){
-         alert('중복없음', result);
-            //중복X
-            //$('#idcheck').html('중복되는 아이디가 없습니다.')
+         alert('사용가능한 아이디입니다.', result);
          }else{
-            alert('중복있음', result);
-            //중복O
-           // $('#idcheck').html('아이디가 중복됩니다.')
+            alert('중복된 아이디입니다.', result);
          }
       },
       error : function(){

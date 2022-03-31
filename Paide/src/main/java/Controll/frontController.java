@@ -18,6 +18,8 @@ import Service.IDSendMailService;
 import Service.JoinService;
 import Service.LikeUpdateService;
 import Service.LoginService;
+import Service.LogoutServiceCon;
+import Service.PWSendMailService;
 import Service.SearchFarmlistService;
 import Service.SearchIDService;
 import Service.SearchPWService;
@@ -115,6 +117,12 @@ public class frontController extends HttpServlet {
 			com = new UpdateMemberService();
 			nextpage = com.execute(request, response);
 			
+		}else if(command.equals("PWSendMailService.do")) {
+			com = new PWSendMailService();
+			nextpage = com.execute(request, response);
+		}else if(command.equals("LogoutServiceCon.do")) {
+			com = new LogoutServiceCon();
+			nextpage = com.execute(request, response);
 		}
 		// else if 마지막줄
 		if (nextpage != null) {

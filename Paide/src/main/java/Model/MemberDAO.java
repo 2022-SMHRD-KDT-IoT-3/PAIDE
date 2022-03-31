@@ -113,7 +113,7 @@ public class MemberDAO {
 	public MemberDTO Login(String id, String pw) {
 		dbconn();
 		try {
-			String sql = "select * from t_member where id=? and pw=?";
+			String sql = "select * from t_member where m_id=? and m_pw=?";
 			psmt = conn.prepareStatement(sql);
 			
 			psmt.setString(1, id);
@@ -203,9 +203,11 @@ public class MemberDAO {
 			if(rs.next()) {
 				String m_pw = rs.getString(2);
 				String m_email=rs.getString(7);
+				String m_id = rs.getString(1);
 				
 				sendpw.add(m_pw);
 				sendpw.add(m_email);
+				sendpw.add(m_id);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -374,7 +376,7 @@ public class MemberDAO {
 	}
 	
 	//비번찾기 메일보내기 메소드
-		public static void SendMailPW(ArrayList<String> sendpw) {
+		public static boolean SendMailPW(ArrayList<String> sendpw) {
 			Properties prop = System.getProperties();
 			
 			prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -403,6 +405,7 @@ public class MemberDAO {
 			}finally {
 				System.out.println("check check");
 			}
+			return true;
 		}
 		
 	//아이디 중복확인 메소드
