@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTf-8"
-    pageEncoding="UTf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype HTML>
 <head>
    <meta charset="UTF-8">
@@ -71,18 +71,18 @@ div.text1{
          <p class="lead">본인의 이름, 전화번호를 입력해주세요.</p>
          <br>
          <div class="login-input-wrap"> 
-            <input placeholder="ID" type="text"/>
+            <input placeholder="이름" type="text" name="name"/>
             <br>
             <br>
             <div class="login-input-wrap"> 
-                <input placeholder="전화번호" type="text"/>
+                <input placeholder="전화번호" type="text" name="phone"/>
             <form class="confirm">
                <br>
                <div class="text1">
                <input type='button'
                       value='본인확인  '
                       class="Confirm1"
-                      onclick='alert("확인 성공")'/>
+                      id = "checkname"/>
                </div>
             </div>
              </form>
@@ -97,14 +97,14 @@ div.text1{
          <p class="lead">02. 이메일 입력></p>
          <p class="lead">회원가입시 등록한 이메일을 입력해 주세요.</p>
          <div class="login-input-wrap password-wrap">   
-            <input placeholder="E-mail" type="password"/>
+            <input placeholder="E-mail" type="text" name="email"/>
             <form class="confirm">
                <br>
                <div class="text2">
                <input type='button' 
                       value='확인  '
                       class="Confirm2"
-                      onclick='alert("아이디를 해당 이메일로 보냈습니다. 아이디 확인 후 로그인을 진행해주세요.")'/>
+                      id = "sendmail"/>
                      </div>
              </form>
          </div>
@@ -112,11 +112,23 @@ div.text1{
          <br>
          <br>
          <br>
+         
+         <!-- 변경(최설미 주관) : 바로 로그인 화면으로 전환-->
+         <input type='button'
+         value='다음'
+         class="Confirm3"
+         style='cursor:pointer'
+         onClick="location.href='page-login.jsp'">
+
+
+         <br>
+         <br>
+
          <div class="bottom">
-            <span class="helper-text"><i class="fa fa-lock"></i> <a href="#"> 비밀번호 찾기</a></span>
-            <span class="helper-text"><a href="#"> | 회원가입</a></span>
-            <span class="helper-text"><a href="#"> | 로그인</a></span>
+            <span class="helper-text"><i class="fa fa-lock"></i> <a href="page-findPw.jsp"> 비밀번호 찾기</a></span>
+            <span class="helper-text"><a href="page-join.jsp"> | 회원가입</a></span>
          </div>
+         
 
       </section>
      
@@ -128,5 +140,53 @@ div.text1{
       </footer>
       </div>
    </div>
+   
+   <script type="text/javascript" src="assets/vendor/jquery/jquery.min.js"></script>
+   <script type="text/javascript" src="assets/vendor/jquery/jquery.cookie-1.4.1.min.js"></script>
+    <script type="text/javascript">
+    
+	$('#checkname').on('click',function(){
+		$.ajax({ 
+			url : "SearchIDService.do",
+			type : "post",
+			data : { //JSON형태로 묶음 / ""로 써도 됨 
+				"m_name" : $('input[name=name]').val(),
+				"m_phone" : $('input[name=phone]').val()
+			},
+			dataType : "json",
+			success : function(res){ 
+					alert("본인확인이 완료되었습니다.");
+					let m_id = res[0];
+					$.cookie('mailid', m_id); //아이디, 이메일이]
+			},
+			error : function(){
+				alert("회원정보가 없습니다.")
+			}
+		})
+	});
+	
+	$('#sendmail').on('click',function(){
+		$.ajax({
+			url : "IDSendMailService.do",
+			type : "post",
+			data : {
+				"m_email" : $('input[name=email]').val(),
+				"mailid" : $.cookie('mailid')
+			},
+			success : function(res){
+				if(res=='true'){
+				alert("메일을 보내드렸습니다. 확인 후 다시 로그인해주세요.")
+				}else{
+					alert("등록된 이메일이 아닙니다.");
+				}
+				console.log(res)
+				
+			},
+			error : function(){
+				alert("등록된 이메일이 아닙니다.");
+			}
+		})
+	});
+    </script>
 </body>
 </html>

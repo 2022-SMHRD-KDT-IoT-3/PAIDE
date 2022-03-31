@@ -1,3 +1,4 @@
+<%@page import="Model.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
     
@@ -30,6 +31,8 @@
 </head>
 
 <body>
+<% 
+	MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
    <!-- WRAPPER -->
    <div id="wrapper">
           <!-- NAVBAR -->

@@ -40,18 +40,17 @@
 								<div class="logo text-center"><a href="index.jsp"><img src="assets/img/pidelogo.png" alt="Klorofil Logo"></a></div>
 								<p class="lead">Login to your account</p>
 							</div>
-							<form class="form-auth-small" action="index.jsp">
+							<form class="form-auth-small" action="LoginService.do" method="post">
 								<div class="form-group">
 									<label for="signin-id" class="control-label sr-only">아이디</label>
-									<input type="text" class="form-control" id="signin-email"  placeholder="아이디">
+									<input type="text" class="form-control" name="signin-email"  placeholder="아이디">
 								</div>
 								
 								<div class="form-group">
 									<label for="signin-password" class="control-label sr-only">비밀번호</label>
-									<input type="password" class="form-control" id="signin-password"  placeholder="비밀번호">
+									<input type="password" class="form-control" name="signin-password"  placeholder="비밀번호">
 								</div>
-								
-								<button type="submit" class="btn btn-primary btn-lg btn-block" onclick="index.jsp">로그인</button>
+								<input type="submit" class="btn btn-primary btn-lg btn-block" value="로그인">
 								<div class="bottom">
 									<span class="helper-text"><i class="fa fa-lock"></i> <a href="page-findPw.jsp">비밀번호찾기 | </a></span>
 									<span class="helper-text"><i class="fa fa-lock"></i> <a href="page-findId.jsp"> 아이디찾기</a></span>
@@ -80,6 +79,10 @@
 	 </footer>
 	
 	<!-- END WRAPPER -->
+	
+	
+		
+		
 </body>
 
 </html>
