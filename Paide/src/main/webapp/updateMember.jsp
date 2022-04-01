@@ -143,7 +143,6 @@
       </nav>
       <!-- END NAVBAR -->
       <!-- LEFT SIDEBAR -->
-      <!-- LEFT SIDEBAR -->
       <div id="sidebar-nav" class="sidebar">
          <div class="sidebar-scroll">
             <nav>
@@ -180,20 +179,18 @@
                <div class="panel panel-profile">
                   <div class="clearfix">
                      <!-- LEFT COLUMN -->
-                     <div class="profile-left">
+                      <div class="profile-left">
                         <div class="profile-header">
-                           <div class="overlay"></div>
-                           <form action="">
-                              <div class="profile-main">
-                                 <span class="label label-success">프로필사진등록</span>
-                                 <!-- ?대매니 서버상에서 등록시 이미지를 보여줄 것인지 아니면 서브밋후 이미지가 변경되게 할것인지  -->
-                                 <div id="preview"> </div>
-                                 <form action="/main/user/image_insert" id="form" name="form" method="post"
-                                    enctype="multipart/form-data" autocomplete="off">
-                                    <input type="file" name="profile" accept="image/*" onchange="previewImage(this)" />
-                                    <button type="submit" class="btn btn-primary">업로드</button>
-                                 </form>
-                              </div>
+                           <div class="profile-main">
+                              <!-- 기본이미지 -->
+                              <div id="preview"><img id="profileimg" src="assets/img/farmer.png"> </div>
+                              <!--변경 action 프로필이미지 넣는 메소드로 -->
+                              <form action="" id="form" name="form" method="post" enctype="multipart/form-data"
+                                 autocomplete="off">
+                                 <input type="file" name="profile" accept="image/*" onchange="previewImage(this)" />
+                                 <button type="submit" class="btn btn-primary">업로드</button>
+                              </form>
+                           </div>
                         </div>
                         <!-- PROFILE DETAIL -->
                         <div class="profile-detail">
@@ -207,17 +204,19 @@
                                  <!-- action 회원정보수정서비스콘으로-->
                                  <form action="#" method="">
                                     <div class="panel-body">
-                                       <!--                                     placeholder에 사용자의 기존정보넣기 -->
-                                       이름<input type="text" name="m_name" class="form-control" placeholder="송다민">
+                                       <!--                                     value 에 사용자의 기존정보넣기 -->
+                                       이름<input type="text" name="m_name" class="form-control" value="송다민">
                                        <br>
-                                       휴대전화<input type="number" name="m_phone" class="form-control"
-                                          placeholder="01012341234">
+                                       휴대전화<input type="text" name="m_phone" class="form-control" value="01071215056">
                                        <br>
-
-                                       비밀번호<input type="password" name="m_pw" class="form-control" value="password">
+                                       비밀번호<input id="updatePW" type="password" name="m_pw" class="form-control"
+                                          value="회원비밀번호">
+                                       <br>
+                                       새 비밀번호 확인 <font id="chkNotice" size="2"></font><input id="updatePwChk"
+                                          type="password" name="m_pw" class="form-control" placeholder="비밀번호확인">
                                        <br>
                                        이메일<input type="email" name="m_email" class="form-control"
-                                          placeholder="damin@paide.com">
+                                          value="damin0722@naver.com">
                                        <br>
                                        <center>
                                           <button type="submit" class="btn btn-primary">완료</button>
@@ -227,6 +226,8 @@
                                  </form>
                               </div>
                            </div>
+                             
+
                            <!-- END INPUTS -->
                         </div>
                         <!-- END PROFILE DETAIL -->
@@ -258,15 +259,11 @@
                                     농장정보수정서비스로 -->
                               <form action="UpdateFarmService.do" method="post">
                                  <div class="panel-body">
-
                                     농장이름<input type="text" name="fu_name" class="form-control" value="선택한 농장이름">
-                                    <button type="button" class="btn btn-primary btn-sm" onClick="checkfu()">중복확인</button>   
-
                                     <br>
                                     지역선택
-
                                     <select name="fu_region" class="form-control">
-                                       <!-- 변경 -->
+                                       <!-- 변경 : 선택한 농장 지역으로 위에서 선택한 농장정보가 들어가야합니다.-->
                                        <option value="">선택한 농장 지역</option>
                                        <option value="서울특별시">서울특별시</option>
                                        <option value="경기도">경기도</option>
