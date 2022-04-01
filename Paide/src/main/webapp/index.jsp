@@ -31,8 +31,7 @@
 </head>
 
 <body>
-<% 
-	MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
+<% MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
    <!-- WRAPPER -->
    <div id="wrapper">
           <!-- NAVBAR -->
