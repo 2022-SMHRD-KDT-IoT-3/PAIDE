@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTf-8"
+    pageEncoding="UTf-8"%>
 <!doctype html>
 <html lang="en">
 
@@ -66,15 +66,18 @@
 
                   <!-- 로그아웃시 삭제1 start-->
                   <li class="dropdown">
+                     <!-- ?대매니 등록된 프로필 사진 경로 지정 onerror="지정된 경로에 사진이 없을 경우 띄우는 이미지경로"  
+                           프로필 사진을 등록하지 않았을 경우 기본이미지 = 프로필기본이미지.png -->
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
-                           class="icon-submenu lnr lnr-chevron-down"></i></a>
+                           class="img-circle" alt="Avatar" onerror="this.src ='assets/img/프로필기본이미지.png'">
+                        <span> 송다민 </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
+
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="lnr lnr-bubble"></i>
@@ -139,7 +142,7 @@
          </div>
       </nav>
       <!-- END NAVBAR -->
-
+      <!-- LEFT SIDEBAR -->
       <!-- LEFT SIDEBAR -->
       <div id="sidebar-nav" class="sidebar">
          <div class="sidebar-scroll">
@@ -179,17 +182,18 @@
                      <!-- LEFT COLUMN -->
                      <div class="profile-left">
                         <div class="profile-header">
-                           <div class="profile-main">
-                              <!-- 기본이미지 -->
-                              <div id="preview"><img id="profileimg" src="assets/img/farmer.png"> </div>
-                              <!--변경 action 프로필이미지 넣는 메소드로 -->
-                              <form action="" id="form" name="form" method="post" enctype="multipart/form-data"
-                                 autocomplete="off">
-                                 <input type="file" name="profile" accept="image/*" onchange="previewImage(this)" />
-                                 <button type="submit" class="btn btn-primary">업로드</button>
-                              </form>
-                           </div>
-
+                           <div class="overlay"></div>
+                           <form action="">
+                              <div class="profile-main">
+                                 <span class="label label-success">프로필사진등록</span>
+                                 <!-- ?대매니 서버상에서 등록시 이미지를 보여줄 것인지 아니면 서브밋후 이미지가 변경되게 할것인지  -->
+                                 <div id="preview"> </div>
+                                 <form action="/main/user/image_insert" id="form" name="form" method="post"
+                                    enctype="multipart/form-data" autocomplete="off">
+                                    <input type="file" name="profile" accept="image/*" onchange="previewImage(this)" />
+                                    <button type="submit" class="btn btn-primary">업로드</button>
+                                 </form>
+                              </div>
                         </div>
                         <!-- PROFILE DETAIL -->
                         <div class="profile-detail">
@@ -204,18 +208,16 @@
                                  <form action="#" method="">
                                     <div class="panel-body">
                                        <!--                                     placeholder에 사용자의 기존정보넣기 -->
-                                       이름<input type="text" name="m_name" class="form-control" value="송다민">
+                                       이름<input type="text" name="m_name" class="form-control" placeholder="송다민">
                                        <br>
-                                       휴대전화<input type="text" name="m_phone" class="form-control" value="01071215056">
+                                       휴대전화<input type="number" name="m_phone" class="form-control"
+                                          placeholder="01012341234">
                                        <br>
-                                       비밀번호<input id="updatePW" type="password" name="m_pw" class="form-control"
-                                          value="회원비밀번호">
-                                       <br>
-                                       새 비밀번호 확인 <font id="chkNotice" size="2"></font><input id="updatePwChk"
-                                          type="password" name="m_pw" class="form-control" placeholder="비밀번호확인">
+
+                                       비밀번호<input type="password" name="m_pw" class="form-control" value="password">
                                        <br>
                                        이메일<input type="email" name="m_email" class="form-control"
-                                          value="damin0722@naver.com">
+                                          placeholder="damin@paide.com">
                                        <br>
                                        <center>
                                           <button type="submit" class="btn btn-primary">완료</button>
@@ -236,7 +238,7 @@
                         <div class="panel">
                            <div class="panel-body">
                               <!-- 변경 
-                                 선택한 농장의 이름값을보내주기 농장서비스로가고 농장서비스에서 값을가지고 다시 돌아와야함  -->
+                                 선택한 농장의 이름값을보내주기 농장서비스로 -->
                               <form action="" method="">
                                  <div class="input-group">
                                     <select class="form-control">
@@ -256,12 +258,12 @@
                                     농장정보수정서비스로 -->
                               <form action="" method="">
                                  <div class="panel-body">
-                                    농장이름<input type="text" name="" class="form-control" value="선택한 농장이름">
+                                    농장이름<input type="text" name="" class="form-control" placeholder="농장1 =선택한 농장이름">
                                     <br>
                                     지역선택
                                     <select class="form-control">
-                                       <!-- 변경 -->
-                                       <option name="f_region" value="">선택한 농장 지역</option>
+                                                              
+                                       <option name="f_region" value="">선택한 농장의 지역</option>
                                        <option name="f_region" value="서울특별시">서울특별시</option>
                                        <option name="f_region" value="경기도">경기도</option>
                                        <option name="f_region" value="강원도">강원도</option>
@@ -280,8 +282,7 @@
                                     <br>
                                     재배작목
                                     <select class="form-control">
-                                       <!-- 변경 -->
-                                       <option name="f_crops" value="">선택한 농장의 작목</option>
+                                       <option name="f_crops" value="">재배작목 =선택한 농장의 작목</option>
                                        <option name="f_crops" value="딸기">딸기</option>
                                        <option name="f_crops" value="오이">오이</option>
                                        <option name="f_crops" value="토마토">토마토</option>
@@ -290,8 +291,7 @@
                                     <br>
                                     재배시설
                                     <select class="form-control">
-                                       <!-- 변경 -->
-                                       <option name="f_facility" value="">선택한농장의 작목</option>
+                                       <option name="f_facility" value="">재배시설 =선택한농장의 작목</option>
                                        <option name="f_facility" value="비닐온실">비닐온실</option>
                                        <option name="f_facility" value="유리온실">유리온실</option>
                                     </select>
@@ -301,25 +301,20 @@
                               <button type="submit" class="btn btn-primary">수정완료</button>
                               <!-- 변경 
                                  농장삭제서비스 현재 선택한 농장의 값을 가지고 농장삭제메소드로 가기-->
-                              <button type="submit" class="btn btn-primary">농장삭제</button>
+                              <a href="#">
+                                 <button type="submit" class="btn btn-primary">농장삭제</button></a>
                            </center>
-                           </form>
                            <br>
                         </div>
                         <h4 class="heading">농장추가</h4>
-                        <!-- 변경 : 농장추가 
-                           ?다민 : 프론트 UpdateMemberService.do에서 농장정보 업데이트로 가는거 어떻게 하죵 
-                            action 농장추가하는 곳 으로  -->
-                           <!-- 변경 : action값 frontcontroller에서 받아옴. -->
-                        <form action="UpdateMemberService.do" method="">
-                           <div class="panel">
-                              <div class="panel-body">
-
-                                    <div class="input-group">
-                                       농장이름<input type="text" id="fnameCheck" name="f_name" class="form-control" placeholder="농장이름을 입력해주세요."  style="margin-top: 7px;" >
-                                       <button id ="fbtn" type="submit" class="btn btn-primary btn-sm">중복확인</button>   
-                                    </div>
-                                       <br>
+                        <!-- 변경 
+                           농장추가하는 곳 으로  -->
+                        <form action="" method="">
+                        <div class="panel">
+                           <div class="panel-body">
+                                 <div class="panel-body">
+                                    농장이름<input type="text" name="" class="form-control" placeholder="농장1 =선택한 농장이름">
+                                    <br>
                                     지역선택
                                     <select class="form-control">
                                        <option name="f_region" value="">지역을 선택해주세요.</option>
@@ -354,14 +349,14 @@
                                        <option name="f_facility" value="비닐온실">비닐온실</option>
                                        <option name="f_facility" value="유리온실">유리온실</option>
                                     </select>
-                              </div>
-                              <center>
-                                 <!-- ?다민 : 프론트 컨트롤러 가는거여???  -->
-                                 <button type="submit" class="btn btn-primary">농장추가</button>
-                                 <input class="btn btn-primary" type="reset">
-                              </center>
-                              <br>
+                                 </div>
                            </div>
+                           <center>
+                              <button type="submit" class="btn btn-primary">농장추가</button>
+                              <input class="btn btn-primary" type="reset">
+                           </center>
+                           <br>
+                        </div>
                         </form>
                      </div>
                      <!-- END RIGHT COLUMN -->
@@ -370,6 +365,8 @@
             </div>
          </div>
          <!-- END MAIN CONTENT -->
+
+
       </div>
       <!-- END MAIN -->
       <div class="clearfix"></div>
@@ -388,7 +385,7 @@
    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
    <script src="assets/scripts/klorofil-common.js"></script>
-   <!-- 프로필 이미지 변경 자바스크립트 -->
+   <!-- 프로필 이 -->
    <script type="text/javascript">
 
       function previewImage(f) {
@@ -413,7 +410,6 @@
             // 파일 읽기가 완료되었을때 실행
             reader.onload = function (rst) {
                document.getElementById('preview').innerHTML = '<img id="profileimg"  src="' + rst.target.result + '">';
-               // document.getElementById('preview').profileimg = 'rst.target.result';
             }
 
             // 파일을 읽는다
@@ -421,58 +417,6 @@
 
          }
       }
-   </script>
-   <!-- 농장이름 중복체크  -->
-   	<script type="text/javascript">
-         //0. 농장이름 중복체크 버튼을 클릭했을 때
-         $('#fbtn').on('click', function () {
-            //1. 입력한 id 가져오기
-            let id = $('input[name=f_name]').val();
-            console.log(f_name);
-   
-            //2. ajax로 id 보내기(설미누나가 만든 콘 이름으로 지정해야 함.)+ 농장이름 중복메소드로 보내야함 
-            $.ajax({
-               url: 'UpdateMemberService.do',
-               data: {//입력한 id data보내기
-                  f_name: f_name //이름지정 : input태그값 
-               },
-               dataType: "text", //중복체크 결과값 text로 받아오기
-               success: function (result) {
-                  alert('성공', result);
-                  if (result == 'false') {
-                     //중복X
-                     $('#fnameCheck').html('사용가능한 농장이름 입니다.')
-                  } else {
-                     //중복O
-                     $('#fnameCheck').html('중복된 농장장이름 입니다.')
-                  }
-               },
-               error: function () {
-                  alert('오류입니다.');
-               }
-            });
-   
-         })
-      </script>
-   <!-- 비밀번홈 확인하는 제이쿼리  -->
-   <script type="text/javascript">
-      $(function () {
-         $('#updatePW').keyup(function () {
-            $('#chkNotice').html('');
-         });
-
-         $('#updatePwChk').keyup(function () {
-
-            if ($('#updatePW').val() != $('#updatePwChk').val()) {
-               $('#chkNotice').html('비밀번호 일치하지 않음');
-               $('#chkNotice').attr('color', '#f82a2aa3');
-            } else {
-               $('#chkNotice').html('비밀번호 일치함');
-               $('#chkNotice').attr('color', '#199894b3');
-            }
-
-         });
-      });
    </script>
    <script>
       $(function () {
