@@ -18,6 +18,7 @@ import Service.DeleteCmtService;
 import Service.DeleteFarmService;
 import Service.IDSendMailService;
 import Service.JoinService;
+import Service.LikeMupdateService;
 import Service.LikeUpdateService;
 import Service.LoginService;
 import Service.LogoutServiceCon;
@@ -26,6 +27,7 @@ import Service.SearchFarmlistService;
 import Service.SearchIDService;
 import Service.SearchPWService;
 import Service.UpdateArticleService;
+import Service.UpdateCmtService;
 import Service.UpdateFarmService;
 import Service.UpdateLevel;
 import Service.UpdateMemberService;
@@ -75,68 +77,81 @@ public class frontController extends HttpServlet {
 		} else if (command.equals("CheckFarmNameService.do")) {
 			com = new CheckFarmNameService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("CheckIDService.do")) {
 			com = new CheckIDService();
-			
+
 			nextpage = com.execute(request, response);
 		} else if (command.equals("CheckInfoService.do")) {
 			com = new CheckInfoService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("DeleteCmtService.do")) {
 			com = new DeleteCmtService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("IDSendMailService.do")) {
 			com = new IDSendMailService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("JoinService.do")) {
 			com = new JoinService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("LoginService.do")) {
 			com = new LoginService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("SearchFarmlistService.do")) {
 			com = new SearchFarmlistService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("SearchIDService.do")) {
 			com = new SearchIDService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("SearchPWService.do")) {
 			com = new SearchPWService();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("UpdateLevel.do")) {
 			com = new UpdateLevel();
 			nextpage = com.execute(request, response);
-			
+
 		} else if (command.equals("UpdateMemberService.do")) {
 			com = new UpdateMemberService();
 			nextpage = com.execute(request, response);
-			
-		}else if(command.equals("PWSendMailService.do")) {
+
+		} else if (command.equals("PWSendMailService.do")) {
 			com = new PWSendMailService();
 			nextpage = com.execute(request, response);
-		}else if(command.equals("LogoutServiceCon.do")) {
+			
+		} else if (command.equals("LogoutServiceCon.do")) {
 			com = new LogoutServiceCon();
 			nextpage = com.execute(request, response);
-		}else if(command.equals("AddFarmService.do")) {
+			
+		} else if (command.equals("AddFarmService.do")) {
 			com = new AddFarmService();
 			nextpage = com.execute(request, response);
-		}else if(command.equals("UpdateFarmService.do")) {
+			
+		} else if (command.equals("UpdateFarmService.do")) {
 			com = new UpdateFarmService();
 			nextpage = com.execute(request, response);
-		}else if(command.equals("DeleteFarmService.do")) {
+			
+		} else if (command.equals("DeleteFarmService.do")) {
 			com = new DeleteFarmService();
 			nextpage = com.execute(request, response);
+			
+		} else if (command.equals("LikeMupdateService.do")) {
+			com = new LikeMupdateService();
+			nextpage = com.execute(request, response);
+			
+		} else if (command.equals("UpdateCmtService.do")) {
+			com = new UpdateCmtService();
+			nextpage = com.execute(request, response);
+			
 		}
-		
+
 		// else if 마지막줄
 		if (nextpage != null) {
 			response.sendRedirect(nextpage);

@@ -1,3 +1,5 @@
+<%@page import="Model.CommunityDAO"%>
+<%@page import="Model.CommunityDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
     
@@ -35,7 +37,7 @@
       <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-             <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+             <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
                      class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -74,9 +76,9 @@
                                  class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
                                  class="icon-submenu lnr lnr-chevron-down"></i></a>
                          <ul class="dropdown-menu">
-                             <li><a href="myFarm.html"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-                             <li><a href="updateMember.html"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                             <li><a href="index.html"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                             <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                             <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
+                             <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                          </ul>
                      </li>
                      <li class="dropdown">
@@ -118,15 +120,15 @@
                          <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                          <ul id='neighbor' class="dropdown-menu notifications">
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                          </ul>
                      </li>
@@ -149,18 +151,18 @@
             <nav>
                <ul class="nav">
                    <!--변경 active-> 게시글의 카테고리에 active를 넣어줘야한다   -->
-                  <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.html" class="active"><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-				      <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class="active"><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+				      <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
-                           <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                           <li><a href="farmSelect.html" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                           <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                           <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
                   </li>
@@ -170,6 +172,22 @@
          </div>
       </div>
       <!-- END LEFT SIDEBAR -->
+      <%
+		String userID = null;
+		if (session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		} else {
+			userID = "test";
+		}
+		int article_seq = 0;
+		if (request.getParameter("article_seq") != null) {
+			article_seq = Integer.parseInt(request.getParameter("article_seq"));
+		}
+
+		CommunityDTO dto = new CommunityDAO().getArticle(article_seq);
+		%>
+      
+      
      <!-- MAIN -->
 		<div class="main">
 			<!-- MAIN CONTENT -->
@@ -186,7 +204,7 @@
                                  <div class="row">
                                     <div class="col-md-12">
                                        <!-- 변경 : 선택한 게시글 제목 article_title -->
-                                    <h3 style="text-align: center; margin: 3%;"   >수완에서 딸기 직거래 하실 분 </h3>
+                                    <h3 style="text-align: center; margin: 3%;"   ><%=dto.getArticle_title().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></h3>
                                        <!--
                                        글 순번 article_seq 
                                        글 제목 article_title
@@ -202,20 +220,20 @@
                                                 <th>
                                                 작성일
                                                 <!-- article_date -->
-                                                22.03.24
+                                                <%=dto.getArticle_date()%>
                                                 </th>
                                                 <th>
                                                 작성자
                                                 <!-- m_id -->
                                                 <!-- 작성자 클릭시 작성자(chanyoung0831)의 농장화면으로 이동 -->
-                                                <a href="OtherFarm.html">chanyoung0831</a>
+                                                <a href="OtherFarm.jsp?m_id=<%=dto.getM_id()%>"><%=dto.getM_id()%></a>
                                                 </th>
                                              </tr>
                                           </thead>
                                           <tbody>
                                              <tr>
                                                 <td colspan="2">
-                                                   수완에서 토마토직거래하실분 있나요 맛있어요수완에서 토마토직거래하실분 있나요 맛있어요수완에서 토마토직거래하실분 있나요 맛있어요수완에서 토마토직거래하실분 있나요 맛있어요
+                                                   <%=dto.getArticle_content().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>
                                                 </td>
                                              </tr>
                                              <tr >

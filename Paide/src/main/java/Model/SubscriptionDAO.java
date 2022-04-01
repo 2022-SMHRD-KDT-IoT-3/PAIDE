@@ -21,10 +21,9 @@ public class SubscriptionDAO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
-			String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-			// thin이라는 버전
-			String dbid = "hr";
-			String dbpw = "hr";
+			String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
+			String dbid = "campus_b_0310_3";
+			String dbpw = "smhrd3";
 
 			conn = DriverManager.getConnection(url, dbid, dbpw);
 		} catch (Exception e) {

@@ -198,6 +198,49 @@ public class CommunityDAO {
 		return list;
 	}
 
+	// 게시글 목록 보기 메소드(카테고리별)
+	public ArrayList<CommunityDTO> getList(int pageNumber, String category) {
+		dbconn();
+		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
+		try {
+			String sql = "select * from t_board where article_seq < ? and article_category = ? and available = 1 and rownum < 11  order by article_seq desc";
+			psmt = conn.prepareStatement(sql);
+			// and rownum< 11
+			// select * from t_board where article_seq < 10 order by article_seq desc
+			int check1 = getNext();
+			int check2 = pageNumber;
+			int test = check1 - (check2 - 1) * 10;
+			System.out.println("check1 : " + check1 + ", check2 : " + check2);
+
+			psmt.setInt(1, test);
+			psmt.setString(2, category);
+
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				int article_seq = rs.getInt(1);
+				System.out.println("test " + article_seq);
+				String article_title = rs.getString(2);
+				System.out.println("test2 " + article_title);
+
+				String article_content = rs.getString("article_content");
+				String article_file = rs.getString("article_file");
+				String article_date = rs.getString("article_date");
+				String m_id = rs.getString("m_id");
+				String article_category = rs.getString("article_category");
+
+				codto = new CommunityDTO(article_seq, article_title, article_content, article_file, article_date, m_id,
+						article_category);
+				list.add(codto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+		return list;
+	}
+
 	// 마지막 게시글 다음 번호 찾기 메소드
 	public boolean nextPage(int pageNumber) {
 		dbconn();
@@ -281,7 +324,7 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
-	
+
 	// 생성한 댓글 저장 메소드(농장댓글)
 	public int Insert_Fcmt(CommunityDTO dto) {
 		dbconn();
@@ -326,8 +369,8 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
-	
-	// 댓글 수정 메소드(게시판 댓글)
+
+	// 댓글 수정 메소드(농장 댓글)
 	public int updateFcmt(int fcmt_seq, String fcmt_content) {
 		dbconn();
 		try {
@@ -347,7 +390,7 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
-	
+
 	// 댓글 삭제 메소드(게시판 댓글)
 	public int Delete_Cmt(int cmt_seq) {
 		dbconn();
@@ -355,9 +398,9 @@ public class CommunityDAO {
 			String sql = "update t_comment set cmtavailable = 0 where cmt_seq = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, cmt_seq);
-			
+
 			cnt = psmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -383,17 +426,16 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
-	
 
 	// 댓글 좋아요 업데이트 메소드(게시판 댓글)
-	public int Plikes(int article_seq, int cmt_seq) {
+	public int Plikes(int cmt_seq) {
 		dbconn();
 		try {
-			String sql = "update t_comment set cmt_like = cmt_like + 1 where article_seq = ? and cmt_seq = ?";
+			String sql = "update t_comment set cmt_like = cmt_like + 1 where cmt_seq = ?";
 			psmt = conn.prepareStatement(sql);
 
-			psmt.setInt(1, article_seq);
-			psmt.setInt(2, cmt_seq);
+			// psmt.setInt(1, article_seq);
+			psmt.setInt(1, cmt_seq);
 
 			cnt = psmt.executeUpdate();
 
@@ -404,16 +446,15 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
-	
+
 	// 댓글 좋아요 업데이트 메소드(농장 댓글)
-	public int Pflikes(int t_farm_seq, int fcmt_seq) {
+	public int Pflikes(int fcmt_seq) {
 		dbconn();
 		try {
-			String sql = "update t_comment_farm set fcmt_like = fcmt_like + 1 where t_farm_seq = ? and fcmt_seq = ?";
+			String sql = "update t_comment_farm set fcmt_like = fcmt_like + 1 where fcmt_seq = ?";
 			psmt = conn.prepareStatement(sql);
 
-			psmt.setInt(1, t_farm_seq);
-			psmt.setInt(2, fcmt_seq);
+			psmt.setInt(1, fcmt_seq);
 
 			cnt = psmt.executeUpdate();
 
@@ -426,15 +467,15 @@ public class CommunityDAO {
 	}
 
 	// 좋아요 개수 찾기 메소드(게시판 댓글)
-	public int select_like(int article_seq, int cmt_seq) {
+	public int select_like(int cmt_seq) {
 		dbconn();
 		int like = 0;
 		try {
-			String sql = "select cmt_like from t_comment where article_seq=? and cmt_seq = ?";
+			String sql = "select cmt_like from t_comment where cmt_seq = ?";
 			psmt = conn.prepareStatement(sql);
 
-			psmt.setInt(1, article_seq);
-			psmt.setInt(2, cmt_seq);
+			// psmt.setInt(1, article_seq);
+			psmt.setInt(1, cmt_seq);
 
 			rs = psmt.executeQuery();
 
@@ -450,22 +491,21 @@ public class CommunityDAO {
 
 		return like;
 	}
-	
+
 	// 좋아요 개수 찾기 메소드(농장 댓글)
-	public int select_flike(int t_farm_seq, int fcmt_seq) {
+	public int select_flike(int fcmt_seq) {
 		dbconn();
 		int like = 0;
 		try {
-			String sql = "select fcmt_like from t_comment_farm where t_farm_seq = ? and fcmt_seq = ?";
+			String sql = "select fcmt_like from t_comment_farm where fcmt_seq = ?";
 			psmt = conn.prepareStatement(sql);
 
-			psmt.setInt(1, t_farm_seq);
-			psmt.setInt(2, fcmt_seq);
+			psmt.setInt(1, fcmt_seq);
 
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				like = rs.getInt("cmt_like");
+				like = rs.getInt("fcmt_like");
 			}
 
 		} catch (Exception e) {
@@ -478,10 +518,27 @@ public class CommunityDAO {
 	}
 
 	// 좋아요 취소 메소드(게시판 댓글)
-	public int Mlikes(MemberDTO dto) {
+	public int Mlikes(int cmt_seq) {
 		dbconn();
 		try {
-			String sql = "update t_comment set cmt_like = cmt_like-1 where m_id = ?";
+			String sql = "update t_comment set cmt_like = cmt_like - 1 where cmt_seq = ?";
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setInt(1, cmt_seq);
+			cnt = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+		return cnt;
+	}
+
+	// 좋아요 취소 메소드(농장 댓글)
+	public int Mflikes(int cmt_seq) {
+		dbconn();
+		try {
+			String sql = "update t_comment_farm set fcmt_like = fcmt_like-1 where fcmt_seq = ?";
 			psmt = conn.prepareStatement(sql);
 
 			psmt.setString(1, dto.getM_id());
@@ -493,23 +550,72 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
-	
-	// 좋아요 취소 메소드(농장 댓글)
-		public int Mflikes(MemberDTO dto) {
-			dbconn();
-			try {
-				String sql = "update t_comment_farm set fcmt_like = fcmt_like-1 where m_id = ?";
-				psmt = conn.prepareStatement(sql);
 
-				psmt.setString(1, dto.getM_id());
-				cnt = psmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				dbclose();
-			}
-			return cnt;
+	// 좋아요 정보 업데이트(추가)
+	public void addLikeInfo(int cmt_seq, String m_id) {
+		dbconn();
+		try {
+
+			String sql2 = "insert into infolike values(?,?)";
+			PreparedStatement psmt2 = conn.prepareStatement(sql2);
+
+			psmt2.setInt(1, cmt_seq);
+			psmt2.setString(2, m_id);
+
+			psmt2.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
 		}
+	}
+
+	// 좋아요 정보 업데이트(삭제)
+	public void deleteLikeInfo(int cmt_seq, String m_id) {
+		dbconn();
+		try {
+
+			String sql = "delete from infolike where cmt_seq = ? and m_id = ?";
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setInt(1, cmt_seq);
+			psmt.setString(2, m_id);
+
+			psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	// 좋아요 누른 댓글인지 확인
+	public int isLike(int cmt_seq, String m_id) {
+		dbconn();
+		try {
+			String sql = "select * from infolike where cmt_seq = ? and m_id = ?";
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setInt(1, cmt_seq);
+			psmt.setString(2, m_id);
+
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+
+				return 1;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			dbclose();
+		}
+		return 0;
+
+	}
 
 	// 게시글 댓글 전체 조회(게시판 댓글)
 	public ArrayList<CommunityDTO> getCmtList(int article_seq) {
@@ -541,37 +647,37 @@ public class CommunityDAO {
 		}
 		return list;
 	}
-	
+
 	// 게시글 댓글 전체 조회(농장 댓글)
-		public ArrayList<CommunityDTO> getFcmtList(int t_farm_seq) {
-			ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
-			dbconn();
-			try {
-				String sql = "select * from t_comment_farm where t_farm_seq = ? and FCMTAVAILABLE = 1";
-				psmt = conn.prepareStatement(sql);
-				psmt.setInt(1, t_farm_seq);
+	public ArrayList<CommunityDTO> getFcmtList(int t_farm_seq) {
+		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
+		dbconn();
+		try {
+			String sql = "select * from t_comment_farm where t_farm_seq = ? and FCMTAVAILABLE = 1";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, t_farm_seq);
 
-				rs = psmt.executeQuery();
+			rs = psmt.executeQuery();
 
-				while (rs.next()) {
-					int cmt_seq = rs.getInt(1);
-					t_farm_seq = rs.getInt(2);
-					String cmt_content = rs.getString(3);
-					String m_id = rs.getString(4);
-					String cmt_date = rs.getString(5);
-					int like = rs.getInt(6);
+			while (rs.next()) {
+				int cmt_seq = rs.getInt(1);
+				t_farm_seq = rs.getInt(2);
+				String cmt_content = rs.getString(3);
+				String m_id = rs.getString(4);
+				String cmt_date = rs.getString(5);
+				int like = rs.getInt(6);
 
-					codto = new CommunityDTO(cmt_seq, t_farm_seq, cmt_content, m_id, cmt_date, like);
-					list.add(codto);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				dbclose();
+				codto = new CommunityDTO(cmt_seq, t_farm_seq, cmt_content, m_id, cmt_date, like);
+				list.add(codto);
 			}
-			return list;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
 		}
+		return list;
+	}
 
 	// 특정 댓글번호로 댓글 내용 찾기(게시판 댓글)
 	public String cmt_content(int cmt_seq) {
@@ -595,27 +701,63 @@ public class CommunityDAO {
 		}
 		return cmt;
 	}
-	
+
 	// 특정 댓글번호로 댓글 내용 찾기(농장 댓글)
-		public String fcmt_content(int fcmt_seq) {
-			dbconn();
-			String cmt = "";
-			try {
+	public String fcmt_content(int fcmt_seq) {
+		dbconn();
+		String cmt = "";
+		try {
 
-				String sql = "select fcmt_content from t_commnet_farm where fcmt_seq = ?";
-				psmt = conn.prepareStatement(sql);
+			String sql = "select fcmt_content from t_commnet_farm where fcmt_seq = ?";
+			psmt = conn.prepareStatement(sql);
 
-				psmt.setInt(1, fcmt_seq);
+			psmt.setInt(1, fcmt_seq);
 
-				if (rs.next()) {
-					cmt = rs.getString(1);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				dbclose();
+			if (rs.next()) {
+				cmt = rs.getString(1);
 			}
-			return cmt;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
 		}
+		return cmt;
+	}
+	
+	// 게시글 검색 메소드
+	public ArrayList<CommunityDTO> getSearch(String searchField, String searchText){
+		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
+		dbconn();
+		String sql = "select * from t_community where " + searchField.trim();
+		try {
+			
+			if(searchText != null && !searchText.equals("")) {
+				sql += " Like '%" + searchText.trim() + "%' order by article_seq";
+			}
+			
+			psmt = conn.prepareStatement(sql);
+
+			rs = psmt.executeQuery();
+
+			int article_seq = rs.getInt(1);
+			String article_title = rs.getString(2);
+			String article_content = rs.getString("article_content");
+			String article_file = rs.getString("article_file");
+			String article_date = rs.getString("article_date");
+			String m_id = rs.getString("m_id");
+			String article_category = rs.getString("article_category");
+			codto = new CommunityDTO(article_seq, article_title, article_content, article_file, article_date, m_id,
+					article_category);
+			list.add(codto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+		return list;
+			
+	}
+	
 }

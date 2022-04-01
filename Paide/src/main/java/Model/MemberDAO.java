@@ -1,13 +1,11 @@
 package Model;
 
 import java.sql.Connection;
-import java.io.UnsupportedEncodingException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -29,10 +27,9 @@ public class MemberDAO {
 			try {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 
-				String url = "jdbc:oracle:thin:@localhost:1521:xe";
-				// thin이라는 버전
-				String dbid = "hr";
-				String dbpw = "hr";
+				String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
+				String dbid = "campus_b_0310_3";
+				String dbpw = "smhrd3";
 
 				conn = DriverManager.getConnection(url, dbid, dbpw);
 				if(conn != null) {
@@ -471,6 +468,22 @@ public class MemberDAO {
 		return checkEmail;
 	}
 	
-	
+	// 게시글의 주인에게 게시글에 달린 댓글 수 업데이트
+		public void commentUp(int article_seq) {
+
+			dbconn();
+			try {
+				String sql = "update t_member set m_comment = m_comment + 1 where m_id = (select m_id from t_community where article_seq = ?)";
+				
+				psmt = conn.prepareStatement(sql);
+				psmt.setInt(1, article_seq);
+				
+				psmt.executeUpdate();
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 		
 }

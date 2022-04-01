@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import Inter.Command;
 import Model.CommunityDAO;
 import Model.CommunityDTO;
+import Model.MemberDAO;
 
 public class WriteCmtService implements Command {
 
@@ -38,6 +39,9 @@ public class WriteCmtService implements Command {
 		
 		int result = dao.Insert_Cmt(dto);
 		System.out.println(result);
+		
+		MemberDAO dao2 = new MemberDAO();
+		dao2.commentUp(article_seq);
 		
 
 		return "ViewBoard.jsp?article_seq="+ article_seq;
