@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Inter.Command;
+import Service.AddFarmService;
 import Service.CheckFarmNameService;
 import Service.CheckIDService;
 import Service.CheckInfoService;
 import Service.DeleteArticleService;
 import Service.DeleteCmtService;
+import Service.DeleteFarmService;
 import Service.IDSendMailService;
 import Service.JoinService;
 import Service.LikeUpdateService;
@@ -24,6 +26,7 @@ import Service.SearchFarmlistService;
 import Service.SearchIDService;
 import Service.SearchPWService;
 import Service.UpdateArticleService;
+import Service.UpdateFarmService;
 import Service.UpdateLevel;
 import Service.UpdateMemberService;
 import Service.WriteArticleService;
@@ -123,7 +126,17 @@ public class frontController extends HttpServlet {
 		}else if(command.equals("LogoutServiceCon.do")) {
 			com = new LogoutServiceCon();
 			nextpage = com.execute(request, response);
+		}else if(command.equals("AddFarmService.do")) {
+			com = new AddFarmService();
+			nextpage = com.execute(request, response);
+		}else if(command.equals("UpdateFarmService.do")) {
+			com = new UpdateFarmService();
+			nextpage = com.execute(request, response);
+		}else if(command.equals("DeleteFarmService.do")) {
+			com = new DeleteFarmService();
+			nextpage = com.execute(request, response);
 		}
+		
 		// else if 마지막줄
 		if (nextpage != null) {
 			response.sendRedirect(nextpage);

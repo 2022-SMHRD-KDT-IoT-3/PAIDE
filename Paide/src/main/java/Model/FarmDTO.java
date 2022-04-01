@@ -10,7 +10,18 @@ public class FarmDTO {
 	private String f_name;
 	
 	// 농장등록 생성자 > t_farm
-	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String f_date, String f_name) {
+	public FarmDTO(String f_owner_id, String f_region, String f_crops, String f_facility, String f_name) {
+		super();
+		this.f_owner_id = f_owner_id;
+		this.f_region = f_region;
+		this.f_crops = f_crops;
+		this.f_facility = f_facility;
+		this.f_name = f_name;
+	}
+	
+	
+	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String f_date,
+			String f_name) {
 		super();
 		this.f_seq = f_seq;
 		this.f_owner_id = f_owner_id;
@@ -20,7 +31,8 @@ public class FarmDTO {
 		this.f_date = f_date;
 		this.f_name = f_name;
 	}
-	
+
+
 	private int env_seq;
 	private double temperature;
 	private double temperature_outer;
