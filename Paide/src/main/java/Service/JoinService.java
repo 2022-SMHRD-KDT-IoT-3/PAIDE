@@ -37,7 +37,6 @@ public class JoinService implements Command{
 		}else {
 			System.out.println("회원가입 실패");
 			nextpage = "goMain";
-			
 		}
 		
 		return nextpage;

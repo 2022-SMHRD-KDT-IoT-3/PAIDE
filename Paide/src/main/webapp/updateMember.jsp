@@ -241,13 +241,13 @@
                                  선택한 농장의 이름값을보내주기 농장서비스로 -->
                               <form action="" method="">
                                  <div class="input-group">
-                                    <select class="form-control">
+                                    <select name="fs_name" class="form-control" >
                                        <!-- 변경 사용자의 등록된 농장 이름 가져오기  -->
                                        <option value="">농장을선택해주세요.</option>
                                        <!-- 등록된 회원의 농장이 나와야함  -->
-                                       <option name="f_name" value="대매니의 딸기농장">대매니의 딸기농장</option>
-                                       <option name="f_name" value="">토마토농장 </option>
-                                       <option name="f_name" value="">등록한 농장</option>
+                                       <option value="대매니의 딸기농장">대매니의 딸기농장</option>
+                                       <option value="">토마토농장 </option>
+                                       <option value="">등록한 농장</option>
                                     </select>
                                     <span class="input-group-btn">
                                        <button class="btn btn-primary" type="submit">선택</button></span>
@@ -256,44 +256,55 @@
                               <hr>
                               <!-- 위에서 선택한 농장의 값이 placeholder에 들어와야함
                                     농장정보수정서비스로 -->
-                              <form action="" method="">
+                              <form action="UpdateFarmService.do" method="post">
                                  <div class="panel-body">
-                                    농장이름<input type="text" name="" class="form-control" placeholder="농장1 =선택한 농장이름">
+
+                                    농장이름<input type="text" name="fu_name" class="form-control" value="선택한 농장이름">
+                                    <button type="button" class="btn btn-primary btn-sm" onClick="checkfu()">중복확인</button>   
+
                                     <br>
                                     지역선택
-                                    <select class="form-control">
-                                                              
-                                       <option name="f_region" value="">선택한 농장의 지역</option>
-                                       <option name="f_region" value="서울특별시">서울특별시</option>
-                                       <option name="f_region" value="경기도">경기도</option>
-                                       <option name="f_region" value="강원도">강원도</option>
-                                       <option name="f_region" value="충청북도">충청북도</option>
-                                       <option name="f_region" value="충청남도">충청남도</option>
-                                       <option name="f_region" value="대전광역시">대전광역시</option>
-                                       <option name="f_region" value="전라북도">전라북도</option>
-                                       <option name="f_region" value="전라남도">전라남도</option>
-                                       <option name="f_region" value="광주광역시">광주광역시</option>
-                                       <option name="f_region" value="경상북도">경상북도</option>
-                                       <option name="f_region" value="경상남도">경상남도</option>
-                                       <option name="f_region" value="부산광역시">부산광역시</option>
-                                       <option name="f_region" value="울산광역시">울산광역시</option>
-                                       <option name="f_region" value="제주특별자치도">제주특별자치도</option>
+
+                                    <select name="fu_region" class="form-control">
+                                       <!-- 변경 -->
+                                       <option value="">선택한 농장 지역</option>
+                                       <option value="서울특별시">서울특별시</option>
+                                       <option value="경기도">경기도</option>
+                                       <option value="강원도">강원도</option>
+                                       <option value="충청북도">충청북도</option>
+                                       <option value="충청남도">충청남도</option>
+                                       <option value="대전광역시">대전광역시</option>
+                                       <option value="전라북도">전라북도</option>
+                                       <option value="전라남도">전라남도</option>
+                                       <option value="광주광역시">광주광역시</option>
+                                       <option value="경상북도">경상북도</option>
+                                       <option value="경상남도">경상남도</option>
+                                       <option value="부산광역시">부산광역시</option>
+                                       <option value="울산광역시">울산광역시</option>
+                                       <option value="제주특별자치도">제주특별자치도</option>
+
                                     </select>
                                     <br>
                                     재배작목
-                                    <select class="form-control">
-                                       <option name="f_crops" value="">재배작목 =선택한 농장의 작목</option>
-                                       <option name="f_crops" value="딸기">딸기</option>
-                                       <option name="f_crops" value="오이">오이</option>
-                                       <option name="f_crops" value="토마토">토마토</option>
-                                       <option name="f_crops" value="파프리카">파프리카</option>
+
+                                    <select name="fu_crops" class="form-control">
+                                       <!-- 변경 -->
+                                       <option value="">선택한 농장의 작목</option>
+                                       <option value="딸기">딸기</option>
+                                       <option value="오이">오이</option>
+                                       <option value="토마토">토마토</option>
+                                       <option value="파프리카">파프리카</option>
+
                                     </select>
                                     <br>
                                     재배시설
-                                    <select class="form-control">
-                                       <option name="f_facility" value="">재배시설 =선택한농장의 작목</option>
-                                       <option name="f_facility" value="비닐온실">비닐온실</option>
-                                       <option name="f_facility" value="유리온실">유리온실</option>
+
+                                    <select name="fu_facility" class="form-control">
+                                       <!-- 변경 -->
+                                       <option value="">선택한농장의 작목</option>
+                                       <option value="P">비닐온실</option>
+                                       <option value="G">유리온실</option>
+
                                     </select>
                                  </div>
                            </div>
@@ -307,47 +318,54 @@
                            <br>
                         </div>
                         <h4 class="heading">농장추가</h4>
-                        <!-- 변경 
-                           농장추가하는 곳 으로  -->
-                        <form action="" method="">
-                        <div class="panel">
-                           <div class="panel-body">
-                                 <div class="panel-body">
-                                    농장이름<input type="text" name="" class="form-control" placeholder="농장1 =선택한 농장이름">
-                                    <br>
+
+                        <!-- 변경 : 농장추가 
+                           ?다민 : 프론트 UpdateMemberService.do에서 농장정보 업데이트로 가는거 어떻게 하죵 
+                            action 농장추가하는 곳 으로  -->
+                           <!-- 변경 : action값 frontcontroller에서 받아옴. -->
+                        <form action="AddFarmService.do" method="post">
+                           <div class="panel">
+                              <div class="panel-body">
+
+                                    <div class="input-group">
+                                       농장이름<input type="text" id="fnameCheck" name="f_name" class="form-control" placeholder="농장이름을 입력해주세요."  style="margin-top: 7px;" >
+                                       <button type="button" class="btn btn-primary btn-sm" onClick="checkf()">중복확인</button>   
+                                    </div>
+                                       <br>
+
                                     지역선택
-                                    <select class="form-control">
-                                       <option name="f_region" value="">지역을 선택해주세요.</option>
-                                       <option name="f_region" value="서울특별시">서울특별시</option>
-                                       <option name="f_region" value="경기도">경기도</option>
-                                       <option name="f_region" value="강원도">강원도</option>
-                                       <option name="f_region" value="충청북도">충청북도</option>
-                                       <option name="f_region" value="충청남도">충청남도</option>
-                                       <option name="f_region" value="대전광역시">대전광역시</option>
-                                       <option name="f_region" value="전라북도">전라북도</option>
-                                       <option name="f_region" value="전라남도">전라남도</option>
-                                       <option name="f_region" value="광주광역시">광주광역시</option>
-                                       <option name="f_region" value="경상북도">경상북도</option>
-                                       <option name="f_region" value="경상남도">경상남도</option>
-                                       <option name="f_region" value="부산광역시">부산광역시</option>
-                                       <option name="f_region" value="울산광역시">울산광역시</option>
-                                       <option name="f_region" value="제주특별자치도">제주특별자치도</option>
+                                    <select name="f_region" class="form-control">
+                                       <option value="">지역을 선택해주세요.</option>
+                                       <option value="서울특별시">서울특별시</option>
+                                       <option value="경기도">경기도</option>
+                                       <option value="강원도">강원도</option>
+                                       <option value="충청북도">충청북도</option>
+                                       <option value="충청남도">충청남도</option>
+                                       <option value="대전광역시">대전광역시</option>
+                                       <option value="전라북도">전라북도</option>
+                                       <option value="전라남도">전라남도</option>
+                                       <option value="광주광역시">광주광역시</option>
+                                       <option value="경상북도">경상북도</option>
+                                       <option value="경상남도">경상남도</option>
+                                       <option value="부산광역시">부산광역시</option>
+                                       <option value="울산광역시">울산광역시</option>
+                                       <option value="제주특별자치도">제주특별자치도</option>
                                     </select>
                                     <br>
                                     재배작목
-                                    <select class="form-control">
-                                       <option name="f_crops" value="">재배작목을 선택해주세요.</option>
-                                       <option name="f_crops" value="딸기">딸기</option>
-                                       <option name="f_crops" value="오이">오이</option>
-                                       <option name="f_crops" value="토마토">토마토</option>
-                                       <option name="f_crops" value="파프리카">파프리카</option>
+                                    <select name="f_crops" class="form-control">
+                                       <option value="">재배작목을 선택해주세요.</option>
+                                       <option value="딸기">딸기</option>
+                                       <option value="오이">오이</option>
+                                       <option value="토마토">토마토</option>
+                                       <option value="파프리카">파프리카</option>
                                     </select>
                                     <br>
                                     재배시설
-                                    <select class="form-control">
-                                       <option name="f_facility" value="">재배시설을 선택해주세요. </option>
-                                       <option name="f_facility" value="비닐온실">비닐온실</option>
-                                       <option name="f_facility" value="유리온실">유리온실</option>
+                                    <select name="f_facility" class="form-control">
+                                       <option value="">재배시설을 선택해주세요. </option>
+                                       <option value="P">비닐온실</option>
+                                       <option value="G">유리온실</option>
                                     </select>
                                  </div>
                            </div>
@@ -362,6 +380,7 @@
                      <!-- END RIGHT COLUMN -->
                   </div>
                </div>
+              
             </div>
          </div>
          <!-- END MAIN CONTENT -->
@@ -418,6 +437,82 @@
          }
       }
    </script>
+
+   <!-- 농장이름 중복체크  -->
+   	<script type="text/javascript">
+         //0. 농장이름 중복체크 버튼을 클릭했을 때
+        function checkf(){
+            let f_name = $('input[name=f_name]').val();
+            console.log(f_name)
+   
+            $.ajax({
+               url: 'CheckFarmNameService.do',
+               type : "get",
+               data: {//입력한 id data보내기
+                  "f_name": f_name //이름지정 : input태그값 
+               },
+               dataType: "text", //중복체크 결과값 text로 받아오기
+               success: function (result) {
+                  if (result == 'false') {
+                     alert('사용가능한 농장이름 입니다.')
+                  } else {
+                     alert('중복된 농장장이름 입니다.')
+                  }
+               },
+               error: function () {
+                  alert('오류입니다.');
+               }
+            })
+   
+         };
+         
+         function checkfu(){
+             let f_name = $('input[name=fu_name]').val();
+             console.log(f_name)
+    
+             $.ajax({
+                url: 'CheckFarmNameService.do',
+                type : "get",
+                data: {//입력한 id data보내기
+                   "f_name": f_name //이름지정 : input태그값 
+                },
+                dataType: "text", //중복체크 결과값 text로 받아오기
+                success: function (result) {
+                   if (result == 'false') {
+                      alert('사용가능한 농장이름 입니다.')
+                   } else {
+                      alert('중복된 농장장이름 입니다.')
+                   }
+                },
+                error: function () {
+                   alert('오류입니다.');
+                }
+             })
+    
+          };
+         
+      </script>
+   <!-- 비밀번홈 확인하는 제이쿼리  -->
+   <script type="text/javascript">
+      $(function () {
+         $('#updatePW').keyup(function () {
+            $('#chkNotice').html('');
+         });
+
+         $('#updatePwChk').keyup(function () {
+
+            if ($('#updatePW').val() != $('#updatePwChk').val()) {
+               $('#chkNotice').html('비밀번호 일치하지 않음');
+               $('#chkNotice').attr('color', '#f82a2aa3');
+            } else {
+               $('#chkNotice').html('비밀번호 일치함');
+               $('#chkNotice').attr('color', '#199894b3');
+            }
+
+         });
+      });
+   </script>
+
    <script>
       $(function () {
          var data, options;

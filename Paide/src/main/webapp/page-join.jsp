@@ -50,7 +50,7 @@
                          <!-- 변경 : 이름 값 안 넣어져 있길래 넣음-->
                         <div class="form-group">
                            <label for="signin-id" class="control-label sr-only">이름</label>
-                           <input type="text" class="form-control" name="name"  placeholder="이름">
+                           <input type="text" class="form-control" name="name" id="name" placeholder="이름">
                         </div>
                         
                         <div class="form-group">
@@ -73,7 +73,7 @@
                            <font id="chkNotice" size="2"></font>
 
                         </div>
-                        <input type="submit" value="회원가입" id="Join" class="btn btn-primary btn-lg btn-block">
+                        <input type="submit" value="회원가입" id="Join" class="btn btn-primary btn-lg btn-block" disabled>
                         <!-- <button type="submit" class="btn btn-default">회원가입</button> -->
                      </form>
                   </div>
@@ -110,12 +110,24 @@
 <!-- 변경: 중복확인 불러오는 제이쿼리임. 안되어 있더라.... -->
  <script type="text/javascript">
    //0. 아이디 중복체크 버튼을 클릭했을 때
+   idcheck = false;
+   pwcheck = false;
+   
+   function btn_disabled(){
+	   if(idcheck==true && pwcheck==true){
+		   $('#Join').removeAttr("disabled");
+	   }else{
+		   $('#Join').attr('disabled', 'disabled')
+	   }
+   }
+   
+   
+   
    $('#btn').on('click',function(){
    //1. 입력한 email 가져오기
       let id = $('input[name=id]').val();
       console.log(id);
    
-   //2. ajax로 email 보내기(설미누나가 만든 서비스콘 이름으로 지정해야 함.)
    $.ajax({
       url : 'CheckIDService.do', //어디로 보낼지
       data : {//입력한 email data보내기
@@ -124,14 +136,13 @@
       dataType : "text", //중복체크 결과값 text로 받아오기
       success : function(result){
          if(result=='false'){
-         alert('중복없음', result);
-            //중복X
-            //$('#idcheck').html('중복되는 아이디가 없습니다.')
+         alert('사용가능한 아이디입니다.', result);
+         idcheck = true;
          }else{
-            alert('중복있음', result);
-            //중복O
-           // $('#idcheck').html('아이디가 중복됩니다.')
+            alert('중복된 아이디입니다.', result);
+            idcheck = false;
          }
+         btn_disabled();
       },
       error : function(){
          alert('실패');
@@ -152,10 +163,13 @@
         if($('#userPw').val() != $('#userPwChk').val()){
           $('#chkNotice').html('비밀번호 일치하지 않음');
           $('#chkNotice').attr('color', '#f82a2aa3');
+          pwcheck=false;
         } else{
           $('#chkNotice').html('비밀번호 일치함');
           $('#chkNotice').attr('color', '#199894b3');
+          pwcheck=true;
         }
+        btn_disabled();
 
     });
 });

@@ -9,6 +9,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import Inter.Command;
 import Model.MemberDAO;
 
@@ -21,17 +23,26 @@ public class SearchIDService implements Command{
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String nextpage = "";
-		String m_name = request.getParameter("");
-		String m_phone = request.getParameter("");
+		String nextpage = null;
+		String m_name = request.getParameter("m_name");
+		String m_phone = request.getParameter("m_phone");
 		
 		ArrayList<String> sendid = new MemberDAO().SearchID(m_name, m_phone);
+		System.out.println(sendid.get(0));
+		System.out.println(sendid.get(1));
 		
-		if (sendid != null) {
+		
+		Gson gson = new Gson();
+				
+		if(sendid.size() != 0) {
+		String mailid = gson.toJson(sendid);
+		
 			PrintWriter out = response.getWriter();
-			out.print(sendid);
+			out.print(mailid);
 			out.close();
-			nextpage="TEST.jsp";
+			
+		}else {
+			System.out.println("¾øÀ½");
 		}
 		
 		

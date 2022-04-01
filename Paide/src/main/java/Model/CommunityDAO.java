@@ -425,7 +425,7 @@ public class CommunityDAO {
 		return cnt;
 	}
 
-	// 좋아요 개수 찾기 메소드
+	// 좋아요 개수 찾기 메소드(게시판 댓글)
 	public int select_like(int article_seq, int cmt_seq) {
 		dbconn();
 		int like = 0;
@@ -450,8 +450,34 @@ public class CommunityDAO {
 
 		return like;
 	}
+	
+	// 좋아요 개수 찾기 메소드(농장 댓글)
+	public int select_flike(int t_farm_seq, int fcmt_seq) {
+		dbconn();
+		int like = 0;
+		try {
+			String sql = "select fcmt_like from t_comment_farm where t_farm_seq = ? and fcmt_seq = ?";
+			psmt = conn.prepareStatement(sql);
 
-	// 좋아요 취소 메소드
+			psmt.setInt(1, t_farm_seq);
+			psmt.setInt(2, fcmt_seq);
+
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				like = rs.getInt("cmt_like");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbclose();
+		}
+
+		return like;
+	}
+
+	// 좋아요 취소 메소드(게시판 댓글)
 	public int Mlikes(MemberDTO dto) {
 		dbconn();
 		try {
@@ -467,8 +493,25 @@ public class CommunityDAO {
 		}
 		return cnt;
 	}
+	
+	// 좋아요 취소 메소드(농장 댓글)
+		public int Mflikes(MemberDTO dto) {
+			dbconn();
+			try {
+				String sql = "update t_comment_farm set fcmt_like = fcmt_like-1 where m_id = ?";
+				psmt = conn.prepareStatement(sql);
 
-	// 게시글 댓글 전체 조회
+				psmt.setString(1, dto.getM_id());
+				cnt = psmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				dbclose();
+			}
+			return cnt;
+		}
+
+	// 게시글 댓글 전체 조회(게시판 댓글)
 	public ArrayList<CommunityDTO> getCmtList(int article_seq) {
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
 		dbconn();
@@ -498,8 +541,39 @@ public class CommunityDAO {
 		}
 		return list;
 	}
+	
+	// 게시글 댓글 전체 조회(농장 댓글)
+		public ArrayList<CommunityDTO> getFcmtList(int t_farm_seq) {
+			ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
+			dbconn();
+			try {
+				String sql = "select * from t_comment_farm where t_farm_seq = ? and FCMTAVAILABLE = 1";
+				psmt = conn.prepareStatement(sql);
+				psmt.setInt(1, t_farm_seq);
 
-	// 특정 댓글번호로 댓글 내용 찾기
+				rs = psmt.executeQuery();
+
+				while (rs.next()) {
+					int cmt_seq = rs.getInt(1);
+					t_farm_seq = rs.getInt(2);
+					String cmt_content = rs.getString(3);
+					String m_id = rs.getString(4);
+					String cmt_date = rs.getString(5);
+					int like = rs.getInt(6);
+
+					codto = new CommunityDTO(cmt_seq, t_farm_seq, cmt_content, m_id, cmt_date, like);
+					list.add(codto);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				dbclose();
+			}
+			return list;
+		}
+
+	// 특정 댓글번호로 댓글 내용 찾기(게시판 댓글)
 	public String cmt_content(int cmt_seq) {
 		dbconn();
 		String cmt = "";
@@ -521,4 +595,27 @@ public class CommunityDAO {
 		}
 		return cmt;
 	}
+	
+	// 특정 댓글번호로 댓글 내용 찾기(농장 댓글)
+		public String fcmt_content(int fcmt_seq) {
+			dbconn();
+			String cmt = "";
+			try {
+
+				String sql = "select fcmt_content from t_commnet_farm where fcmt_seq = ?";
+				psmt = conn.prepareStatement(sql);
+
+				psmt.setInt(1, fcmt_seq);
+
+				if (rs.next()) {
+					cmt = rs.getString(1);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				dbclose();
+			}
+			return cmt;
+		}
 }

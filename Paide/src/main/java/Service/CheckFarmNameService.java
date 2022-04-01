@@ -16,17 +16,19 @@ public class CheckFarmNameService implements Command{
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("[CheckFarmNameService]");
+		String nextpage = null;
 		
-		request.setCharacterEncoding("UTF-8");
 		
-		String owner_id = request.getParameter("");
-		boolean result = new FarmDAO().checkfname(owner_id);
+		String f_name = request.getParameter("f_name");
+		boolean result = new FarmDAO().checkfname(f_name);
 		
 		PrintWriter out = response.getWriter();
 		out.print(result);
 		out.close();
 		
-		return null;
+		
+		
+		return nextpage;
 	}
 
 }
