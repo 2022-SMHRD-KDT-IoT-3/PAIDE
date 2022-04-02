@@ -64,11 +64,11 @@
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav">
-                  <li><a href="index.html" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.html" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-				      <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.jsp" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+				      <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
                   <!-- 로그아웃 -->
                   <!-- 로그아웃시 사라지게하기 -->
                </ul>

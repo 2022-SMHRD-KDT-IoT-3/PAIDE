@@ -35,7 +35,7 @@
                <div class="left">
                   <div class="content">
                      <div class="header">
-                        <div class="logo text-center"><a href="index.html"><img src="assets/img/pidelogo.png" alt="Klorofil Logo"></a></div>
+                        <div class="logo text-center"><a href="index.jsp"><img src="assets/img/pidelogo.png" alt="Klorofil Logo"></a></div>
                         <p class="lead">Join to your account</p>
                      </div>
                <!-- 변경 : action값은 우리가 만든 서비스 값으로 줘야 함. -->
