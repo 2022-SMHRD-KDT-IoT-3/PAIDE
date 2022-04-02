@@ -50,6 +50,11 @@ public class CommunityDTO {
 	}
 	
 	
+	
+	public CommunityDTO() {
+		super();
+	}
+
 	public void setArticle_category(String article_category) {
 		this.article_category = article_category;
 	}

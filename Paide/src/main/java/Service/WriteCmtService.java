@@ -41,10 +41,9 @@ public class WriteCmtService implements Command {
 		System.out.println(result);
 		
 		MemberDAO dao2 = new MemberDAO();
-		dao2.commentUp(article_seq);
 		
 
-		return "ViewBoard.jsp?article_seq="+ article_seq;
+		return "boardSelect.jsp?article_seq="+ article_seq;
 		
 		// https://lkg3796.tistory.com/37
 		// https://all-record.tistory.com/143

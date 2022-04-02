@@ -102,14 +102,38 @@ public class CommunityDAO {
 		return c_list;
 	}
 
-	// getNext 메소드
+	// getNext 메소드(전체)
 	public int getNext() {
 		PreparedStatement psmt2;
 		ResultSet rs2;
 		try {
-			String sql = "select article_seq from t_community order by article_seq desc";
+			String sql = "select count(*) from t_community where available = 1";
 			psmt2 = conn.prepareStatement(sql);
 
+			rs2 = psmt2.executeQuery();
+
+			while (rs2.next()) {
+				return rs2.getInt(1) + 1;
+			}
+			return 1; // 첫번째 게시물인 경우
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1; // 데이터베이스 오류
+	}
+	
+	// 카테고리별 게시글 수
+	public int getNext2(String category) {
+		PreparedStatement psmt2;
+		ResultSet rs2;
+		dbconn();
+		try {
+			String sql = "select count(*) from t_community where available = 1 and article_category = ?";
+			psmt2 = conn.prepareStatement(sql);
+			psmt2.setString(1, category);
+			
 			rs2 = psmt2.executeQuery();
 
 			while (rs2.next()) {
@@ -203,24 +227,23 @@ public class CommunityDAO {
 		dbconn();
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
 		try {
-			String sql = "select * from t_board where article_seq < ? and article_category = ? and available = 1 and rownum < 11  order by article_seq desc";
+			String sql = "SELECT SA2.* FROM( SELECT ROWNUM R1, SA1.* FROM(SELECT * FROM t_community where article_category = ? ORDER BY article_date)SA1)SA2 WHERE R1 > ? AND R1 < ?";
 			psmt = conn.prepareStatement(sql);
-			// and rownum< 11
-			// select * from t_board where article_seq < 10 order by article_seq desc
-			int check1 = getNext();
-			int check2 = pageNumber;
-			int test = check1 - (check2 - 1) * 10;
-			System.out.println("check1 : " + check1 + ", check2 : " + check2);
+			// int check1 = getNext();
+			// int check2 = pageNumber;
+			// int test = check1 - (check2 - 1) * 10;
+			// System.out.println("check1 : " + check1 + ", check2 : " + check2);
 
-			psmt.setInt(1, test);
-			psmt.setString(2, category);
+			psmt.setString(1, category);
+			psmt.setInt(2, (pageNumber - 1) * 10);
+			psmt.setInt(3, (pageNumber - 1) * 10 + 11);
 
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-				int article_seq = rs.getInt(1);
+				int article_seq = rs.getInt(2);
 				System.out.println("test " + article_seq);
-				String article_title = rs.getString(2);
+				String article_title = rs.getString(3);
 				System.out.println("test2 " + article_title);
 
 				String article_content = rs.getString("article_content");
@@ -241,11 +264,11 @@ public class CommunityDAO {
 		return list;
 	}
 
-	// 마지막 게시글 다음 번호 찾기 메소드
-	public boolean nextPage(int pageNumber) {
+	// 마지막 게시글 다음 번호 찾기 메소드 (카테고리별)s
+	public boolean nextPage(int pageNumber, String category) {
 		dbconn();
 		try {
-			String sql = "select * from t_community where article_seq < ?";
+			String sql = "select * from t_community where article_category = ? and rownum < ?";
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, getNext() - (pageNumber - 1) * 10);

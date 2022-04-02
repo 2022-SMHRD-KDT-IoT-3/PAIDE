@@ -46,6 +46,7 @@
             </div>
             <form class="navbar-form navbar-left" method="post" name="search" action="SearchArticleService.do">
                <div class="input-group">
+               <form method="post" name="search" action="commu_All.jsp">
                   <table>
                      <tr>
                         <td>
@@ -56,14 +57,14 @@
                            </select>  
                         </td>
                         <td>
-                           <input type="text" class="form-control" placeholder="Search dashboard..." name="searchText"
-                              maxlength="100">
+                           <input type="text" class="form-control" placeholder="검색" name="searchText" maxlength="100">
                         </td>
                         <td>
                            <button type="submit" class="btn btn-primary">Go</button>
                         </td>
                      </tr>
                   </table>
+                  </form>
                </div>
             </form>
             <div id="navbar-menu">
