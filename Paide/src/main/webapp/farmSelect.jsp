@@ -177,7 +177,7 @@
                <div class="panel ">
                <!-- form  -->
                <!--변경 대매니 action = 농장검색 서비스에서 => farmSelect_Choice.jsp   -->
-                  <form action="" name="farmSelect" method="post">
+                  <form action="SearchFarmlistService.do" name="farmSelect">
                      <div class="panel-body">
                         <div class="panel">
                            <div class="panel-heading">
@@ -204,8 +204,8 @@
                               <table class="table table-bordered">
                                  <tbody>
                                     <tr>
-                                       <td><input type="checkbox" name="f_facility" value="비닐온실"> 비닐온실</td>
-                                       <td><input type="checkbox" name="f_facility" value="유리온실"> 유리온실</td>
+                                       <td><input type="checkbox" name="f_facility" value="P"> 비닐온실</td>
+                                       <td><input type="checkbox" name="f_facility" value="G"> 유리온실</td>
                                     </tr>
                                  </tbody>
                               </table>
@@ -236,7 +236,7 @@
                                     <tr>
                                        <td><input type="checkbox" name="f_region" value="경상남도"> 경상남도</td>
                                        <td><input type="checkbox" name="f_region" value="부산광역시"> 부산광역시</td>
-                                       <td><input type="checkbox" name="f_region" value="f_region"> 울산광역시</td>
+                                       <td><input type="checkbox" name="f_region" value="울산광역시"> 울산광역시</td>
                                        <td><input type="checkbox" name="f_region" value="제주특별자치도"> 제주특별자치도</td>
                                        <td> </td>
                                     </tr>

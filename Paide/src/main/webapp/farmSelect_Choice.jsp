@@ -1,3 +1,7 @@
+<%@page import="java.net.URLDecoder"%>
+<%@page import="Model.FarmDAO"%>
+<%@page import="Model.FarmDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 <!doctype html>
@@ -38,6 +42,13 @@
 </head>
 
 <body>
+<% String crops = request.getParameter(URLDecoder.decode("crops", "UTF-8"));
+ 	String regions = request.getParameter(URLDecoder.decode("regions", "UTF-8"));
+ 	String facility = request.getParameter(URLDecoder.decode("facs", "UTF-8"));
+ 	ArrayList<FarmDTO> farmlist = new FarmDAO().SearchFarm(crops, regions, facility);
+ 	System.out.println(farmlist.get(0).getF_crops());
+ 	System.out.println(farmlist.get(0).getF_region());
+%>
    <!-- WRAPPER -->
    <div id="wrapper">
       <!-- NAVBAR -->
@@ -263,7 +274,23 @@
                                        <span class="cssclass"></span></span></a>
                               </td>
                            </tr>
-                           
+                           <% for(int i = 0; i<farmlist.size(); i++){ %>
+                           <tr>
+                           <td><%= farmlist.get(i).getF_name() %></td>
+                           <td><%= farmlist.get(i).getF_region() %></td>
+                           <td><%= farmlist.get(i).getF_crops() %></td>
+                           <%	if("P".equals(farmlist.get(i).getF_facility())){%>
+                           <td>비닐온실</td>
+                           <%}else if("G".equals(farmlist.get(i).getF_facility())){ %>
+                           <td>유리온실</td>
+                           <%} %>
+                           <td>
+                                 <a href="OtherFarm_detail.html"><span style="color:#3f7647"><span
+                                          class="fa fa-line-chart"></span>
+                                       <span class="cssclass"></span></span></a>
+                              </td>
+                           </tr>
+                           <%}; %>
                         </tbody>
                     </div>
 
