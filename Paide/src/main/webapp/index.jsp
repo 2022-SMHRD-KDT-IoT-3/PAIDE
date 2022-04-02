@@ -52,8 +52,8 @@
                            <select class="form-control" name="searchField">
                               <option value="0">선택</option>
                               <option value="article_title">제목</option>
-                              <option value="writer">작성자</option>
-                           </select>
+                              <option value="wrsiter">작성자</option>
+                           </select>  
                         </td>
                         <td>
                            <input type="text" class="form-control" placeholder="Search dashboard..." name="searchText"
