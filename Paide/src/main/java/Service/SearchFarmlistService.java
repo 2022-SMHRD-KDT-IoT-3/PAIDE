@@ -1,6 +1,8 @@
 package Service;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,13 +21,11 @@ public class SearchFarmlistService implements Command{
 			throws ServletException, IOException {
 		System.out.println("[SearchFarmlistService]");
 		
-		String[] crop = request.getParameterValues("crops");
-		String[] region = request.getParameterValues("regions");
-		String[] fac = request.getParameterValues("facs");
+		String[] crop = request.getParameterValues("f_crops");
+		String[] region = request.getParameterValues("f_region");
+		String[] fac = request.getParameterValues("f_facility");
 		
-//		StringBuilder sb_c = new StringBuilder();
-//		StringBuilder sb_r = new StringBuilder();
-//		StringBuilder sb_f = new StringBuilder();
+
 		
 		String crops = ","+crop[0];
 		for(int i = 1 ; i<crop.length; i++) {
@@ -46,9 +46,10 @@ public class SearchFarmlistService implements Command{
 		System.out.println(regions);
 		System.out.println(facs);
 		
-		ArrayList<FarmDTO> farmlist = new FarmDAO().SearchFarm(crops, regions, facs);
-		
-		return null;
+		//ArrayList<FarmDTO> farmlist = new FarmDAO().SearchFarm(crops, regions, facs);
+		response.setContentType("text/html; charset=UTF-8");
+		String nextpage="farmSelect_Choice.jsp?crops="+URLEncoder.encode(crops, StandardCharsets.UTF_8)+"&regions="+URLEncoder.encode(regions, StandardCharsets.UTF_8)+"&facs="+URLEncoder.encode(facs, StandardCharsets.UTF_8);
+		return nextpage;
 	}
 
 }

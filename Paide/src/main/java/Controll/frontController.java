@@ -16,6 +16,7 @@ import Service.CheckInfoService;
 import Service.DeleteArticleService;
 import Service.DeleteCmtService;
 import Service.DeleteFarmService;
+import Service.EditFarmService;
 import Service.IDSendMailService;
 import Service.JoinService;
 import Service.LikeMupdateService;
@@ -150,6 +151,9 @@ public class frontController extends HttpServlet {
 			com = new UpdateCmtService();
 			nextpage = com.execute(request, response);
 			
+		}else if(command.equals("EditFarmService.do")) {
+			com = new EditFarmService();
+			nextpage = com.execute(request, response);
 		}
 
 		// else if 마지막줄

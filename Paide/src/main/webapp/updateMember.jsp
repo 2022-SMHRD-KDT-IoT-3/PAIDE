@@ -240,7 +240,7 @@
                            <div class="panel-body">
                               <!-- 변경 
                                  선택한 농장의 이름값을보내주기 농장서비스로 -->
-                              <form action="" method="">
+                              <form>
                                  <div class="input-group">
                                     <select name="fs_name" class="form-control" >
                                        <!-- 변경 사용자의 등록된 농장 이름 가져오기  -->
@@ -251,20 +251,21 @@
                                        <option value="">등록한 농장</option>
                                     </select>
                                     <span class="input-group-btn">
-                                       <button class="btn btn-primary" type="submit">선택</button></span>
+                                       <button class="btn btn-primary" type="button" onClick="select()">선택</button></span>
                                  </div>
                               </form>
                               <hr>
                               <!-- 위에서 선택한 농장의 값이 placeholder에 들어와야함
                                     농장정보수정서비스로 -->
-                              <form action="UpdateFarmService.do" method="post">
+                              <form>
                                  <div class="panel-body">
                                     농장이름<input type="text" name="fu_name" class="form-control" value="선택한 농장이름">
+                                    <button type="button" class="btn btn-primary btn-sm" onClick="checkfu()">중복확인</button>
                                     <br>
                                     지역선택
-                                    <select name="fu_region" class="form-control">
+                                    <select name="fu_region" id="region" class="form-control">
                                        <!-- 변경 : 선택한 농장 지역으로 위에서 선택한 농장정보가 들어가야합니다.-->
-                                       <option value="">선택한 농장 지역</option>
+                                       <option value="" id="test">선택한 농장 지역</option>
                                        <option value="서울특별시">서울특별시</option>
                                        <option value="경기도">경기도</option>
                                        <option value="강원도">강원도</option>
@@ -284,7 +285,7 @@
                                     <br>
                                     재배작목
 
-                                    <select name="fu_crops" class="form-control">
+                                    <select name="fu_crops" id="crop" class="form-control">
                                        <!-- 변경 -->
                                        <option value="">선택한 농장의 작목</option>
                                        <option value="딸기">딸기</option>
@@ -296,7 +297,7 @@
                                     <br>
                                     재배시설
 
-                                    <select name="fu_facility" class="form-control">
+                                    <select name="fu_facility" id="fac" class="form-control">
                                        <!-- 변경 -->
                                        <option value="">선택한농장의 작목</option>
                                        <option value="P">비닐온실</option>
@@ -306,11 +307,11 @@
                                  </div>
                            </div>
                            <center>
-                              <button type="submit" class="btn btn-primary">수정완료</button>
+                              <button type="button" class="btn btn-primary" onClick = "fupdate()">수정완료</button>
                               <!-- 변경 
                                  농장삭제서비스 현재 선택한 농장의 값을 가지고 농장삭제메소드로 가기-->
                               <a href="#">
-                                 <button type="submit" class="btn btn-primary">농장삭제</button></a>
+                                 <button type="button" class="btn btn-primary" onClick = "fdelete()">농장삭제</button></a>
                            </center>
                            <br>
                         </div>
@@ -453,7 +454,7 @@
                   if (result == 'false') {
                      alert('사용가능한 농장이름 입니다.')
                   } else {
-                     alert('중복된 농장장이름 입니다.')
+                     alert('중복된 농장이름 입니다.')
                   }
                },
                error: function () {
@@ -478,7 +479,7 @@
                    if (result == 'false') {
                       alert('사용가능한 농장이름 입니다.')
                    } else {
-                      alert('중복된 농장장이름 입니다.')
+                      alert('중복된 농장이름 입니다.')
                    }
                 },
                 error: function () {
@@ -487,7 +488,79 @@
              })
     
           };
+          
+          function select(){
+        	  $.ajax({
+        		  url : "EditFarmService.do",
+        		  type : "get",
+        		  data : {
+        			  "f_name" : $('select[name=fs_name]').val()
+        		  },
+        		  dataType : "json",
+        		  success : function(res){
+        			  let name = $('select[name=fs_name]').val();
+        	  		$('input[name=fu_name]').val(name);
+        	  		
+          			let region = res[0].f_region;
+        	  $("#region").val(region).attr("selected", "selected");
+          			let crop = res[0].f_crops;
+        	  $("#crop").val(crop).attr("selected", "selected");
+        	  let fac = res[0].f_facility;
+        	 	$("#fac").val(fac).attr("selected", "selected");
+        		  
+        		  },
+        		  error : function(){
+        			  console.log("실패")
+        		  }
+        	  
+        	  })
+        	 }
+          
+          function fupdate(){
+     		 $.ajax({
+     			 url : "UpdateFarmService.do",
+     		 	 type : "post",
+     		 	 data : {
+     		 		 "fs_name" : $('select[name=fs_name]').val(),
+     		 		 "fu_name" : $('input[name=fu_name]').val(),
+     		 		 "fu_region" : $('select[name=fu_region]').val(),
+     		 		 "fu_crops" : $('select[name=fu_crops]').val(),
+     		 		 "fu_facility" : $('select[name=fu_facility]').val()
+     		 	 },
+     		 	 dataType : "text",
+     		 	 success : function(res){
+     		 		 if(res=='success'){
+     		 			 alert('농장 수정 성공')
+     		 		 }else if(res=='fail'){
+     		 			 alert('다시 한번 시도해주세요')
+     		 		 }
+     		 	 },
+     		 	 error : function(){
+     		 		 console.log('실패')
+     		 	 }
+     		 })
+     	 };
          
+     	function fdelete(){
+   		 $.ajax({
+   			 url : "DeleteFarmService.do",
+   		 	 type : "post",
+   		 	 data : {
+   		 		 "fs_name" : $('select[name=fs_name]').val()
+   		 	 },
+   		 	 dataType : "text",
+   		 	 success : function(res){
+   		 		 if(res=='success'){
+   		 			 alert('농장 삭제 성공')
+   		 		 }else if(res=='fail'){
+   		 			 alert('다시 한번 시도해주세요')
+   		 		 }
+   		 	 },
+   		 	 error : function(){
+   		 		 console.log('실패')
+   		 	 }
+   		 })
+   	 };
       </script>
    <!-- 비밀번홈 확인하는 제이쿼리  -->
    <script type="text/javascript">
