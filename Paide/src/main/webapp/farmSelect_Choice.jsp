@@ -276,6 +276,7 @@
                            </tr>
                            <% for(int i = 0; i<farmlist.size(); i++){ %>
                            <tr>
+                           		<% if(!"delete".equals(farmlist.get(i).getF_owner_id())){ %>
                            <td><%= farmlist.get(i).getF_name() %></td>
                            <td><%= farmlist.get(i).getF_region() %></td>
                            <td><%= farmlist.get(i).getF_crops() %></td>
@@ -290,6 +291,7 @@
                                        <span class="cssclass"></span></span></a>
                               </td>
                            </tr>
+                           <%} %>
                            <%}; %>
                         </tbody>
                     </div>

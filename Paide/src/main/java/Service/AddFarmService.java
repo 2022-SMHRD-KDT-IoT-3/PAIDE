@@ -21,11 +21,11 @@ public class AddFarmService implements Command{
 		request.setCharacterEncoding("UTF-8");
 		String nextpage = null;
 		
-		String f_owner_id = "m_id 01";//request.getParameter("f_owner_id");
 		String f_name = request.getParameter("f_name");
 		String f_region = request.getParameter("f_region");
 		String f_crops = request.getParameter("f_crops");
 		String f_facility = request.getParameter("f_facility");
+		String f_owner_id = request.getParameter("f_id");
 		
 		System.out.println(f_owner_id);
 		System.out.println(f_name);
@@ -38,10 +38,12 @@ public class AddFarmService implements Command{
 		PrintWriter out = response.getWriter();
 		if(cnt>0) {
 			System.out.println("농장등록 성공");
-			nextpage = "index.jsp";
+			out.print("success");
+			out.close();
 		}else {
 			System.out.println("농장등록 실패");
-			nextpage = "updateMember.jsp";
+			out.print("fail");
+			out.close();
 		}
 		
 		

@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.FarmDAO"%>
+<%@page import="Model.FarmDTO"%>
+<%@page import="Model.MemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 <!doctype html>
@@ -27,6 +31,9 @@
 </head>
 
 <body>
+<% MemberDTO info = (MemberDTO)session.getAttribute("info");
+	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
+%>
    <!-- WRAPPER -->
    <div id="wrapper">
     <!-- NAVBAR -->
@@ -245,10 +252,10 @@
                                     <select name="fs_name" class="form-control" >
                                        <!-- 변경 사용자의 등록된 농장 이름 가져오기  -->
                                        <option value="">농장을선택해주세요.</option>
+                                       <% for(int i = 0; i<farmlist.size(); i++){ %>
                                        <!-- 등록된 회원의 농장이 나와야함  -->
-                                       <option value="대매니의 딸기농장">대매니의 딸기농장</option>
-                                       <option value="">토마토농장 </option>
-                                       <option value="">등록한 농장</option>
+                                       <option value="<%=farmlist.get(i)%>"><%=farmlist.get(i)%></option>
+                                       <%}; %>
                                     </select>
                                     <span class="input-group-btn">
                                        <button class="btn btn-primary" type="button" onClick="select()">선택</button></span>
@@ -321,7 +328,7 @@
                            ?다민 : 프론트 UpdateMemberService.do에서 농장정보 업데이트로 가는거 어떻게 하죵 
                             action 농장추가하는 곳 으로  -->
                            <!-- 변경 : action값 frontcontroller에서 받아옴. -->
-                        <form action="AddFarmService.do" method="post">
+                        <form>
                            <div class="panel">
                               <div class="panel-body">
 
@@ -365,10 +372,11 @@
                                        <option value="P">비닐온실</option>
                                        <option value="G">유리온실</option>
                                     </select>
+                                    <input type="hidden" name="f_id" value="<%= info.getM_id() %>">
                                  </div>
                            </div>
                            <center>
-                              <button type="submit" class="btn btn-primary">농장추가</button>
+                              <button type="button" class="btn btn-primary" onClick="addf()">농장추가</button>
                               <input class="btn btn-primary" type="reset">
                            </center>
                            <br>
@@ -515,6 +523,30 @@
         	  
         	  })
         	 }
+          function addf(){
+      		 $.ajax({
+      			 url : "AddFarmService.do",
+      		 	 type : "post",
+      		 	 data : {
+      		 		 "f_name" : $('input[name=f_name]').val(),
+      		 		 "f_region" : $('select[name=f_region]').val(),
+      		 		 "f_crops" : $('select[name=f_crops]').val(),
+      		 		 "f_facility" : $('select[name=f_facility]').val(),
+      		 		 "f_id" : $('input[name=f_id]').val()
+      		 	 },
+      		 	 dataType : "text",
+      		 	 success : function(res){
+      		 		 if(res=='success'){
+      		 			 alert('농장 생성 성공')
+      		 		 }else if(res=='fail'){
+      		 			 alert('다시 한번 시도해주세요')
+      		 		 }
+      		 	 },
+      		 	 error : function(){
+      		 		 console.log('실패')
+      		 	 }
+      		 })
+      	 };
           
           function fupdate(){
      		 $.ajax({
@@ -523,6 +555,7 @@
      		 	 data : {
      		 		 "fs_name" : $('select[name=fs_name]').val(),
      		 		 "fu_name" : $('input[name=fu_name]').val(),
+     		 		 "f_id" : $('input[name=f_id]').val(),
      		 		 "fu_region" : $('select[name=fu_region]').val(),
      		 		 "fu_crops" : $('select[name=fu_crops]').val(),
      		 		 "fu_facility" : $('select[name=fu_facility]').val()

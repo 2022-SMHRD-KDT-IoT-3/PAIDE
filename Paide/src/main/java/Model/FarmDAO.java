@@ -666,5 +666,27 @@ public class FarmDAO {
  		}
  		return fdto;
  	}
+ 	
+ 	//내 농장 리스트 불러오기 메소드
+ 	public ArrayList<String> myfarm(String m_id){
+ 		ArrayList<String> list = new ArrayList<>();
+ 		dbconn();
+ 		try {
+			String sql = "select f_name from t_farm where f_owner_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, m_id);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				String f_names = rs.getString(1);
+				
+				list.add(f_names);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+ 		return list;
+ 	}
 
 }
