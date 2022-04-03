@@ -172,18 +172,18 @@
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav">
-                  <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.html" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-                  <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+                  <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="active" class="collapsed"><i class="lnr lnr-user"></i> <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
-                           <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                           <li><a href="farmSelect.html" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                           <li><a href="commuWrite.html" class="active"><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                           <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.jsp" class="active"><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
                   </li>
@@ -233,7 +233,7 @@
                   
                      <center>
                         <!-- 저장을 누르면 자신이 선택한 카테고리 게시판으로 넘어가야함. -->
-                       <input type="submit" class="btn btn-primary" value="저장"> <a href="myFarm.html"><button type="button" class="btn btn-primary" value="취소">취소</button></a>
+                       <input type="submit" class="btn btn-primary" value="저장"> <a href="myFarm.jsp"><button type="button" class="btn btn-primary" value="취소">취소</button></a>
                      </center>
                 </form>  
                   <!-- form태그 버튼 까지 씌워서 버튼 값이 넘어갈 수 있게 함. -->

@@ -86,7 +86,7 @@ public class FarmDTO {
 	
 	
 	//농장검색 생성자
-	public FarmDTO(int f_seq, String f_owner_id, String f_name, String f_region, String f_crops, String f_facility) {
+	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String name) {
 		super();
 		this.f_seq = f_seq;
 		this.f_owner_id = f_owner_id;

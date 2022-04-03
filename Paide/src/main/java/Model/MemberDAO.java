@@ -467,23 +467,5 @@ public class MemberDAO {
 		}
 		return checkEmail;
 	}
-	
-	// 게시글의 주인에게 게시글에 달린 댓글 수 업데이트
-		public void commentUp(int article_seq) {
-
-			dbconn();
-			try {
-				String sql = "update t_member set m_comment = m_comment + 1 where m_id = (select m_id from t_community where article_seq = ?)";
-				
-				psmt = conn.prepareStatement(sql);
-				psmt.setInt(1, article_seq);
-				
-				psmt.executeUpdate();
-				
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-			
-		}
 		
 }

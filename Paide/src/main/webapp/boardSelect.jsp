@@ -1,3 +1,4 @@
+<%@page import="Model.MemberDTO"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
@@ -173,11 +174,11 @@
       </div>
       <!-- END LEFT SIDEBAR -->
       <%
+      MemberDTO info = (MemberDTO)session.getAttribute("info");
+      
 		String userID = null;
-		if (session.getAttribute("userID") != null) {
-			userID = (String) session.getAttribute("userID");
-		} else {
-			userID = "test";
+		if (session.getAttribute("info") != null) {
+			userID = info.getM_id();
 		}
 		int article_seq = 0;
 		if (request.getParameter("article_seq") != null) {
@@ -293,9 +294,12 @@
                                              <tr>
                                                 <td colspan="2">
                                                    <!-- 댓글입력창 -->
-                                                   <div class="input-group">
-                                                      <input class="form-control" type="text">
-                                                      <span class="input-group-btn"><button class="btn btn-primary" type="button">작성</button></span>
+                                                   <form action="WriteCmtService.do?article_seq=<%=dto.getArticle_seq()%>" method="post">
+                                                      <div class="input-group">
+                                                       	 <input type="hidden" name="cmtWriter" placeholder="<%=userID%>" value="<%=userID%>">
+                                                         <input class="form-control" name="cmtContent" placeholder="댓글을 입력해주세요" type="text">
+                                                         <span class="input-group-btn"><button class="btn btn-primary" type="submit">작성</button></span>
+                                                   </form>
                                                       <!-- 작성btton 클릭시 =>  댓글 테이블 t_comment -->
                                                    </div>
                                                 </td>

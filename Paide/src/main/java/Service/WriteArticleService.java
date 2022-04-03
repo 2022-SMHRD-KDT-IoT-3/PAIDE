@@ -19,7 +19,6 @@ public class WriteArticleService implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		try {
 			// post방식 인코딩
 			request.setCharacterEncoding("UTF-8");
@@ -45,20 +44,46 @@ public class WriteArticleService implements Command {
 			
 			MultipartRequest multi = new MultipartRequest(request, savePath, maxsize, encoding, filePolicy);
 			
+			CommunityDTO dto = new CommunityDTO();
+			
 			// 데이터 꺼내오기
 			String article_title = multi.getParameter("title");
 			String m_id = multi.getParameter("writer");
 			String article_category = multi.getParameter("category");
 			// 파일이름에 한글이 있으면 인코딩
-			String article_file = URLEncoder.encode(multi.getFilesystemName("fileName"), "UTF-8");
+			
+			String article_file = multi.getOriginalFileName("fileName");;
+			
+			if(article_file == null) {
+				dto.setArticle_file("");
+			}else {
+				dto.setArticle_file(URLEncoder.encode(multi.getFilesystemName("fileName"), "UTF-8"));
+			}
 			String article_content = multi.getParameter("content");
 			
+
 			System.out.println("title : " + article_title);
 			System.out.println("writer : " + m_id);
 			System.out.println("fileName : " + article_file);
 			System.out.println("content : " + article_content);
 			
-			CommunityDTO dto = new CommunityDTO(0, article_title, article_content, article_file, "", m_id, article_category);
+			
+			dto.setArticle_seq(0);
+			dto.setArticle_title(article_title);
+			dto.setArticle_content(article_content);
+			dto.setArticle_date("");
+			dto.setM_id(m_id);
+			dto.setArticle_category(article_category);
+			
+			//String fileName = multi.getOriginalFileName("fileName");
+			
+			//if(fileName == null) {
+			//	dto.setArticle_file("");
+			//}
+			//else {
+			//	dto.setArticle_file(fileName);
+			//}
+			//
 			int cnt = new CommunityDAO().Insert_C(dto);
 			
 			if(cnt>0) {
@@ -72,7 +97,7 @@ public class WriteArticleService implements Command {
 			e.printStackTrace();
 		}
 
-		return null;
+		return "BoardMain.jsp";
 		// https://lkg3796.tistory.com/37
 		// https://all-record.tistory.com/143
 	}

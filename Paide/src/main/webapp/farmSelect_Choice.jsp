@@ -1,3 +1,7 @@
+<%@page import="java.net.URLDecoder"%>
+<%@page import="Model.FarmDAO"%>
+<%@page import="Model.FarmDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 <!doctype html>
@@ -38,12 +42,19 @@
 </head>
 
 <body>
+<% String crops = request.getParameter(URLDecoder.decode("crops", "UTF-8"));
+ 	String regions = request.getParameter(URLDecoder.decode("regions", "UTF-8"));
+ 	String facility = request.getParameter(URLDecoder.decode("facs", "UTF-8"));
+ 	ArrayList<FarmDTO> farmlist = new FarmDAO().SearchFarm(crops, regions, facility);
+ 	System.out.println(farmlist.get(0).getF_crops());
+ 	System.out.println(farmlist.get(0).getF_region());
+%>
    <!-- WRAPPER -->
    <div id="wrapper">
       <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-            <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+            <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
                   class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -81,9 +92,9 @@
                            class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
-                        <li><a href="myFarm.html"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-                        <li><a href="updateMember.html"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                        <li><a href="index.html"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                        <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
+                        <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
                   <li class="dropdown">
@@ -125,15 +136,15 @@
                      <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                      <ul id='neighbor' class="dropdown-menu notifications">
-                        <li><a href="OtherFarm.html" class="notification-item"><span
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                        <li><a href="OtherFarm.html" class="notification-item"><span
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                        <li><a href="OtherFarm.html" class="notification-item"><span
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                        <li><a href="OtherFarm.html" class="notification-item"><span
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                        <li><a href="OtherFarm.html" class="notification-item"><span
+                        <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                      </ul>
                   </li>
@@ -155,20 +166,20 @@
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav">
-                  <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.html" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-                  <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+                  <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="active" class="collapsed"><i
                            class="lnr lnr-user"></i> <span>송다민</span> <i
                            class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
-                           <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                           <li><a href="farmSelect.html" class="active"><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                           <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                           <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.jsp" class="active"><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
                   </li>
@@ -213,7 +224,7 @@
                               <td>(f_facility)</td>
                               <td>
                                  <!--대맨 해당 (농장의 이름)값을 가지고 OtherFarm_detail에서 해당 농장의 정보를 보여줘야함-->
-                                 <a href="OtherFarm_detail.html"><span style="color:#3f7647"><span
+                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
                                           class="fa fa-line-chart"></span>
                                        <span class="cssclass"></span></span></a>
                               </td>
@@ -225,7 +236,7 @@
                               <td>딸기</td>
                               <td>유리온실</td>
                               <td>
-                                 <a href="OtherFarm_detail.html"><span style="color:#3f7647"><span
+                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
                                           class="fa fa-line-chart"></span>
                                        <span class="cssclass"></span></span></a>
                               </td>
@@ -236,7 +247,7 @@
                               <td>딸기</td>
                               <td>유리온실</td>
                               <td>
-                                 <a href="OtherFarm_detail.html"><span style="color:#3f7647"><span
+                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
                                           class="fa fa-line-chart"></span>
                                        <span class="cssclass"></span></span></a>
                               </td>
@@ -247,7 +258,7 @@
                               <td>딸기</td>
                               <td>유리온실</td>
                               <td>
-                                 <a href="OtherFarm_detail.html"><span style="color:#3f7647"><span
+                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
                                           class="fa fa-line-chart"></span>
                                        <span class="cssclass"></span></span></a>
                               </td>
@@ -258,12 +269,30 @@
                               <td>딸기</td>
                               <td>유리온실</td>
                               <td>
+                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
+                                          class="fa fa-line-chart"></span>
+                                       <span class="cssclass"></span></span></a>
+                              </td>
+                           </tr>
+                           <% for(int i = 0; i<farmlist.size(); i++){ %>
+                           <tr>
+                           		<% if(!"delete".equals(farmlist.get(i).getF_owner_id())){ %>
+                           <td><%= farmlist.get(i).getF_name() %></td>
+                           <td><%= farmlist.get(i).getF_region() %></td>
+                           <td><%= farmlist.get(i).getF_crops() %></td>
+                           <%	if("P".equals(farmlist.get(i).getF_facility())){%>
+                           <td>비닐온실</td>
+                           <%}else if("G".equals(farmlist.get(i).getF_facility())){ %>
+                           <td>유리온실</td>
+                           <%} %>
+                           <td>
                                  <a href="OtherFarm_detail.html"><span style="color:#3f7647"><span
                                           class="fa fa-line-chart"></span>
                                        <span class="cssclass"></span></span></a>
                               </td>
                            </tr>
-                           
+                           <%} %>
+                           <%}; %>
                         </tbody>
                     </div>
 

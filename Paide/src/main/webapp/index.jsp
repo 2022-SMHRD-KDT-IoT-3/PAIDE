@@ -31,8 +31,7 @@
 </head>
 
 <body>
-<% 
-	MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
+<% MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
    <!-- WRAPPER -->
    <div id="wrapper">
           <!-- NAVBAR -->
@@ -47,38 +46,39 @@
             </div>
             <form class="navbar-form navbar-left" method="post" name="search" action="SearchArticleService.do">
                <div class="input-group">
+               <form method="post" name="search" action="commu_All.jsp">
                   <table>
                      <tr>
                         <td>
                            <select class="form-control" name="searchField">
                               <option value="0">선택</option>
                               <option value="article_title">제목</option>
-                              <option value="writer">작성자</option>
-                           </select>
+                              <option value="wrsiter">작성자</option>
+                           </select>  
                         </td>
                         <td>
-                           <input type="text" class="form-control" placeholder="Search dashboard..." name="searchText"
-                              maxlength="100">
+                           <input type="text" class="form-control" placeholder="검색" name="searchText" maxlength="100">
                         </td>
                         <td>
                            <button type="submit" class="btn btn-primary">Go</button>
                         </td>
                      </tr>
                   </table>
+                  </form>
                </div>
             </form>
             <div id="navbar-menu">
                <ul class="nav navbar-nav navbar-right">
-
                   <!-- 로그아웃시 삭제1 start-->
+                   <% if(info != null){%>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
-                           class="icon-submenu lnr lnr-chevron-down"></i></a>
+                           class="img-circle" alt="Avatar"> <%= info.getM_name() %> 
+                            <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                        <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                        <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
                   <li class="dropdown">
@@ -131,6 +131,11 @@
                         <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                      </ul>
+                     <% }else{%>
+                     <div class="navbar-btn navbar-btn-right"> 
+                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+                     </div>
+                     <%} %>
                   </li>
                   <!-- 로그아웃시 삭제1 end-->
 
@@ -158,9 +163,10 @@
                   <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                   <!-- 로그아웃시 삭제2 start -->
+                  <% if(info != null){%>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i>
-                        <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
                            <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
@@ -168,6 +174,7 @@
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
+                     <%} %>
                   </li>
                   <!-- 로그아웃시 삭제2 end -->
                </ul>

@@ -108,7 +108,7 @@ public class FarmDAO {
 		dbconn();
 		try {
 			
-		String sql = "update t_farm set f_region = ?, f_crops = ?, f_facility = ?, f_name = ? where f_owner_id = ? and f_name = ?";	
+		String sql = "update t_farm set f_region = ?, f_crops = ?, f_facility = ?, f_name = ? where f_name = ?";	
 		
 		psmt = conn.prepareStatement(sql);
 		
@@ -116,8 +116,7 @@ public class FarmDAO {
 		psmt.setString(2, dto.getF_crops());
 		psmt.setString(3, dto.getF_facility());
 		psmt.setString(4, dto.getF_name());
-		psmt.setString(5, dto.getF_owner_id());
-		psmt.setString(6, f_name);
+		psmt.setString(5, f_name);
 		
 		cnt = psmt.executeUpdate();
 		
@@ -129,13 +128,13 @@ public class FarmDAO {
 		
 	}
 
-   // 농장삭제 메소드
-   public int delete(String f_name) {
+// 농장삭제 메소드
+	public int delete(String f_name) {
 		dbconn();
 		
 		try {
 			
-			String sql = "delete from t_farm where f_name = ?";
+			String sql = "update t_farm set f_owner_id = 'delete', f_name=delete_seq.nextval where f_name = ?";
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, f_name);
@@ -642,5 +641,52 @@ public class FarmDAO {
       return vo;
 
    }
+ //농장수정 정보불러오기 메소드
+ 	public FarmDTO SelectF(String f_name) {
+ 		dbconn();
+ 		try {
+ 			String sql = "select * from t_farm where f_name = ?";
+ 			psmt = conn.prepareStatement(sql);
+ 			psmt.setString(1, f_name);
+ 			rs = psmt.executeQuery();
+ 			if(rs.next()) {
+ 				String f_owner= rs.getString(2);
+ 				String f_region= rs.getString(3);
+ 				String f_crops= rs.getString(4);
+ 				String f_facility= rs.getString(5);
+ 				String f_myname = rs.getString(7);
+ 				
+ 				
+ 				fdto = new FarmDTO(f_owner, f_region, f_crops, f_facility, f_myname);
+ 			}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}finally {
+ 			dbclose();
+ 		}
+ 		return fdto;
+ 	}
+ 	
+ 	//내 농장 리스트 불러오기 메소드
+ 	public ArrayList<String> myfarm(String m_id){
+ 		ArrayList<String> list = new ArrayList<>();
+ 		dbconn();
+ 		try {
+			String sql = "select f_name from t_farm where f_owner_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, m_id);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				String f_names = rs.getString(1);
+				
+				list.add(f_names);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+ 		return list;
+ 	}
 
 }

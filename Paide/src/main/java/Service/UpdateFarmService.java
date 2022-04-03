@@ -1,6 +1,7 @@
 package Service;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class UpdateFarmService implements Command{
 		String nextpage = null;
 		
 		String fs_name = request.getParameter("fs_name");
-		String f_owner_id = "csm"; //request.getParameter("f_owner_id");
+		String f_owner_id = request.getParameter("f_owner_id");
 		String f_name = request.getParameter("fu_name");
 		String f_region = request.getParameter("fu_region");
 		String f_crops = request.getParameter("fu_crops");
@@ -38,12 +39,15 @@ public class UpdateFarmService implements Command{
 		FarmDTO fdto = new FarmDTO(f_owner_id, f_region, f_crops, f_facility, f_name);
 		int cnt = new FarmDAO().update(fdto, fs_name);
 		
+		PrintWriter out = response.getWriter();
 		if(cnt>0) {
 			System.out.println("농장수정 성공");
-			nextpage = "main.jsp";
+			out.print("success");
+			out.close();
 		}else {
 			System.out.println("농장수정 실패");
-			nextpage = "updateMember.jsp";
+			out.print("fail");
+			out.close();
 		}
 		
 		

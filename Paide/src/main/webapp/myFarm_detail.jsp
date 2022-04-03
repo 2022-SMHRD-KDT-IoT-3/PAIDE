@@ -35,7 +35,7 @@
       <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-             <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+             <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
                      class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -74,9 +74,9 @@
                                  class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
                                  class="icon-submenu lnr lnr-chevron-down"></i></a>
                          <ul class="dropdown-menu">
-                             <li><a href="myFarm.html"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-                             <li><a href="updateMember.html"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                             <li><a href="index.html"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                             <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                             <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
+                             <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                          </ul>
                      </li>
                      <li class="dropdown">
@@ -118,15 +118,15 @@
                          <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                          <ul id='neighbor' class="dropdown-menu notifications">
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
+                             <li><a href="OtherFarm.jsp" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                          </ul>
                      </li>
@@ -149,11 +149,11 @@
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav">
-                  <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.html" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-                  <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+                  <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                   <!-- 로그아웃시 삭제2 start -->
                   <li>
@@ -161,9 +161,9 @@
                         <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
-                           <li><a href="myFarm.html" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                           <li><a href="farmSelect.html" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                           <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                           <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
                   </li>
@@ -207,7 +207,7 @@
                               <br>
                               <center>
                                  <!--  나의 농장 첫번째 화면으로 돌아가기 -->
-                                 <a href="myFarm.html"> <button type="button" class="btn btn-primary">농장홈화면</button></a>
+                                 <a href="myFarm.jsp"> <button type="button" class="btn btn-primary">농장홈화면</button></a>
                               </center>
                            </div>
                            <!-- current_date끝 -->
@@ -278,9 +278,9 @@
                         <!-- 차트버튼 -->
                         <center>
                            <!-- 농장하루평균차트 -->
-                           <a href="myFarm_ChartDay.html"> <button type="button" class="btn btn-primary btn-lg"><i class="lnr lnr-chevron-left-circle"></i>&nbsp;&nbsp;일일차트&nbsp;&nbsp;<i class="bi bi-graph-up-arrow"></i></button></a>
+                           <a href="myFarm_ChartDay.jsp"> <button type="button" class="btn btn-primary btn-lg"><i class="lnr lnr-chevron-left-circle"></i>&nbsp;&nbsp;일일차트&nbsp;&nbsp;<i class="bi bi-graph-up-arrow"></i></button></a>
                            <!-- 농장평균차트 -->
-                           <a href="myFarm_ChartAvg.html"> <button type="button" class="btn btn-primary btn-lg">평균차트&nbsp;&nbsp;<i class="bi bi-bar-chart-line"></i>&nbsp;&nbsp;<i class="lnr lnr-chevron-right-circle"></i></button></a>
+                           <a href="myFarm_ChartAvg.jsp"> <button type="button" class="btn btn-primary btn-lg">평균차트&nbsp;&nbsp;<i class="bi bi-bar-chart-line"></i>&nbsp;&nbsp;<i class="lnr lnr-chevron-right-circle"></i></button></a>
                         </center>
                         <br>
                         <!-- 댓글달기 Start -->
