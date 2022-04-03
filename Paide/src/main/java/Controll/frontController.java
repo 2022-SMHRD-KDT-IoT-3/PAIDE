@@ -27,6 +27,7 @@ import Service.PWSendMailService;
 import Service.SearchFarmlistService;
 import Service.SearchIDService;
 import Service.SearchPWService;
+import Service.SeenotificationService;
 import Service.UpdateArticleService;
 import Service.UpdateCmtService;
 import Service.UpdateFarmService;
@@ -151,10 +152,16 @@ public class frontController extends HttpServlet {
 			com = new UpdateCmtService();
 			nextpage = com.execute(request, response);
 			
-		}else if(command.equals("EditFarmService.do")) {
+		} else if(command.equals("EditFarmService.do")) {
 			com = new EditFarmService();
 			nextpage = com.execute(request, response);
+			
+		} else if(command.equals("SeenotificationService.do")) {
+			com = new SeenotificationService();
+			nextpage = com.execute(request, response);
+			
 		}
+		
 
 		// else if 마지막줄
 		if (nextpage != null) {

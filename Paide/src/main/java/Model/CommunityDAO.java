@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 public class CommunityDAO {
 	Connection conn = null;
 	PreparedStatement psmt = null;
@@ -783,4 +784,84 @@ public class CommunityDAO {
 			
 	}
 	
+	// 댓글 알림 메소드(찬영)
+	public ArrayList<CommunityDTO> newcomment(String id, int cmtcnt) {
+		System.out.println("댓글알림접속");
+			ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
+		dbconn();
+		try {
+			String sql = "select y.article_title, t.cmt_date, y.article_seq, t.m_id "
+					+ "from t_community y, t_comment t "
+					+ "where y.m_id = ? "
+					+ "and rownum <= ? "
+					+ "and y.article_seq = t.article_seq "
+					+ "order by t.cmt_date desc";
+				
+				psmt = conn.prepareStatement(sql);
+				
+				System.out.println(sql);
+				
+				System.out.println("id : " + id);
+				System.out.println( "cnt : " + cmtcnt);
+				psmt.setString(1, id);
+				psmt.setInt(2, cmtcnt);
+				
+				rs = psmt.executeQuery();
+
+				while(rs.next()) {
+					String article_title = rs.getString(1);
+					String m_id = rs.getString(4);
+					
+					System.out.println("title : " + article_title);
+					System.out.println("m_id : " + m_id); 
+					
+					codto = new CommunityDTO(article_title, m_id);
+					
+					cmtlist.add(codto);
+				}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return cmtlist;
+	}
+	
+	// 농장 댓글 알림 메소드(찬영)
+	public ArrayList<CommunityDTO> newfcomment(String id, int fcmtcnt){
+		System.out.println("농장댓글알림접속");
+		ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
+		dbconn();
+		try {
+			String sql = "select c.fcmt_content, c.m_id, f.f_seq, f.f_owner_id "
+					+ "from t_comment_farm c, t_farm f "
+					+ "where c.t_farm_seq = f.f_seq "
+					+ "and f.f_owner_id = ? "
+					+ "and rownum <= ? "
+					+ "order by c.fcmt_date desc";
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.setInt(2, fcmtcnt);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				String fcmt_content = rs.getString(1);
+				String m_id = rs.getString(2);
+				
+				codto = new CommunityDTO(fcmt_content, m_id);
+				
+				fcmtlist.add(codto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return fcmtlist;
+		
+	}
 }
