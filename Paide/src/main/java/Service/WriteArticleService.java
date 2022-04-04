@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -13,15 +14,23 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import Inter.Command;
 import Model.CommunityDAO;
 import Model.CommunityDTO;
+import Model.MemberDTO;
 
 public class WriteArticleService implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		String article_category = "";
 		try {
 			// post방식 인코딩
 			request.setCharacterEncoding("UTF-8");
+		
+			HttpSession session = request.getSession();
+			MemberDTO info = (MemberDTO)session.getAttribute("info");
+		    session.getAttribute("info");
+		    String m_id = info.getM_id();
 			
 			// MultipartRequest 객체의 매개변수 정리
 			// savePath : 파일의 저장 경로
@@ -48,10 +57,10 @@ public class WriteArticleService implements Command {
 			
 			// 데이터 꺼내오기
 			String article_title = multi.getParameter("title");
-			String m_id = multi.getParameter("writer");
-			String article_category = multi.getParameter("category");
-			// 파일이름에 한글이 있으면 인코딩
+			article_category = multi.getParameter("category");
+			System.out.println("category : " + article_category);
 			
+			// 파일이름에 한글이 있으면 인코딩
 			String article_file = multi.getOriginalFileName("fileName");;
 			
 			if(article_file == null) {
@@ -97,7 +106,7 @@ public class WriteArticleService implements Command {
 			e.printStackTrace();
 		}
 
-		return "BoardMain.jsp";
+		return "commu_" + article_category +".jsp";
 		// https://lkg3796.tistory.com/37
 		// https://all-record.tistory.com/143
 	}

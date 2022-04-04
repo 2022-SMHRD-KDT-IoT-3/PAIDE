@@ -48,16 +48,15 @@
             <div class="navbar-btn">
                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
-            <form class="navbar-form navbar-left" method="post" name="search" action="SearchArticleService.do">
+            <form class="navbar-form navbar-left" method="post" name="search" action="commu_All.jsp">
                <div class="input-group">
-               <form method="post" name="search" action="commu_All.jsp">
                   <table>
                      <tr>
                         <td>
                            <select class="form-control" name="searchField">
                               <option value="0">선택</option>
                               <option value="article_title">제목</option>
-                              <option value="wrsiter">작성자</option>
+                              <option value="m_id">작성자</option>
                            </select>  
                         </td>
                         <td>
@@ -68,7 +67,6 @@
                         </td>
                      </tr>
                   </table>
-                  </form>
                </div>
             </form>
             <div id="navbar-menu">

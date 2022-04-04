@@ -35,6 +35,7 @@ import Service.UpdateLevel;
 import Service.UpdateMemberService;
 import Service.WriteArticleService;
 import Service.WriteCmtService;
+import Service.WriteFCmtService;
 
 @WebServlet("*.do")
 public class frontController extends HttpServlet {
@@ -160,6 +161,9 @@ public class frontController extends HttpServlet {
 			com = new SeenotificationService();
 			nextpage = com.execute(request, response);
 			
+		} else if (command.equals("WriteFCmtService.do")) {
+			com = new WriteFCmtService();
+			nextpage = com.execute(request, response);
 		}
 		
 

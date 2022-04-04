@@ -1,5 +1,6 @@
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
+<%@page import="Model.MemberDTO" %>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8" pageEncoding="UTf-8"%>
 
@@ -32,6 +33,22 @@
 </head>
 
 <body>
+	<%
+  		MemberDTO info = (MemberDTO)session.getAttribute("info");
+    
+		String userID = null;
+		if(session.getAttribute("useID") != null){
+			userID = (String)session.getAttribute("userID");
+		};
+		
+		int pageNumber = 1;
+		if(request.getParameter("pageNumber") != null){
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		}
+		
+		
+		String category = "D";
+	%>
 	<!-- WRAPPER -->
 	<div id="wrapper">
 		<!-- NAVBAR -->
@@ -66,7 +83,7 @@
 					<ul class="nav navbar-nav navbar-right">
 
 						<!-- 로그아웃시 삭제1 start-->
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span> 송다민 </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
 								<li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
@@ -161,23 +178,6 @@
 									</div>
 								</div>
 	<%
-		String userID = null;
-		if(session.getAttribute("useID") != null){
-			userID = (String)session.getAttribute("userID");
-		};
-		
-		int pageNumber = 1;
-		if(request.getParameter("pageNumber") != null){
-			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-		}
-		
-		//String category = null;
-		//if(request.getParameter("category") != null){
-		//	category = request.getParameter("article_category");
-		//}
-		
-		String category = "D";
-	
 		ArrayList<CommunityDTO> list = new CommunityDAO().getList(pageNumber, category);
 		CommunityDAO dao = new CommunityDAO();
 	%>

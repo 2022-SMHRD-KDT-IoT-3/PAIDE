@@ -10,7 +10,7 @@ import Inter.Command;
 import Model.CommunityDAO;
 import Model.CommunityDTO;
 
-public class WrtieFCmtService implements Command {
+public class WriteFCmtService implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)

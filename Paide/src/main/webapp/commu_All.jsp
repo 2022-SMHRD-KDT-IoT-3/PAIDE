@@ -1,3 +1,7 @@
+<%@page import="Model.CommunityDAO"%>
+<%@page import="Model.CommunityDTO"%>
+<%@page import="Model.MemberDTO" %>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 <!doctype html>
@@ -29,6 +33,23 @@
 </head>
 
 <body>
+	<%
+  		MemberDTO info = (MemberDTO)session.getAttribute("info");
+    
+		String userID = null;
+		if(session.getAttribute("useID") != null){
+			userID = (String)session.getAttribute("userID");
+		};
+		
+		int pageNumber = 1;
+		if(request.getParameter("pageNumber") != null){
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		}
+		
+		String searchField = request.getParameter("searchField");
+		String searchText = request.getParameter("searchText");
+		
+	%>
    <!-- 게시판전체조회 -->
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -72,7 +93,7 @@
                   <!-- 로그아웃시 삭제1 start-->
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
+                           class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
@@ -157,7 +178,7 @@
                   <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i>
-                        <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
                            <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
@@ -196,12 +217,17 @@
                               </div>
                            </div>
                         </div>
+                        <%
+                        	ArrayList<CommunityDTO> list = new CommunityDAO().getSearch(searchField, searchText, pageNumber);
+                        	CommunityDAO dao = new CommunityDAO();
+                        
+                        %>
                         <h4>
                            <!-- 회원이 검색한 키워드 넣어주기 name = searchText -->
-                           내가 찾은 검색어 : <strong>직거래</strong>
+                           내가 찾은 검색어 : <strong><%= request.getParameter("searchText") %></strong>
                         </h4>
                         <!-- 변경           article_seq  게시글의 개수  -->
-                        <div style="text-align: center;">총 <strong class="text-success">5</strong>개의 게시글이 검색 되었습니다.</div>
+                        <div style="text-align: center;">총 <%= list.size() %>개<strong class="text-success">5</strong>개의 게시글이 검색 되었습니다.</div>
                         <br>
                         <div class="row">
                            <div id ="commutabled" class="col-md-12">

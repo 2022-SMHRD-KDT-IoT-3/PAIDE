@@ -1,3 +1,4 @@
+<%@ page import="Model.MemberDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 <!doctype html>
@@ -104,6 +105,15 @@
 </head>
 
 <body>
+	<% 
+      	MemberDTO info = (MemberDTO)session.getAttribute("info");
+      
+		String userID = null;
+		if (session.getAttribute("info") != null) {
+			userID = info.getM_id();
+		}
+	%>
+
    <!-- WRAPPER -->
    <div id="wrapper">
           <!-- NAVBAR -->
@@ -144,7 +154,7 @@
                   <!-- 로그아웃시 삭제1 start-->
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
+                           class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
@@ -262,7 +272,7 @@
                            <div class="profile-main">
                               <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
                               <!-- 로그인한 회원 이름변수 ㄱ -->
-                              <h3 class="name">송다민</h3>
+                              <h3 class="name"><%= info.getM_name() %></h3>
                            </div>
                         </div>
                         <!-- END PROFILE HEADER -->

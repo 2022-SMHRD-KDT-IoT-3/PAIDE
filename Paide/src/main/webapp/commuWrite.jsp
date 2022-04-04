@@ -1,3 +1,4 @@
+<%@page import="Model.MemberDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 
@@ -54,6 +55,15 @@
 </style>
 
 <body>
+	<% 
+      	MemberDTO info = (MemberDTO)session.getAttribute("info");
+      
+		String userID = null;
+		if (session.getAttribute("info") != null) {
+			userID = info.getM_id();
+		}
+	%>
+
    <!-- WRAPPER -->
    <div id="wrapper">
        <!-- NAVBAR -->
@@ -206,12 +216,12 @@
                   <div class="panel-heading">
                      <h3 class="panel-title">게시판 선택</h3> 
                      <br>
-                     <select class="form-control">
+                     <select class="form-control" name="category">
                        <!-- 변경: value값 게시판 의미에 맞게 바꿈. -->
-                        <option name="category" value="trade">농산물직거래</option>
-                        <option name="category" value="experience">체험농장</option>
-                        <option name="category" value="farmjob">농촌일자리</option>
-                        <option name="category" value="free_board">자유게시판</option>
+                        <option value="D">농산물직거래</option>
+                        <option value="E">체험농장</option>
+                        <option value="W">농촌일자리</option>
+                        <option value="F">자유게시판</option>
                      </select>
                   </div>
                   <div class="panel-body">
@@ -219,7 +229,7 @@
                      <table class = "table2">
                      <tr>
                         <td>제목</td>
-                        <td><input type = "text" name = "title" size=60 style="width:70%;float:left">
+                        <td><input type ="text" name ="title" size=60 style="width:70%;float:left">
                            &nbsp;
                            <input name="fileName" type="file" style="width:28%; float: right;"></td>
                      </tr>

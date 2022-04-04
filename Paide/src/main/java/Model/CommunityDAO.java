@@ -201,10 +201,7 @@ public class CommunityDAO {
 
 			while (rs.next()) {
 				int article_seq = rs.getInt(1);
-				System.out.println("test " + article_seq);
 				String article_title = rs.getString(2);
-				System.out.println("test2 " + article_title);
-
 				String article_content = rs.getString("article_content");
 				String article_file = rs.getString("article_file");
 				String article_date = rs.getString("article_date");
@@ -586,8 +583,9 @@ public class CommunityDAO {
 			psmt2.setInt(1, cmt_seq);
 			psmt2.setString(2, m_id);
 
-			psmt2.executeUpdate();
-
+			int cnt = psmt2.executeUpdate();
+			System.out.println(cnt);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -750,7 +748,7 @@ public class CommunityDAO {
 	}
 	
 	// 게시글 검색 메소드
-	public ArrayList<CommunityDTO> getSearch(String searchField, String searchText){
+	public ArrayList<CommunityDTO> getSearch(String searchField, String searchText, int pageNumber){
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
 		dbconn();
 		String sql = "select * from t_community where " + searchField.trim();
@@ -759,6 +757,15 @@ public class CommunityDAO {
 			if(searchText != null && !searchText.equals("")) {
 				sql += " Like '%" + searchText.trim() + "%' order by article_seq";
 			}
+			
+			String sql2 = "SELECT SA2.* FROM( SELECT ROWNUM R1, SA1.* FROM(SELECT * FROM t_community ORDER BY article_date)SA1)SA2 WHERE R1 > ? AND R1 < ?";
+			psmt = conn.prepareStatement(sql2);
+	
+			psmt.setInt(1, (pageNumber - 1) * 10);
+			psmt.setInt(2, (pageNumber - 1) * 10 + 11);
+			
+			
+			
 			
 			psmt = conn.prepareStatement(sql);
 
@@ -798,8 +805,6 @@ public class CommunityDAO {
 					+ "order by t.cmt_date desc";
 				
 				psmt = conn.prepareStatement(sql);
-				
-				System.out.println(sql);
 				
 				System.out.println("id : " + id);
 				System.out.println( "cnt : " + cmtcnt);
