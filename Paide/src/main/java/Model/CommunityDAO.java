@@ -751,21 +751,22 @@ public class CommunityDAO {
 	public ArrayList<CommunityDTO> getSearch(String searchField, String searchText, int pageNumber){
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
 		dbconn();
-		String sql = "select * from t_community where " + searchField.trim();
+
 		try {
 			
+			String sql = "SELECT SA2.* FROM( SELECT ROWNUM R1, SA1.* FROM(SELECT * FROM t_community WHERE "
+					+ searchField.trim();
+
 			if(searchText != null && !searchText.equals("")) {
-				sql += " Like '%" + searchText.trim() + "%' order by article_seq";
-			}
-			
-			String sql2 = "SELECT SA2.* FROM( SELECT ROWNUM R1, SA1.* FROM(SELECT * FROM t_community ORDER BY article_date)SA1)SA2 WHERE R1 > ? AND R1 < ?";
-			psmt = conn.prepareStatement(sql2);
+				sql += " LIKE '%"
+					+ searchField.trim()
+					+ "ORDER BY article_date)SA1)SA2 WHERE R1 > ? AND R1 < ?";	
+					};
+					
+			psmt = conn.prepareStatement(sql);
 	
 			psmt.setInt(1, (pageNumber - 1) * 10);
 			psmt.setInt(2, (pageNumber - 1) * 10 + 11);
-			
-			
-			
 			
 			psmt = conn.prepareStatement(sql);
 
