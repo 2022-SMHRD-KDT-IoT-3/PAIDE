@@ -34,6 +34,7 @@
 
 <body>
 	<%
+		request.setCharacterEncoding("UTF-8");
   		MemberDTO info = (MemberDTO)session.getAttribute("info");
     
 		String userID = null;
@@ -227,7 +228,7 @@
                            내가 찾은 검색어 : <strong><%= request.getParameter("searchText") %></strong>
                         </h4>
                         <!-- 변경           article_seq  게시글의 개수  -->
-                        <div style="text-align: center;">총 <%= list.size() %>개<strong class="text-success">5</strong>개의 게시글이 검색 되었습니다.</div>
+                        <div style="text-align: center;">총 <strong class="text-success"><%= dao.getNext(searchField, searchText) - 1 %></strong>개의 게시글이 검색 되었습니다.</div>
                         <br>
                         <div class="row">
                            <div id ="commutabled" class="col-md-12">
@@ -250,24 +251,38 @@
                                        <td>article_date</td>
                                        <td>첨부파일유무</td>
                                     </tr> -->
-                                    <tr>
-                                       <td>001</td>
-                                       <td>농산물직거래</td>
-                                       <!-- 선택한 제목(article_title)을 가지고 게시글페이지로이동 -->
-                                       <td><a href="boardSelect.jsp">수완에서 딸기 직거래 하실 분</a></td>
-                                       <!-- m_id -->
-                                       <td>damin0722</td>
-                                       <td>2022.03.24</td>
-                                       <td> <i class="lnr lnr-link"></i></td>
-                                    </tr>
-                                    <tr>
-                                       <td>002</td>
-                                       <td>농촌일자리</td>
-                                       <td><a href="#">수완에서 토마토 직거래 하실 분~</a></td>
-                                       <td>damin0722</td>
-                                       <td>2022.03.24</td>
-                                       <td><i class="lnr lnr-link"></i></td>
-                                    </tr>
+                                   <% for(int i = 0; i < list.size(); i++){ %>
+										<tr>
+											<td><%= (pageNumber - 1) * 10 + i + 1 %></td>
+											<td>
+												<%
+													if(list.get(i).getArticle_category().equals("D")){
+												%>
+												농산물 직거래
+												<%
+													}else if(list.get(i).getArticle_category().equals("E")){
+												%>
+												체험농장
+												<%
+													}else if(list.get(i).getArticle_category().equals("F")){
+												%>
+												농촌일자리
+												<%
+													}else if(list.get(i).getArticle_category().equals("W")){
+												%>
+												자유게시판
+												<%
+													}
+												%>
+											</td>
+											<!-- 선택한 제목(article_title)을 가지고 게시글페이지로이동 -->
+											<td><a href="boardSelect.jsp?article_seq=<%= list.get(i).getArticle_seq()%>"><%= list.get(i).getArticle_title().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
+											<!-- m_id -->
+											<td><%=list.get(i).getM_id()%></td>
+											<td><%=list.get(i).getArticle_date()%></td>
+											<td><i class="lnr lnr-link"></i></td>
+										</tr>
+										<%} %>
                                  </tbody>
                               </table>
                            </div>
@@ -275,15 +290,22 @@
                      </div>
                      <!--  페이지 넘기기 START-->
                      <div class="row">
-                        <div class="col" style="text-align: center;">
-                           <ul class="pagination">
-                              <li class="page-item"><a class="page-link" href="#"><i class="lnr lnr-chevron-left">
-                                       이전</i></a></li>
-                              <li class="page-item"><a class="page-link" href="#">다음 <i
-                                       class="lnr lnr-chevron-right"></i></a></li>
-                           </ul>
-                        </div>
-                     </div>
+								<div class="col" style="text-align: center;">
+									<ul class="pagination">
+									<% 
+										if(pageNumber != 1){
+									%>
+										<li class="page-item"><a class="page-link" href="commu_All.jsp?pageNumber=<%= pageNumber - 1 %>&searchField=<%=searchField%>&searchText=<%=searchText%>"><i class="lnr lnr-chevron-left">이전</i></a></li>
+									<%
+										} if(dao.getNext(searchField, searchText) - 1 - (pageNumber - 1) * 10 > 10){
+									%>	
+										<li class="page-item"><a class="page-link" href="commu_All.jsp?pageNumber=<%= pageNumber + 1 %>&searchField=<%=searchField%>&searchText=<%=searchText%>">다음<i class="lnr lnr-chevron-right"></i></a></li>
+									<%
+										}
+									%>
+									</ul>
+								</div>
+							</div>
                      <!--  페이지 넘기기 END-->
                   </div>
                </div>

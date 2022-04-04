@@ -1,4 +1,6 @@
 <%@page import="Model.MemberDTO" %>
+<%@page import="Model.CommunityDAO"%>
+<%@page import="Model.CommunityDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 
@@ -63,6 +65,12 @@
 			userID = info.getM_id();
 		}
 		
+		int article_seq = 0;
+		if (request.getParameter("article_seq") != null) {
+			article_seq = Integer.parseInt(request.getParameter("article_seq"));
+		}
+
+		CommunityDTO dto = new CommunityDAO().getArticle(article_seq);
 	%>
 
    <!-- WRAPPER -->
@@ -105,7 +113,7 @@
                   <!-- 로그아웃시 삭제1 start-->
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
+                           class="img-circle" alt="Avatar"> <span> <%= info.getM_id() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
@@ -213,7 +221,7 @@
                <div class="panel">
 
               <!-- 변경 : action값 frontcontroller에서 받아옴. -->
-               <form action="WriteArticleService.do" method="post" enctype = "multipart/form-data">
+               <form action="UpdateArticleService.do" method="post" enctype = "multipart/form-data">
                   <div class="panel-heading">
                      <h3 class="panel-title">게시판 선택</h3> 
                      <br>
@@ -230,15 +238,16 @@
                      <table class = "table2">
                      <tr>
                         <td>제목</td>
-                        <td><input type ="text" name ="title" size=60 style="width:70%;float:left">
+                        <input type="hidden" name="article_seq" value="<%= dto.getArticle_seq() %>">
+                        <td><input type ="text" name ="title" value="<%=dto.getArticle_title().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>" size=60 style="width:70%;float:left">
                            &nbsp;
-                           <input name="fileName" type="file" style="width:28%; float: right;"></td>
+                           <input name="fileName" type="file" value="<%= dto.getArticle_file() %>"style="width:28%; float: right;"></td>
                      </tr>
                      <br>
                      <br>
                      <tr>
                         <td>내용</td>
-                        <td><textarea name = content cols=92 rows=15></textarea></td>
+                        <td><textarea name = "content" value="<%=dto.getArticle_content().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%>" cols=92 rows=15></textarea></td>
                      </tr>
                      </table>
                   

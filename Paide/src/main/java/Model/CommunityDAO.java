@@ -103,12 +103,21 @@ public class CommunityDAO {
 		return c_list;
 	}
 
-	// getNext 메소드(전체)
-	public int getNext() {
+	// getNext 메소드(검색용)
+	public int getNext(String searchField, String searchText) {
 		PreparedStatement psmt2;
 		ResultSet rs2;
+		dbconn();
 		try {
-			String sql = "select count(*) from t_community where available = 1";
+			String sql = "SELECT COUNT(*) FROM t_community WHERE "
+					+ searchField.trim();
+
+			if(searchText != null && !searchText.equals("")) {
+				sql += " LIKE '%"
+					+ searchText.trim()
+					+ "%'";	
+					};
+			
 			psmt2 = conn.prepareStatement(sql);
 
 			rs2 = psmt2.executeQuery();
@@ -182,50 +191,50 @@ public class CommunityDAO {
 	}
 
 	// 게시물 목록 보기 메소드(전체)
-	public ArrayList<CommunityDTO> getList(int pageNumber) {
-		dbconn();
-		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
-		try {
-			String sql = "select * from t_community where article_seq < ? and available = 1 and rownum < 11  order by article_seq desc";
-			psmt = conn.prepareStatement(sql);
+	// public ArrayList<CommunityDTO> getList(int pageNumber) {
+		//dbconn();
+		//ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
+		//try {
+			//String sql = "select * from t_community where article_seq < ? and available = 1 and rownum < 11  order by article_seq desc";
+			//psmt = conn.prepareStatement(sql);
 			// and rownum< 11
 			// select * from t_board where article_seq < 10 order by article_seq desc
-			int check1 = getNext();
-			int check2 = pageNumber;
-			int test = check1 - (check2 - 1) * 10;
-			System.out.println("check1 : " + check1 + ", check2 : " + check2);
+			//int check1 = getNext();
+			//int check2 = pageNumber;
+			//int test = check1 - (check2 - 1) * 10;
+			//System.out.println("check1 : " + check1 + ", check2 : " + check2);
 
-			psmt.setInt(1, test);
+			//psmt.setInt(1, test);
 
-			rs = psmt.executeQuery();
+			//rs = psmt.executeQuery();
 
-			while (rs.next()) {
-				int article_seq = rs.getInt(1);
-				String article_title = rs.getString(2);
-				String article_content = rs.getString("article_content");
-				String article_file = rs.getString("article_file");
-				String article_date = rs.getString("article_date");
-				String m_id = rs.getString("m_id");
-				String article_category = rs.getString("article_category");
+			//while (rs.next()) {
+				//int article_seq = rs.getInt(1);
+				//String article_title = rs.getString(2);
+			//	String article_content = rs.getString("article_content");
+				//String article_file = rs.getString("article_file");
+			//	String article_date = rs.getString("article_date");
+			//	String m_id = rs.getString("m_id");
+			//	String article_category = rs.getString("article_category");
 
-				codto = new CommunityDTO(article_seq, article_title, article_content, article_file, article_date, m_id,
-						article_category);
-				list.add(codto);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			dbclose();
-		}
-		return list;
-	}
+			//	codto = new CommunityDTO(article_seq, article_title, article_content, article_file, article_date, m_id,
+			//			article_category);
+			//	list.add(codto);
+			//}
+		//} catch (Exception e) {
+		//	e.printStackTrace();
+	//	} finally {
+			//dbclose();
+		//}
+		//return list;
+	//}
 
 	// 게시글 목록 보기 메소드(카테고리별)
 	public ArrayList<CommunityDTO> getList(int pageNumber, String category) {
 		dbconn();
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
 		try {
-			String sql = "SELECT SA2.* FROM( SELECT ROWNUM R1, SA1.* FROM(SELECT * FROM t_community where article_category = ? ORDER BY article_date)SA1)SA2 WHERE R1 > ? AND R1 < ?";
+			String sql = "SELECT SA2.* FROM( SELECT ROWNUM R1, SA1.* FROM(SELECT * FROM t_community WHERE article_category = ? AND available = 1 ORDER BY article_date DESC)SA1)SA2 WHERE R1 > ? AND R1 < ?";
 			psmt = conn.prepareStatement(sql);
 			// int check1 = getNext();
 			// int check2 = pageNumber;
@@ -262,26 +271,26 @@ public class CommunityDAO {
 		return list;
 	}
 
-	// 마지막 게시글 다음 번호 찾기 메소드 (카테고리별)s
-	public boolean nextPage(int pageNumber, String category) {
-		dbconn();
-		try {
-			String sql = "select * from t_community where article_category = ? and rownum < ?";
+	// 마지막 게시글 다음 번호 찾기 메소드 (카테고리별)
+	// public boolean nextPage(int pageNumber, String category) {
+	//	dbconn();
+	//	try {
+	//		String sql = "select * from t_community where article_category = ? and rownum < ?";
 
-			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+	//		psmt = conn.prepareStatement(sql);
+	//		psmt.setInt(1, getNext() - (pageNumber - 1) * 10);
 
-			rs = psmt.executeQuery();
+	//		rs = psmt.executeQuery();
 
-			if (rs.next()) {
-				return true;
-			}
+	//		if (rs.next()) {
+	//			return true;
+	//		}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
+	//	} catch (Exception e) {
+	//		e.printStackTrace();
+	//	}
+	//	return false;
+	//}
 
 	// 게시글 삭제 메소드
 	public int Delete_C(int article_seq) {
@@ -756,33 +765,35 @@ public class CommunityDAO {
 			
 			String sql = "SELECT SA2.* FROM( SELECT ROWNUM R1, SA1.* FROM(SELECT * FROM t_community WHERE "
 					+ searchField.trim();
-
-			if(searchText != null && !searchText.equals("")) {
-				sql += " LIKE '%"
-					+ searchField.trim()
-					+ "ORDER BY article_date)SA1)SA2 WHERE R1 > ? AND R1 < ?";	
+			
+					 if(searchText != null && !searchText.equals("")) {
+					 sql += " LIKE '%"
+					     + searchText.trim()
+					     + "%' AND available = 1 ORDER BY article_date DESC)SA1)SA2 WHERE R1 > "
+					     + (pageNumber - 1) * 10
+					     + "AND R1 < "
+					     + (pageNumber - 1) * 10 + 11;
 					};
-					
+
 			psmt = conn.prepareStatement(sql);
 	
-			psmt.setInt(1, (pageNumber - 1) * 10);
-			psmt.setInt(2, (pageNumber - 1) * 10 + 11);
+			// psmt.setInt(1, (pageNumber - 1) * 10);
+			// psmt.setInt(2, (pageNumber - 1) * 10 + 11);
 			
-			psmt = conn.prepareStatement(sql);
-
 			rs = psmt.executeQuery();
+			while (rs.next()) {
+				int article_seq = rs.getInt(2);
+				String article_title = rs.getString(3);
+				String article_content = rs.getString("article_content");
+				String article_file = rs.getString("article_file");
+				String article_date = rs.getString("article_date");
+				String m_id = rs.getString("m_id");
+				String article_category = rs.getString("article_category");
 
-			int article_seq = rs.getInt(1);
-			String article_title = rs.getString(2);
-			String article_content = rs.getString("article_content");
-			String article_file = rs.getString("article_file");
-			String article_date = rs.getString("article_date");
-			String m_id = rs.getString("m_id");
-			String article_category = rs.getString("article_category");
-			codto = new CommunityDTO(article_seq, article_title, article_content, article_file, article_date, m_id,
-					article_category);
-			list.add(codto);
-			
+				codto = new CommunityDTO(article_seq, article_title, article_content, article_file, article_date, m_id,
+						article_category);
+				list.add(codto);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -27,7 +27,7 @@ public class DeleteArticleService implements Command {
 			System.out.println("삭제가 완료되었습니다.");
 		}
 		
-		return "BoardMain.jsp";
+		return "commu_D.jsp";
 	}
 
 }

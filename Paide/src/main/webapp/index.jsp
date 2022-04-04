@@ -48,7 +48,7 @@
             <div class="navbar-btn">
                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
-            <form class="navbar-form navbar-left" method="post" name="search" action="commu_All.jsp">
+            <form action="commu_All.jsp" class="navbar-form navbar-left" method="post">
                <div class="input-group">
                   <table>
                      <tr>
