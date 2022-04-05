@@ -194,7 +194,7 @@
                <div class="panel ">
                <!-- form  -->
                <!--변경 대매니 action = 농장검색 서비스에서 => farmSelect_Choice.jsp   -->
-                  <form action="SearchFarmlistService.do" name="farmSelect">
+                  <form action="SearchFarmlistService.do" name="farmSelect"  onSubmit="return CheckForm(this)">
                      <div class="panel-body">
                         <div class="panel">
                            <div class="panel-heading">
@@ -292,6 +292,56 @@
    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
    <script src="assets/scripts/klorofil-common.js"></script>
    <script>
+   
+   function CheckForm(Join){
+
+       let iscropsChk = false;
+       let isregionsChk = false;
+       let isfacsChk = false;
+       let arr_crops = document.getElementsByName("f_crops");
+       let arr_regions = document.getElementsByName("f_region");
+       let arr_facs = document.getElementsByName("f_facility");
+       for(let i=0; i<arr_crops.length; i++){
+           if(arr_crops[i].checked == true) {
+               iscropsChk = true;
+               break;
+           }
+       }
+   
+       if(!iscropsChk){
+           alert("재배작물의 종류를 한개 이상 선택해주세요.");
+           return false;
+       }
+       
+       for(let i=0; i<arr_facs.length;i++){
+           if(arr_facs[i].checked == true) {
+               isfacsChk = true;
+               break;
+           }
+       }
+   
+       if(!isfacsChk){
+           alert("시설유형의 종류를 한개 이상 선택해주세요.");
+           return false;
+       }
+       
+       for(let i=0; i<arr_regions.length;i++){
+           if(arr_regions[i].checked == true) {
+               isregionsChk = true;
+               break;
+           }
+       }
+   
+       if(!isregionsChk){
+           alert("농장지역의 종류를 한개 이상 선택해주세요.");
+           return false;
+       }
+       
+      
+
+   }
+
+   
       $(function () {
          var data, options;
 

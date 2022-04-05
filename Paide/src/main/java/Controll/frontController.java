@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import Inter.Command;
 import Service.AddFarmService;
+import Service.AddSubscriptionService;
 import Service.CheckFarmNameService;
 import Service.CheckIDService;
 import Service.CheckInfoService;
 import Service.DeleteArticleService;
 import Service.DeleteCmtService;
 import Service.DeleteFarmService;
+import Service.DeleteSubscriptionService;
 import Service.EditFarmService;
 import Service.IDSendMailService;
 import Service.JoinService;
@@ -163,6 +165,12 @@ public class frontController extends HttpServlet {
 			
 		} else if (command.equals("WriteFCmtService.do")) {
 			com = new WriteFCmtService();
+			nextpage = com.execute(request, response);
+		} else if (command.equals("AddSubscriptionService.do")) {
+			com = new AddSubscriptionService();
+			nextpage = com.execute(request, response);
+		} else if (command.equals("DeleteSubscriptionService.do")) {
+			com = new DeleteSubscriptionService();
 			nextpage = com.execute(request, response);
 		}
 		

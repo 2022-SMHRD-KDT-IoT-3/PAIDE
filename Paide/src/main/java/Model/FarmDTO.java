@@ -86,7 +86,7 @@ public class FarmDTO {
 	
 	
 	//농장검색 생성자
-	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String name) {
+	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String f_name) {
 		super();
 		this.f_seq = f_seq;
 		this.f_owner_id = f_owner_id;
@@ -97,9 +97,9 @@ public class FarmDTO {
 	}
 	
 	// 농장 상세보기 생성자
-	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility,
+	public FarmDTO(int f_seq, String f_owner_id, String f_region, String f_crops, String f_facility, String f_name,
 			int env_seq, double temperature, double temperature_outer, double humidity, double humidity_outer,
-			double humidity_soil, double insolation, double window_opened, double co2, double dew_point, String env_date, String f_name) {
+			double humidity_soil, double insolation, double window_opened, double co2, double dew_point, String env_date) {
 		super();
 		this.f_seq = f_seq;
 		this.f_owner_id = f_owner_id;
@@ -107,6 +107,7 @@ public class FarmDTO {
 		this.f_region = f_region;
 		this.f_crops = f_crops;
 		this.f_facility = f_facility;
+		this.f_name = f_name;
 		this.env_seq = env_seq;
 		this.temperature = temperature;
 		this.temperature_outer = temperature_outer;
@@ -123,7 +124,7 @@ public class FarmDTO {
 	//꺾은선 그래프 생성자
 	public FarmDTO(double temperature, double temperature_outer, double humidity, double humidity_outer,
 			double humidity_soil, double insolation, double window_opened, double co2, double dew_point,
-			String env_date, String m_id) {
+			String env_date, int f_seq) {
 		super();
 		this.temperature = temperature;
 		this.temperature_outer = temperature_outer;
@@ -135,7 +136,7 @@ public class FarmDTO {
 		this.co2 = co2;
 		this.dew_point = dew_point;
 		this.env_date = env_date;
-		this.m_id = m_id;
+		this.f_seq = f_seq;
 	}
 	
 

@@ -50,10 +50,7 @@
  	String regions = request.getParameter(URLDecoder.decode("regions", "UTF-8"));
  	String facility = request.getParameter(URLDecoder.decode("facs", "UTF-8"));
  	ArrayList<FarmDTO> farmlist = new FarmDAO().SearchFarm(crops, regions, facility);
- 	System.out.println(farmlist.get(0).getF_crops());
- 	System.out.println(farmlist.get(0).getF_region());
-%>
-<% MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
+ MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
    <!-- WRAPPER -->
    <div id="wrapper">
       <!-- NAVBAR -->
@@ -234,7 +231,7 @@
                            <!-- 반복 Start -->
                            <tr>
                               <!-- ?대맨 : 농장의 이름이 뭐지  -->
-                              <td>?농장이름</td>
+                              <td>농장이름</td>
                               <td>(f_region)</td>
                               <td>(f_crops)</td>
                               <td>(f_facility)</td>
@@ -246,53 +243,9 @@
                               </td>
                            </tr>
                            <!-- 반복 end -->
-                           <tr>
-                              <td>대매니의 딸기농장</td>
-                              <td>광주광역시</td>
-                              <td>딸기</td>
-                              <td>유리온실</td>
-                              <td>
-                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
-                                          class="fa fa-line-chart"></span>
-                                       <span class="cssclass"></span></span></a>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>대매니의 딸기농장</td>
-                              <td>광주광역시</td>
-                              <td>딸기</td>
-                              <td>유리온실</td>
-                              <td>
-                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
-                                          class="fa fa-line-chart"></span>
-                                       <span class="cssclass"></span></span></a>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>대매니의 딸기농장</td>
-                              <td>광주광역시</td>
-                              <td>딸기</td>
-                              <td>유리온실</td>
-                              <td>
-                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
-                                          class="fa fa-line-chart"></span>
-                                       <span class="cssclass"></span></span></a>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>대매니의 딸기농장</td>
-                              <td>광주광역시</td>
-                              <td>딸기</td>
-                              <td>유리온실</td>
-                              <td>
-                                 <a href="OtherFarm_detail.jsp"><span style="color:#3f7647"><span
-                                          class="fa fa-line-chart"></span>
-                                       <span class="cssclass"></span></span></a>
-                              </td>
-                           </tr>
                            <% for(int i = 0; i<farmlist.size(); i++){ %>
                            <tr>
-                           		<% if(!"delete".equals(farmlist.get(i).getF_owner_id())){ %>
+                           		<% if(!"delete".equals(farmlist.get(i).getF_owner_id()) && !info.getM_id().equals(farmlist.get(i).getF_owner_id())){ %>
                            <td><%= farmlist.get(i).getF_name() %></td>
                            <td><%= farmlist.get(i).getF_region() %></td>
                            <td><%= farmlist.get(i).getF_crops() %></td>
@@ -302,7 +255,7 @@
                            <td>유리온실</td>
                            <%} %>
                            <td>
-                                 <a href="OtherFarm_detail.html"><span style="color:#3f7647"><span
+                                 <a href="OtherFarm.jsp?seq=<%=farmlist.get(i).getF_seq()%>"><span style="color:#3f7647"><span
                                           class="fa fa-line-chart"></span>
                                        <span class="cssclass"></span></span></a>
                               </td>

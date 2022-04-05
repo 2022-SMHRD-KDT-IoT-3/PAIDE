@@ -23,9 +23,11 @@ public class DeleteFarmService implements Command{
 		String nextpage = null;
 		String f_name = request.getParameter("fs_name");
 		int cnt = new FarmDAO().delete(f_name);
+		int farmseq = new FarmDAO().searchSeq(f_name);
+		int cnt2 = new FarmDAO().deleteEnv(farmseq);
 		
 		PrintWriter out = response.getWriter();
-		if(cnt>0) {
+		if(cnt>0 && cnt2>0) {
 			System.out.println("농장삭제 성공");
 			out.print("success");
 			out.close();

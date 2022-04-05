@@ -183,349 +183,354 @@ public class FarmDAO {
 
    // 검색한 농장 (메인)상세보기 메소드
    public FarmDTO selectFarm(int seq) {
-      dbconn();
-      try {
-         String sql = "select *" + "from t_farm t, t_env e" + "where t.f_seq = e.f_seq" + "and e.env_date ="
-               + "(select max(env_date) from t_env where f_seq = ?)";
-
-         psmt = conn.prepareStatement(sql);
-         psmt.setInt(1, seq);
-
-         rs = psmt.executeQuery();
-         if (rs.next()) {
-            int f_seq = rs.getInt(1);
-            String f_owner_id = rs.getString(2);
-            String f_region = rs.getString(3);
-            String f_crops = rs.getString(4);
-            String f_facility = rs.getString(5);
-            int env_seq = rs.getInt(7);
-            double temperature = rs.getDouble(9);
-            double temperature_outer = rs.getDouble(10);
-            double humidity = rs.getDouble(11);
-            double hmidity_outer = rs.getDouble(12);
-            double humidity_soil = rs.getDouble(13);
-            double insolation = rs.getDouble(14);
-            double window_opened = rs.getDouble(15);
-            double co2 = rs.getDouble(16);
-            double dew_point = rs.getDouble(17);
-            String env_date = rs.getString(18);
-            String f_name = rs.getString(19);
-
-            fdto = new FarmDTO(f_seq, f_owner_id, f_region, f_crops, f_facility, env_seq, temperature,
-                  temperature_outer, humidity, hmidity_outer, humidity_soil, insolation, window_opened, co2,
-                  dew_point, env_date, f_name);
-         }
-
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return fdto;
+	   dbconn();
+		try {
+			String sql = "select * "
+					+ " from t_farm t, t_env e "
+					+ " where t.f_seq = e.f_seq "
+					+ " and e.env_date = "
+					+ " (select max(env_date) from t_env where f_seq = ?)";
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				int f_seq = rs.getInt(1);
+				String f_owner_id = rs.getString(2);
+				String f_region = rs.getString(3);
+				String f_crops = rs.getString(4);
+				String f_facility = rs.getString(5);
+				String f_name = rs.getString(7);
+				int env_seq = rs.getInt(8);
+				double temperature = rs.getDouble(10);
+				double temperature_outer = rs.getDouble(11);
+				double humidity = rs.getDouble(12);
+				double hmidity_outer = rs.getDouble(13);
+				double humidity_soil = rs.getDouble(14);
+				double insolation = rs.getDouble(15);
+				double window_opened = rs.getDouble(16);
+				double co2 = rs.getDouble(17);
+				double dew_point = rs.getDouble(18);
+				String env_date = rs.getString(19);
+				
+				fdto = new FarmDTO(f_seq,f_owner_id,f_region,f_crops, f_facility,f_name, env_seq, temperature, temperature_outer,humidity,hmidity_outer,humidity_soil,insolation,window_opened,co2,dew_point,env_date);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return fdto;
    }
 
    // 내 농장 (메인)상세보기 메소드
    public FarmDTO myFarm(String m_id) {
-      dbconn();
-      try {
-         String sql = "select *" + "from t_farm t, t_env e" + "where t.f_seq = e.f_seq" + "and e.env_date ="
-               + "(select max(env_date) from t_env where m_id = ?)";
-
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, m_id);
-
-         rs = psmt.executeQuery();
-         if (rs.next()) {
-            int f_seq = rs.getInt(1);
-            String f_owner_id = rs.getString(2);
-            String f_region = rs.getString(3);
-            String f_crops = rs.getString(4);
-            String f_facility = rs.getString(5);
-            int env_seq = rs.getInt(7);
-            double temperature = rs.getDouble(9);
-            double temperature_outer = rs.getDouble(10);
-            double humidity = rs.getDouble(11);
-            double hmidity_outer = rs.getDouble(12);
-            double humidity_soil = rs.getDouble(13);
-            double insolation = rs.getDouble(14);
-            double window_opened = rs.getDouble(15);
-            double co2 = rs.getDouble(16);
-            double dew_point = rs.getDouble(17);
-            String env_date = rs.getString(18);
-            String f_name = rs.getString(19);
-
-            fdto = new FarmDTO(f_seq, f_owner_id, f_region, f_crops, f_facility, env_seq, temperature,
-                  temperature_outer, humidity, hmidity_outer, humidity_soil, insolation, window_opened, co2,
-                  dew_point, env_date, f_name);
-         }
-
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return fdto;
+	   dbconn();
+		try {
+			String sql = "select *"
+					+ " from t_farm t, t_env e "
+					+ " where t.f_seq = e.f_seq "
+					+ " and e.env_date = "
+					+ " (select max(env_date) from t_env where f_seq = ?) ";
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, m_id);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				int f_seq = rs.getInt(1);
+				String f_owner_id = rs.getString(2);
+				String f_region = rs.getString(3);
+				String f_crops = rs.getString(4);
+				String f_facility = rs.getString(5);
+				String f_name = rs.getString(7);
+				int env_seq = rs.getInt(8);
+				double temperature = rs.getDouble(9);
+				double temperature_outer = rs.getDouble(10);
+				double humidity = rs.getDouble(11);
+				double hmidity_outer = rs.getDouble(12);
+				double humidity_soil = rs.getDouble(13);
+				double insolation = rs.getDouble(14);
+				double window_opened = rs.getDouble(15);
+				double co2 = rs.getDouble(16);
+				double dew_point = rs.getDouble(17);
+				String env_date = rs.getString(18);
+				
+				fdto = new FarmDTO(f_seq,f_owner_id,f_region,f_crops, f_facility,f_name, env_seq, temperature, temperature_outer,humidity,hmidity_outer,humidity_soil,insolation,window_opened,co2,dew_point,env_date);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return fdto;
    }
 
    // 꺾은선그래프
-   public ArrayList<FarmDTO> envGraph(String date, String owner_id) {
-      ArrayList<FarmDTO> graph1 = new ArrayList<>();
-      dbconn();
-      try {
-         String sql = "select temperature_outer, humidity_outer, temperature, humidity, dew_point, co2, window_opened, humidity_soil, insolation, to_char(env_date, 'YYYYMMDD HH24:MI'), m_id"
-               + "from t_env" + "where to_char(env_date, 'YYYY-MM-DD') = ? and m_id = ?";
-         psmt = conn.prepareStatement(sql);
+   public ArrayList<FarmDTO> envGraph(String date, int seq) {
+	      ArrayList<FarmDTO> graph1 = new ArrayList<>();
+	      dbconn();
+	      try {
+	         String sql = "select temperature_outer, humidity_outer, temperature, humidity, dew_point, co2, window_opened, humidity_soil, insolation, to_char(env_date, 'YYYYMMDD HH24:MI'), f_seq "
+	               + " from t_env " 
+	               + " where to_char(env_date, 'YYYY-MM-DD') = ? and f_seq = ? "
+	               + " order by env_date ";
+	         psmt = conn.prepareStatement(sql);
 
-         psmt.setString(1, date);
-         psmt.setString(2, owner_id);
+	         psmt.setString(1, date);
+	         psmt.setInt(2, seq);
 
-         rs = psmt.executeQuery();
-         while (rs.next()) {
-            int temperature_outer = rs.getInt(1);
-            int humidity_outer = rs.getInt(2);
-            int temperature = rs.getInt(3);
-            int humidity = rs.getInt(4);
-            int dew_point = rs.getInt(5);
-            int co2 = rs.getInt(6);
-            int window_opened = rs.getInt(7);
-            int humidity_soil = rs.getInt(8);
-            int insolation = rs.getInt(9);
-            String env_date = rs.getString(10);
-            String m_id = rs.getString(11);
+	         rs = psmt.executeQuery();
+	         while (rs.next()) {
+	            int temperature_outer = rs.getInt(1);
+	            int humidity_outer = rs.getInt(2);
+	            int temperature = rs.getInt(3);
+	            int humidity = rs.getInt(4);
+	            int dew_point = rs.getInt(5);
+	            int co2 = rs.getInt(6);
+	            int window_opened = rs.getInt(7);
+	            int humidity_soil = rs.getInt(8);
+	            int insolation = rs.getInt(9);
+	            String env_date = rs.getString(10);
+	            int f_seq = rs.getInt(11);
 
-            fdto = new FarmDTO(temperature, temperature_outer, humidity, humidity_outer, humidity_soil, insolation,
-                  window_opened, co2, dew_point, env_date, owner_id);
-            graph1.add(fdto);
-         }
+	            fdto = new FarmDTO(temperature, temperature_outer, humidity, humidity_outer, humidity_soil, insolation,
+	                  window_opened, co2, dew_point, env_date, f_seq);
+	            graph1.add(fdto);
+	         }
 
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return graph1;
-   }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return graph1;
+	   }
 
    // 과거 일주일 온도,습도,일사량,토양습도,co2
-   public GraphDTO avgGraph_7(String owner_id) {
-      dbconn();
-      try {
-         String sql = "SELECT round(avg(temperature_outer),2), round(avg(temperature),2), round(avg(humidity_outer),2), round(avg(humidity),2), round(avg(insolation),2),round(avg(co2),2),round(avg(humidity_soil),2)"
-               + "FROM T_ENV" + "WHERE m_id = ?"
-               + "and ENV_DATE BETWEEN (SELECT SYSDATE-7 FROM DUAL) AND (SELECT SYSDATE-1 FROM DUAL)";
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, owner_id);
-         rs = psmt.executeQuery();
-         if (rs.next()) {
-            int avg_temperature_outer = rs.getInt(1);
-            int avg_temperature = rs.getInt(2);
-            int avg_humidity_outer = rs.getInt(3);
-            int avg_humidity = rs.getInt(4);
-            int avg_insolation = rs.getInt(5);
-            int avg_co2 = rs.getInt(6);
-            int avg_humidity_soil = rs.getInt(7);
+   public GraphDTO avgGraph_7(int seq) {
+	      dbconn();
+	      try {
+	         String sql = "SELECT round(avg(temperature_outer),2), round(avg(temperature),2), round(avg(humidity_outer),2), round(avg(humidity),2), round(avg(insolation),2),round(avg(co2),2),round(avg(humidity_soil),2) "
+	               + " FROM T_ENV " 
+	               + " WHERE f_seq = ? "
+	               + " and ENV_DATE BETWEEN (SELECT SYSDATE-7 FROM DUAL) AND (SELECT SYSDATE-1 FROM DUAL) ";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         rs = psmt.executeQuery();
+	         if (rs.next()) {
+	            int avg_temperature_outer = rs.getInt(1);
+	            int avg_temperature = rs.getInt(2);
+	            int avg_humidity_outer = rs.getInt(3);
+	            int avg_humidity = rs.getInt(4);
+	            int avg_insolation = rs.getInt(5);
+	            int avg_co2 = rs.getInt(6);
+	            int avg_humidity_soil = rs.getInt(7);
 
-            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
-                  avg_insolation, avg_co2, avg_humidity_soil);
-         }
+	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
+	                  avg_insolation, avg_co2, avg_humidity_soil);
+	         }
 
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return gdto;
-   }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return gdto;
+	   }
 
    // 당일 온도,습도,일사량,토양습도,co2
-   public GraphDTO avgGraph_today(String owner_id) {
-      dbconn();
-      try {
-         String sql = "SELECT round(avg(temperature_outer),2), round(avg(temperature),2), round(avg(humidity_outer),2), round(avg(humidity),2), round(avg(insolation),2),round(avg(co2),2),round(avg(humidity_soil),2)"
-               + "FROM T_ENV" + "WHERE m_id = ?"
-               + "and to_char(env_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')";
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, owner_id);
-         rs = psmt.executeQuery();
-         if (rs.next()) {
-            int avg_temperature_outer = rs.getInt(1);
-            int avg_temperature = rs.getInt(2);
-            int avg_humidity_outer = rs.getInt(3);
-            int avg_humidity = rs.getInt(4);
-            int avg_insolation = rs.getInt(5);
-            int avg_co2 = rs.getInt(6);
-            int avg_humidity_soil = rs.getInt(7);
+   public GraphDTO avgGraph_today(int seq) {
+	      dbconn();
+	      try {
+	         String sql = "SELECT round(avg(temperature_outer),2), round(avg(temperature),2), round(avg(humidity_outer),2), round(avg(humidity),2), round(avg(insolation),2),round(avg(co2),2),round(avg(humidity_soil),2) "
+	               + " FROM T_ENV" + "WHERE f_seq = ? "
+	               + " and to_char(env_date, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD') ";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         rs = psmt.executeQuery();
+	         if (rs.next()) {
+	            int avg_temperature_outer = rs.getInt(1);
+	            int avg_temperature = rs.getInt(2);
+	            int avg_humidity_outer = rs.getInt(3);
+	            int avg_humidity = rs.getInt(4);
+	            int avg_insolation = rs.getInt(5);
+	            int avg_co2 = rs.getInt(6);
+	            int avg_humidity_soil = rs.getInt(7);
 
-            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
-                  avg_insolation, avg_co2, avg_humidity_soil);
-         }
+	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
+	                  avg_insolation, avg_co2, avg_humidity_soil);
+	         }
 
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return gdto;
-   }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return gdto;
+	   }
 
    // 과거 30일 온도,습도,일사량,토양습도,co2
-   public GraphDTO avgGraph_30(String owner_id) {
-      dbconn();
-      try {
-         String sql = "SELECT round(avg(temperature_outer),2), round(avg(temperature),2), round(avg(humidity_outer),2), round(avg(humidity),2), round(avg(insolation),2),round(avg(co2),2),round(avg(humidity_soil),2)"
-               + "FROM T_ENV" + "WHERE m_id = ?"
-               + "and ENV_DATE BETWEEN (SELECT SYSDATE-30 FROM DUAL) AND (SELECT SYSDATE-1 FROM DUAL)";
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, owner_id);
-         rs = psmt.executeQuery();
-         if (rs.next()) {
-            int avg_temperature_outer = rs.getInt(1);
-            int avg_temperature = rs.getInt(2);
-            int avg_humidity_outer = rs.getInt(3);
-            int avg_humidity = rs.getInt(4);
-            int avg_insolation = rs.getInt(5);
-            int avg_co2 = rs.getInt(6);
-            int avg_humidity_soil = rs.getInt(7);
+   public GraphDTO avgGraph_30(int seq) {
+	      dbconn();
+	      try {
+	         String sql = "SELECT round(avg(temperature_outer),2), round(avg(temperature),2), round(avg(humidity_outer),2), round(avg(humidity),2), round(avg(insolation),2),round(avg(co2),2),round(avg(humidity_soil),2) "
+	               + " FROM T_ENV" + "WHERE f_seq = ? "
+	               + " and ENV_DATE BETWEEN (SELECT SYSDATE-30 FROM DUAL) AND (SELECT SYSDATE-1 FROM DUAL) ";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         rs = psmt.executeQuery();
+	         if (rs.next()) {
+	            int avg_temperature_outer = rs.getInt(1);
+	            int avg_temperature = rs.getInt(2);
+	            int avg_humidity_outer = rs.getInt(3);
+	            int avg_humidity = rs.getInt(4);
+	            int avg_insolation = rs.getInt(5);
+	            int avg_co2 = rs.getInt(6);
+	            int avg_humidity_soil = rs.getInt(7);
 
-            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
-                  avg_insolation, avg_co2, avg_humidity_soil);
-         }
+	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
+	                  avg_insolation, avg_co2, avg_humidity_soil);
+	         }
 
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return gdto;
-   }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return gdto;
+	   }
 
    // 최고최저 온도
-   public ArrayList<GraphDTO> temp_HL(String owner_id) {
-      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
-      dbconn();
-      try {
-         String sql = "SELECT TEMPERATURE, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE TEMPERATURE =(SELECT MAX(TEMPERATURE)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL"
-               + "SELECT TEMPERATURE, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE TEMPERATURE =(SELECT MIN(TEMPERATURE)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD'));";
+   public ArrayList<GraphDTO> temp_HL(int seq) {
+	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
+	      dbconn();
+	      try {
+	         String sql = "SELECT TEMPERATURE, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE TEMPERATURE =(SELECT MAX(TEMPERATURE)" + "FROM T_ENV" + "WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL "
+	               + " SELECT TEMPERATURE, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE TEMPERATURE =(SELECT MIN(TEMPERATURE) " + " FROM T_ENV" + "WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) ";
 
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, owner_id);
-         psmt.setString(2, owner_id);
-         rs = psmt.executeQuery();
-         while (rs.next()) {
-            int temp_HL = rs.getInt(1);
-            String time = rs.getString(2);
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         psmt.setInt(2, seq);
+	         rs = psmt.executeQuery();
+	         while (rs.next()) {
+	            int temp_HL = rs.getInt(1);
+	            String time = rs.getString(2);
 
-            gdto = new GraphDTO(temp_HL, time);
-            env_HL.add(gdto);
-         }
+	            gdto = new GraphDTO(temp_HL, time);
+	            env_HL.add(gdto);
+	         }
 
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return env_HL;
-   }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return env_HL;
+	   }
 
    // 최고최저 습도
-   public ArrayList<GraphDTO> humi_HL(String owner_id) {
-      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
-      dbconn();
-      try {
-         String sql = "SELECT HUMIDITY, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE HUMIDITY =(SELECT MAX(HUMIDITY)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL"
-               + "SELECT HUMIDITY, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE HUMIDITY =(SELECT MIN(HUMIDITY)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD'));";
+   public ArrayList<GraphDTO> humi_HL(int seq) {
+	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
+	      dbconn();
+	      try {
+	         String sql = "SELECT HUMIDITY, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE HUMIDITY =(SELECT MAX(HUMIDITY) " + " FROM T_ENV " + " WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL "
+	               + " SELECT HUMIDITY, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE HUMIDITY =(SELECT MIN(HUMIDITY) " + " FROM T_ENV " + " WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) ";
 
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, owner_id);
-         psmt.setString(2, owner_id);
-         rs = psmt.executeQuery();
-         while (rs.next()) {
-            int temp_HL = rs.getInt(1);
-            String time = rs.getString(2);
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         psmt.setInt(2, seq);
+	         rs = psmt.executeQuery();
+	         while (rs.next()) {
+	            int temp_HL = rs.getInt(1);
+	            String time = rs.getString(2);
 
-            gdto = new GraphDTO(temp_HL, time);
-            env_HL.add(gdto);
-         }
+	            gdto = new GraphDTO(temp_HL, time);
+	            env_HL.add(gdto);
+	         }
 
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return env_HL;
-   }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return env_HL;
+	   }
 
    // 최고최저 일사량
-   public ArrayList<GraphDTO> insol_HL(String owner_id) {
-      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
-      dbconn();
-      try {
-         String sql = "SELECT INSOLATION, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE INSOLATION =(SELECT MAX(INSOLATION)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL"
-               + "SELECT INSOLATION, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE INSOLATION =(SELECT MIN(INSOLATION)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD'));";
+   public ArrayList<GraphDTO> insol_HL(int seq) {
+	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
+	      dbconn();
+	      try {
+	         String sql = "SELECT INSOLATION, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE INSOLATION =(SELECT MAX(INSOLATION) " + " FROM T_ENV " + " WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL "
+	               + " SELECT INSOLATION, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE INSOLATION =(SELECT MIN(INSOLATION) " + " FROM T_ENV " + " WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) ";
 
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, owner_id);
-         psmt.setString(2, owner_id);
-         rs = psmt.executeQuery();
-         while (rs.next()) {
-            int temp_HL = rs.getInt(1);
-            String time = rs.getString(2);
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         psmt.setInt(2, seq);
+	         rs = psmt.executeQuery();
+	         while (rs.next()) {
+	            int temp_HL = rs.getInt(1);
+	            String time = rs.getString(2);
 
-            gdto = new GraphDTO(temp_HL, time);
-            env_HL.add(gdto);
-         }
+	            gdto = new GraphDTO(temp_HL, time);
+	            env_HL.add(gdto);
+	         }
 
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return env_HL;
-   }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return env_HL;
+	   }
 
    // 최고최저 토양습도
-   public ArrayList<GraphDTO> soil_HL(String owner_id) {
-      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
-      dbconn();
-      try {
-         String sql = "SELECT HUMIDITY_SOIL, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE HUMIDITY_SOIL =(SELECT MAX(HUMIDITY_SOIL)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL"
-               + "SELECT HUMIDITY_SOIL, TO_CHAR (ENV_DATE, 'HH24:MI')" + "FROM T_ENV"
-               + "WHERE HUMIDITY_SOIL =(SELECT MIN(HUMIDITY_SOIL)" + "FROM T_ENV" + "WHERE M_ID = ?"
-               + "AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD'));";
+   public ArrayList<GraphDTO> soil_HL(int seq) {
+	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
+	      dbconn();
+	      try {
+	         String sql = "SELECT HUMIDITY_SOIL, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE HUMIDITY_SOIL =(SELECT MAX(HUMIDITY_SOIL) " + " FROM T_ENV " + " WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) UNION ALL "
+	               + " SELECT HUMIDITY_SOIL, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
+	               + " WHERE HUMIDITY_SOIL =(SELECT MIN(HUMIDITY_SOIL) " + " FROM T_ENV " + " WHERE f_seq = ? "
+	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) ";
 
-         psmt = conn.prepareStatement(sql);
-         psmt.setString(1, owner_id);
-         psmt.setString(2, owner_id);
-         rs = psmt.executeQuery();
-         while (rs.next()) {
-            int temp_HL = rs.getInt(1);
-            String time = rs.getString(2);
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         psmt.setInt(2, seq);
+	         rs = psmt.executeQuery();
+	         while (rs.next()) {
+	            int temp_HL = rs.getInt(1);
+	            String time = rs.getString(2);
 
-            gdto = new GraphDTO(temp_HL, time);
-            env_HL.add(gdto);
-         }
+	            gdto = new GraphDTO(temp_HL, time);
+	            env_HL.add(gdto);
+	         }
 
-      } catch (SQLException e) {
-         e.printStackTrace();
-      } finally {
-         dbclose();
-      }
-      return env_HL;
-   }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return env_HL;
+	   }
 
    // 농장 환경 데이터 DB 저장 메소드
    public int eData(FarmDTO fdto) {
@@ -688,5 +693,60 @@ public class FarmDAO {
 		}
  		return list;
  	}
+ 	
+ // 농장 seq 찾기 메소드
+  	public int searchSeq(String f_name) {
+  		int f_seq = 0;
+  		dbconn();
+  		try {
+ 			String sql = "select f_seq from t_farm where f_name = ?";
+ 			psmt = conn.prepareStatement(sql);
+ 			psmt.setString(1, f_name);
+ 			rs = psmt.executeQuery();
+ 			if(rs.next()) {
+ 				f_seq = rs.getInt(1);
+ 			}
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}finally {
+ 			dbclose();
+ 		}
+  		return f_seq;
+  	}
+  	
+  	
+  	// 농장환경 초기 데이터 메소드
+  	public int firstEnv(int f_seq, String m_id) {
+  		dbconn();
+  		try {
+ 			String sql = "insert into t_env values(t_env_seq.nextval,?,0,0,0,0,0,0,0,0,0,sysdate,?)";
+ 			psmt = conn.prepareStatement(sql);
+ 			psmt.setInt(1, f_seq);
+ 			psmt.setString(2, m_id);
+ 			cnt = psmt.executeUpdate();
+ 			
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}finally {
+ 			dbclose();
+ 		}
+  		return cnt;
+  	}
+  	
+  	//농장삭제시 환경들도 삭제하는 메소드
+  	public int deleteEnv(int f_seq) {
+  		dbconn();
+  		try {
+  			String sql = "update t_env set m_id = 'delete' where f_seq = ?";
+  			psmt = conn.prepareStatement(sql);
+  			psmt.setInt(1, f_seq);
+  			cnt = psmt.executeUpdate();
+  		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}finally {
+ 			dbclose();
+ 		}
+  		return cnt;
+  	}
 
 }

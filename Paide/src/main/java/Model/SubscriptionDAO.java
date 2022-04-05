@@ -55,12 +55,12 @@ public class SubscriptionDAO {
 			dbconn();
 			// 2. DB실행
 			// SQL문 작성
-			String sql = "insert into t_subscription values(subscription_seq.nextval,?,?,sysdate)";
+			String sql = "insert into t_subscription values(t_subscription_seq.nextval,?,?,sysdate)";
 
 			// sql문 db에 전달
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, slist.getSubscription_id());
-			psmt.setInt(2, slist.getFarm_id());
+			psmt.setInt(2, slist.getSubscriptioned_id());
 
 			// sql문 실행
 			cnt = psmt.executeUpdate();
@@ -80,7 +80,7 @@ public class SubscriptionDAO {
 
 		try {
 
-			String sql = "delete from t_subscription where subscription_id = ? and farm_id = ?";
+			String sql = "delete from t_subscription where subscription_id = ? and subscriptioned_id = ?";
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, subscription_id);
@@ -98,26 +98,28 @@ public class SubscriptionDAO {
 	}
 
 	// 구독 목록 전체 보기
-	public ArrayList<MemberDTO> sub_list(String subscription_id) {
-		ArrayList<MemberDTO> list = new ArrayList<>();
+	public ArrayList<SubscriptionDTO> sub_list(String subscript_id) {
+		ArrayList<SubscriptionDTO> list = new ArrayList<>();
 		dbconn();
 
 		try {
-			String sql = "select s.subscription_id, s.subscriptioned_id, m.m_id"
-					+ "from t_subscription s, t_member m, t_farm f"
-					+ "where s.subscriptioned_id = f.f_seq"
-					+ "and f.f_owner_id = m.m_id"
-					+ "and s.subscription_id = ?";
+			String sql = "select s.subscription_id, s.subscriptioned_id, m.m_id, f.f_name "
+					+ " from t_subscription s, t_member m, t_farm f "
+					+ " where s.subscriptioned_id = f.f_seq "
+					+ " and f.f_owner_id = m.m_id "
+					+ " and s.subscription_id = ?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, subscription_id);
+			psmt.setString(1, subscript_id);
 
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-
-				String m_id = rs.getString(3);
+				String subscription_id = rs.getString(1);
+				int subscriptioned_seq = rs.getInt(2);
+				String subscriptioned_id = rs.getString(3);
+				String f_name = rs.getString(4);
 				
-				MemberDTO dto = new MemberDTO(m_id);
-				list.add(dto);
+				SubscriptionDTO sdto = new SubscriptionDTO(subscription_id, subscriptioned_seq, f_name, subscript_id);
+				list.add(sdto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -34,9 +34,11 @@ public class AddFarmService implements Command{
 		System.out.println(f_facility);
 		FarmDTO fdto = new FarmDTO(f_owner_id, f_region, f_crops, f_facility, f_name);
 		int cnt = new FarmDAO().register(fdto);
+		int farmseq = new FarmDAO().searchSeq(f_name);
+		int cnt2 = new FarmDAO().firstEnv(farmseq, f_owner_id);
 		
 		PrintWriter out = response.getWriter();
-		if(cnt>0) {
+		if(cnt>0 && cnt2>0) {
 			System.out.println("농장등록 성공");
 			out.print("success");
 			out.close();
