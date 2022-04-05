@@ -1,3 +1,5 @@
+<%@page import="Model.MemberDTO"%>
+<%@page import="Model.MemberDAO"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -29,6 +31,7 @@
 </head>
 
 <body>
+<% MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
 	<!-- WRAPPER -->
 	<div id="wrapper">
 		<!-- NAVBAR -->
@@ -70,15 +73,35 @@
 								<li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
 								<li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
 							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-bubble"></i> <span class="badge bg-danger">5</span>
+						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-bubble"></i> <span class="badge bg-danger">
+						 <%
+                        MemberDAO mdao = new MemberDAO();
+                    	MemberDTO mdto = new MemberDTO(); 
+                    	mdao.updatecomment(info.getM_id());
+                     	mdao.updatefcomment(info.getM_id());
+                        int totalalam = mdao.commentalam(info.getM_id()) + mdao.fcommentalam(info.getM_id());
+                        %>
+                        <%=totalalam %>
+						</span>
 						</a>
 							<ul class="dropdown-menu notifications">
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-								<li><a href="#" class="more">See all notifications</a></li>
+								 <% CommunityDTO codto = new CommunityDTO();
+                     	CommunityDAO codao = new CommunityDAO(); 
+                     	ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
+                     	ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
+                     	
+                     	cmtlist = codao.newcomment(info.getM_id(), mdao.commentalam(info.getM_id()));
+                     	fcmtlist = codao.newfcomment(info.getM_id(), mdao.fcommentalam(info.getM_id()));
+                     	
+                     	for(int i = 0; i < cmtlist.size(); i++){
+                     	
+                     	%><li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 글 <%=cmtlist.get(i).getArticle_title() %>에 <%=cmtlist.get(i).getM_id() %>님이 댓글을 작성하였습니다 </a></li>
+                              <%} %>
+                        <%for(int i = 0; i< fcmtlist.size(); i++){
+                     	%>
+                     	<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 농장에<%=fcmtlist.get(i).getM_id()%>님이 댓글을 작성하였습니다 </a></li>
+                     	<%} %>
+                        <li><a href="SeenotificationService.do" class="more">See all notifications</a></li>
 							</ul></li>
 						<!-- 이웃목록
                      추가할 기능

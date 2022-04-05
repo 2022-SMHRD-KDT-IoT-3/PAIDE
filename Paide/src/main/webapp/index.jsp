@@ -88,11 +88,11 @@
                         <i class="lnr lnr-bubble"></i>
                         <span class="badge bg-danger">
                         <%
-                        MemberDAO dao = new MemberDAO();
-                    	MemberDTO dto = new MemberDTO(); 
-                    	dao.updatecomment(info.getM_id());
-                     	dao.updatefcomment(info.getM_id());
-                        int totalalam = dao.commentalam(info.getM_id()) + dao.fcommentalam(info.getM_id());
+                        MemberDAO mdao = new MemberDAO();
+                    	MemberDTO mdto = new MemberDTO(); 
+                    	mdao.updatecomment(info.getM_id());
+                     	mdao.updatefcomment(info.getM_id());
+                        int totalalam = mdao.commentalam(info.getM_id()) + mdao.fcommentalam(info.getM_id());
                         %>
                         <%=totalalam %>
                         </span>
@@ -103,8 +103,8 @@
                      	ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
                      	ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
                      	
-                     	cmtlist = codao.newcomment(info.getM_id(), dao.commentalam(info.getM_id()));
-                     	fcmtlist = codao.newfcomment(info.getM_id(), dao.fcommentalam(info.getM_id()));
+                     	cmtlist = codao.newcomment(info.getM_id(), mdao.commentalam(info.getM_id()));
+                     	fcmtlist = codao.newfcomment(info.getM_id(), mdao.fcommentalam(info.getM_id()));
                      	
                      	for(int i = 0; i < cmtlist.size(); i++){
                      	
