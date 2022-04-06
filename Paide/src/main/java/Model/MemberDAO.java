@@ -92,7 +92,7 @@ public class MemberDAO {
 	public int Join(MemberDTO dto) {
 		dbconn();
 		try {
-			String sql = "insert into t_member values(?, ?, ?, ?, 0, 1, ?, sysdate, 'U', 'basic.jpg', 0, 0, 0, 0)";
+			String sql = "insert into t_member values(?, ?, ?, ?, 0, 1, ?, sysdate, 'U', 'basic.png', 0, 0, 0, 0)";
 			psmt = conn.prepareStatement(sql);
 
 			psmt.setString(1, dto.getM_id());
@@ -327,14 +327,13 @@ public class MemberDAO {
 	public int UpdateMember(MemberDTO dto) {
 		dbconn();
 		try {
-			String sql = "update t_member set m_name=?, m_phone=?, m_pw=?, m_email=?, m_profile=? where m_id=?";
+			String sql = "update t_member set m_name=?, m_phone=?, m_pw=?, m_email=? where m_id=?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getM_name());
 			psmt.setString(2, dto.getM_phone());
 			psmt.setString(3, dto.getM_pw());
 			psmt.setString(4, dto.getM_email());
-			psmt.setString(5, dto.getM_profile());
-			psmt.setString(6, dto.getM_id());
+			psmt.setString(5, dto.getM_id());
 
 			cnt = psmt.executeUpdate();
 		} catch (Exception e) {
@@ -344,6 +343,23 @@ public class MemberDAO {
 		}
 		return cnt;
 	}
+	
+	//프로필사진 업데이트 메소드
+		public int profile(String m_profile, String m_id) {
+			dbconn();
+			try {
+				String sql = "update t_member set m_profile = ? where m_id = ?";
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, m_profile);
+				psmt.setString(2, m_id);
+				cnt = psmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				dbclose();
+			}
+			return cnt;
+		}
 
 	// 아이디찾기 메일보내기 메소드
 	public static boolean SendMailID(ArrayList<String> sendid) {

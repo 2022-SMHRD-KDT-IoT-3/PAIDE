@@ -109,6 +109,13 @@
             color: aliceblue;
         }
     </style>
+    <style>
+	#profile {
+		width: 20px;
+		height: 20px;
+		object-fit: cover;
+	}
+</style>
 
 </head>
 
@@ -117,7 +124,7 @@
 	int f_seq = Integer.parseInt(request.getParameter("seq")); 
 	FarmDTO fdto = new FarmDAO().selectFarm(f_seq);
 	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
-	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 %>
     <!-- WRAPPER -->
     <div id="wrapper">
@@ -187,7 +194,7 @@
                             <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                                 <i class="lnr lnr-users"></i>
                                                                 <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
-                                <span class="badge rounded-pill bg-success">5</span>
+                                <span class="badge rounded-pill bg-success"></span>
                             </a>
                             <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                              사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->

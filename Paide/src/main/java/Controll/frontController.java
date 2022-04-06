@@ -35,6 +35,7 @@ import Service.UpdateCmtService;
 import Service.UpdateFarmService;
 import Service.UpdateLevel;
 import Service.UpdateMemberService;
+import Service.UpdateProfileService;
 import Service.WriteArticleService;
 import Service.WriteCmtService;
 import Service.WriteFCmtService;
@@ -171,6 +172,9 @@ public class frontController extends HttpServlet {
 			nextpage = com.execute(request, response);
 		} else if (command.equals("DeleteSubscriptionService.do")) {
 			com = new DeleteSubscriptionService();
+			nextpage = com.execute(request, response);
+		} else if (command.equals("UpdateProfileService.do")) {
+			com = new UpdateProfileService();
 			nextpage = com.execute(request, response);
 		}
 		

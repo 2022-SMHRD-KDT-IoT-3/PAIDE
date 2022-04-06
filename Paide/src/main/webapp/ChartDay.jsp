@@ -76,7 +76,13 @@
  
     </style>
     <!--END 차트스타일 -->
-
+<style>
+	#profile {
+		width: 20px;
+		height: 20px;
+		object-fit: cover;
+	}
+</style>
 </head>
 
 <body>
@@ -124,8 +130,8 @@
                   <!-- 로그아웃시 삭제1 start-->
                    <% if(info != null){%>
                   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <%= info.getM_name() %> 
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
+                           class="img-circle" alt="Avatar" id="profile"> <%= info.getM_name() %> 
                             <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>

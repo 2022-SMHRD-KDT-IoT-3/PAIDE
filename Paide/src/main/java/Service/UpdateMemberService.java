@@ -24,27 +24,16 @@ public class UpdateMemberService implements Command{
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String savePath = request.getServletContext().getRealPath("./profile");
-		
-		int maxsize = 2*1024*1024;
-		
-		String encoding = "UTF-8";
-		
-		DefaultFileRenamePolicy filePolicy = new DefaultFileRenamePolicy();
-		
-		MultipartRequest multi = new MultipartRequest(request, savePath, maxsize, encoding, filePolicy);
-		
 		
 		String nextpage = null;
-		String m_id = request.getParameter("id");
-		String m_name = request.getParameter("name");
-		String m_phone = request.getParameter("phone");
-		String m_pw = request.getParameter("pw");
-		String m_email = request.getParameter("email");
-		String m_profile = multi.getFilesystemName("profile_A");
+		String m_id = request.getParameter("m_id");
+		String m_name = request.getParameter("m_name");
+		String m_phone = request.getParameter("m_phone");
+		String m_pw = request.getParameter("m_pw");
+		String m_email = request.getParameter("m_email");
 		
 		
-		MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_phone,m_email, m_profile);
+		MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_phone,m_email);
 		
 		int cnt = new MemberDAO().UpdateMember(dto);
 		if(cnt>0) {

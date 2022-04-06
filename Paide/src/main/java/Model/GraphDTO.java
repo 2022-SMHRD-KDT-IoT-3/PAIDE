@@ -51,6 +51,22 @@ public class GraphDTO {
 	
 
 
+	public int getEnv_HL() {
+		return env_HL;
+	}
+
+	public void setEnv_HL(int env_HL) {
+		this.env_HL = env_HL;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
 	public int getAvg_co2() {
 		return avg_co2;
 	}

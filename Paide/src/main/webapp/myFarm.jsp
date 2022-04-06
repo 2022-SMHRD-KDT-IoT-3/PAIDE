@@ -107,18 +107,26 @@
          color: aliceblue;
       }
    </style>
-
+<style>
+	#profile {
+		width: 20px;
+		height: 20px;
+		object-fit: cover;
+	}
+</style>
 </head>
 
 <body>
 	<% 
       	MemberDTO info = (MemberDTO)session.getAttribute("info");
-	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());  
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());  
 	
 		String userID = null;
 		if (session.getAttribute("info") != null) {
 			userID = info.getM_id();
 		}
+		int f_seq = Integer.parseInt(request.getParameter("seq"));
+		
 	%>
 
    <!-- WRAPPER -->
@@ -161,8 +169,8 @@
                   <!-- 로그아웃시 삭제1 start-->
                   <% if(info != null){%>
                   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
+                           class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
@@ -305,7 +313,7 @@
                         <div class="profile-detail">
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
-                              <% FarmDTO Farminfo = new FarmDAO().myFarm(info.getM_id()); %>
+                              <% FarmDTO Farminfo = new FarmDAO().myFarm(farmlist.get(0).getF_seq()); %>
                               <h4 class="heading">회원정보</h4>
                               <ul class="list-unstyled list-justify">
                                  <li>농장주소 <span><%= Farminfo.getF_region() %></span></li>
@@ -335,7 +343,7 @@
                               <br>
                               <center>
                               <!-- 자세히 보기 클릭시 현재 선택한 농장정보 페이지(차트,테이블 있는 곳)로 이동  -->
-                                 <a href="myFarm_detail.jsp"> <button type="button"
+                                 <a href="myFarm_detail.jsp?seq=<%=f_seq%>"> <button type="button"
                                        class="btn btn-primary">자세히보기</button></a>
                               </center>
                            </div>

@@ -32,13 +32,18 @@
    <!-- 댓글 -->
    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<style>
+	#profile {
+		width: 20px;
+		height: 20px;
+		object-fit: cover;
+	}
+</style>
 
 </head>
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
-	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -81,8 +86,8 @@
                      <!-- 로그아웃시 삭제1 start-->
                       <% if(info != null){%>
                      <li class="dropdown">
-                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                                 class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
+                                 class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                                  class="icon-submenu lnr lnr-chevron-down"></i></a>
                          <ul class="dropdown-menu">
                              <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>

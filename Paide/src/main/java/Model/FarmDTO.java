@@ -143,10 +143,12 @@ public class FarmDTO {
 		
 	}
 	
-	
 
-	
-
+	public FarmDTO(int f_seq, String f_name) {
+		super();
+		this.f_seq = f_seq;
+		this.f_name = f_name;
+	}
 
 
 	public String getF_name() {

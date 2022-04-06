@@ -31,11 +31,23 @@
    <!-- ICONS -->
    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+	<style>
+   	#profileimg{
+   	width: 100%;
+      height: 100%;
+      object-fit: cover;
+   	}
+   	#profile{
+   		width: 20px;
+      height: 20px;
+      object-fit: cover;
+   	}
+   </style>
 </head>
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info");
-	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -79,8 +91,8 @@
                   <li class="dropdown">
                      <!-- ?대매니 등록된 프로필 사진 경로 지정 onerror="지정된 경로에 사진이 없을 경우 띄우는 이미지경로"  
                            프로필 사진을 등록하지 않았을 경우 기본이미지 = 프로필기본이미지.png -->
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar" onerror="this.src ='assets/img/프로필기본이미지.png'">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
+                           class="img-circle" alt="Avatar" id="profile" onerror="this.src ='assets/img/프로필기본이미지.png'">
                         <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
@@ -213,10 +225,12 @@
                               <!-- 기본이미지 -->
                               <div id="preview"><img id="profileimg" src="assets/img/farmer.png"> </div>
                               <!--변경 action 프로필이미지 넣는 메소드로 -->
-                              <form action="" id="form" name="form" method="post" enctype="multipart/form-data"
+                              <form action="UpdateProfileService.do" id="form" name="form" method="POST" enctype="multipart/form-data"
                                  autocomplete="off">
                                  <input type="file" name="profile" accept="image/*" onchange="previewImage(this)" />
-                                 <button type="submit" class="btn btn-primary">업로드</button>
+                                 <input type="hidden" name="infoid" value="<%= info.getM_id() %>" />
+                                 <input type="hidden" name="infopw" value="<%= info.getM_pw() %>" />
+                                 <button type="submit" class="btn btn-primary" >업로드</button>
                               </form>
                            </div>
                         </div>
@@ -231,7 +245,7 @@
                                  <!-- 변경  -->
                                  <!-- action 회원정보수정서비스콘으로-->
                                   <% if(info != null){%>
-                                 <form action="updateMemberServiceCon.do" method="">
+                                 <form action="updateMemberServiceCon.do" method="post">
                                     <div class="panel-body">
                                        <!--                                     value 에 사용자의 기존정보넣기 -->
                                        이름<input type="text" name="m_name" class="form-control" value="<%= info.getM_name() %>">
@@ -247,6 +261,7 @@
                                        이메일<input type="email" name="m_email" class="form-control"
                                           value="<%= info.getM_email() %>">
                                        <br>
+                                       <input type="hidden" name = "m_id" value="<%= info.getM_id() %>">
                                        <center>
                                           <input type="submit" value="완료" class="btn btn-primary"/>
                                        </center>
@@ -277,7 +292,7 @@
                                        <option value="">농장을선택해주세요.</option>
                                        <% for(int i = 0; i<farmlist.size(); i++){ %>
                                        <!-- 등록된 회원의 농장이 나와야함  -->
-                                       <option value="<%=farmlist.get(i)%>"><%=farmlist.get(i)%></option>
+                                       <option value="<%=farmlist.get(i).getF_name()%>"><%=farmlist.get(i).getF_name()%></option>
                                        <%}; %>
                                     </select>
                                     <span class="input-group-btn">

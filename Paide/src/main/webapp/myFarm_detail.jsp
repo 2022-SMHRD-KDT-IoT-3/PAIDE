@@ -1,3 +1,4 @@
+<%@page import="Model.GraphDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
@@ -34,11 +35,24 @@
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    <!-- 부트스트랩아이콘 -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+<style>
+	#profile {
+		width: 20px;
+		height: 20px;
+		object-fit: cover;
+	}
+</style>
 </head>
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
-ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
+	int f_seq = Integer.parseInt(request.getParameter("seq"));
+	String startday = "2022-03-27";
+	/* if(request.getParameter("startday").equals(null)){
+		startday = "TO_CHAR(SYSDATE, 'YYYY-MM-DD')";
+	}else{
+		startday = request.getParameter("startday");
+	} */
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -81,8 +95,8 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                      <!-- 로그아웃시 삭제1 start-->
                      <% if(info != null){%>
                      <li class="dropdown">
-                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                                 class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
+                                 class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                                  class="icon-submenu lnr lnr-chevron-down"></i></a>
                          <ul class="dropdown-menu">
                              <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
@@ -247,20 +261,28 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                      <div class="profile-right">
                         <h4 class="heading">날짜선택</h4>
                         <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
-                        <form action="">
+                        <form action="myFarm_detail.jsp" method="get">
                            <div class="input-group">
                               <input type="date" name="startday" id='currentDate'/>
-
+								<input type="hidden" name="seq" value="<%=f_seq%>">
                               <input type="submit" value="선택" class="btn btn-primary"/>
                            </div>
                         </form>
                         <br>
                         <!-- 선택한 농장의 정보테이블  -->
+                        <% ArrayList<GraphDTO> temp = new FarmDAO().temp_HL(f_seq, startday);
+                         	ArrayList<GraphDTO> humi = new FarmDAO().humi_HL(f_seq, startday);
+                         	ArrayList<GraphDTO> soil = new FarmDAO().soil_HL(f_seq, startday);
+                         	ArrayList<GraphDTO> insol = new FarmDAO().insol_HL(f_seq, startday);
+                         	System.out.println(temp.size());
+                         	System.out.println(f_seq);
+                         	System.out.println(startday);
+                        %>
+                        <%if (temp.size()!=0){ %>
                         <table class="table table-bordered">
                            <thead>
                               <tr>
                                  <th>구분</th>
-                                 <th>현재</th>
                                  <th>최고</th>
                                  <th>최고시간</th>
                                  <th>최저</th>
@@ -270,15 +292,13 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                            <tbody>
                               <tr>
                                  <td>온도</td>
-                                 <td>25℃</td>
-                                 <td>29℃</td>
-                                 <td>15:32</td>
-                                 <td>24℃</td>
-                                 <td>09:30</td>
+                                 <td><%=temp.get(0).getEnv_HL() %></td>
+                                 <td><%=temp.get(0).getTime() %></td>
+                                 <td><%=temp.get(1).getEnv_HL() %></td>
+                                 <td><%=temp.get(1).getTime() %></td>
                               </tr>
                               <tr>
                                  <td>습도</td>
-                                 <td>89%</td>
                                  <td>90%</td>
                                  <td>06:40</td>
                                  <td>87%</td>
@@ -286,7 +306,6 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                               </tr>
                               <tr>
                                  <td>일사량</td>
-                                 <td>1200W/㎡</td>
                                  <td>1300W/㎡</td>
                                  <td>14:05</td>
                                  <td>0W/㎡</td>
@@ -295,13 +314,15 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                               <tr>
                                  <td>토양습도</td>
                                  <td>99%</td>
-                                 <td>99%</td>
                                  <td>15:32</td>
                                  <td>89%</td>
                                  <td>09:30</td>
                               </tr>
                            </tbody>
                         </table>
+                        <%}else{%>
+                        	<span>환경정보가 없습니다</span>
+                        <%}%>
                         <!-- 농장정보 테이블 끝  -->
                         <!-- 차트버튼 -->
                         <center>

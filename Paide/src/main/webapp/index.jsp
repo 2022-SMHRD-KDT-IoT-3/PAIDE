@@ -1,3 +1,6 @@
+<%@page import="Model.FarmDTO"%>
+<%@page import="java.lang.ProcessHandle.Info"%>
+<%@page import="Model.FarmDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
@@ -32,10 +35,19 @@
    <!-- ICONS -->
    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+   <style>
+	#profile {
+		width: 20px;
+		height: 20px;
+		object-fit: cover;
+	}
+</style>
 </head>
 
 <body>
-<% MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
+<% MemberDTO info = (MemberDTO)session.getAttribute("info");
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
+%>
    <!-- WRAPPER -->
    <div id="wrapper">
           <!-- NAVBAR -->
@@ -74,11 +86,11 @@
                   <!-- 로그아웃시 삭제1 start-->
                    <% if(info != null){%>
                   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                           class="img-circle" alt="Avatar"> <%= info.getM_name() %> 
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
+                           class="img-circle" alt="Avatar" id="profile"> <%= info.getM_name() %> 
                             <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
-                        <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -182,7 +194,7 @@
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
-                           <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
