@@ -100,7 +100,7 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                     <ul class="nav navbar-nav navbar-right">
 
                         <!-- 로그아웃시 삭제1 start-->
-                        <% if(info != null){%>
+                      	<% if(info != null){%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
                                     class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
@@ -125,7 +125,7 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                         </span>
                      </a>
                      <ul class="dropdown-menu notifications">
-                       <% CommunityDTO codto = new CommunityDTO();
+                      	<% CommunityDTO codto = new CommunityDTO();
                      	CommunityDAO codao = new CommunityDAO(); 
                      	ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
                      	ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
@@ -135,11 +135,11 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                      	
                      	for(int i = 0; i < cmtlist.size(); i++){
                      	
-                     	%><li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 글 <%=cmtlist.get(i).getArticle_title() %>에 <%=cmtlist.get(i).getM_id() %>님이 댓글을 작성하였습니다 </a></li>
+                     	%><li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 글 <%-- <%=cmtlist.get(i).getArticle_title() %>에 <%=cmtlist.get(i).getM_id() %> --%>님이 댓글을 작성하였습니다 </a></li>
                               <%} %>
                         <%for(int i = 0; i< fcmtlist.size(); i++){
                      	%>
-                     	<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 농장에<%=fcmtlist.get(i).getM_id()%>님이 댓글을 작성하였습니다 </a></li>
+                     	<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 농장에<%-- <%=fcmtlist.get(i).getM_id()%> --%>님이 댓글을 작성하였습니다 </a></li>
                      	<%} %>
                         <li><a href="SeenotificationService.do" class="more">See all notifications</a></li>
                             </ul>
@@ -203,7 +203,7 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                         <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                         <!-- 로그아웃시 삭제2 start -->
-                        <% if(info != null){%>
+                      	<% if(info != null){%>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-user"></i>
                                 <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -215,7 +215,7 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                                     <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                                 </ul>
                             </div>
-                            <%} %>
+                           	<%} %>
                         </li>
                         <!-- 로그아웃시 삭제2 end -->
                     </ul>
@@ -343,14 +343,14 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
         $(function () {
             var options;
 
-            var data = {
+            var data1 = {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 series: [
                     [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
                 ]
             };
-
-            // line chart
+            
+			// line chart
             options = {
                 height: "300px",
                 showPoint: true,

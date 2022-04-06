@@ -14,7 +14,9 @@ public class GraphDTO {
 	private int env_HL;
 	private String time;
 	
-	
+	public GraphDTO() {
+		
+	}
 	
 	//평균그래프 생성자
 	public GraphDTO(int avg_temperature_outer, int avg_humidity_outer, int avg_temperature, int avg_humidity,

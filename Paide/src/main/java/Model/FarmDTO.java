@@ -139,6 +139,13 @@ public class FarmDTO {
 		this.f_seq = f_seq;
 	}
 	
+	public FarmDTO() {
+		
+	}
+	
+	
+
+	
 
 
 
