@@ -2,7 +2,9 @@
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
 <%@page import="Model.MemberDAO"%>
-<%@ page import="Model.MemberDTO" %>
+<%@page import="Model.MemberDTO"%>
+<%@page import="Model.FarmDTO"%>
+<%@page import="Model.FarmDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 <!doctype html>
@@ -111,7 +113,8 @@
 <body>
 	<% 
       	MemberDTO info = (MemberDTO)session.getAttribute("info");
-      
+	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());  
+	
 		String userID = null;
 		if (session.getAttribute("info") != null) {
 			userID = info.getM_id();
@@ -156,6 +159,7 @@
                <ul class="nav navbar-nav navbar-right">
 
                   <!-- 로그아웃시 삭제1 start-->
+                  <% if(info != null){%>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
                            class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i
@@ -163,7 +167,7 @@
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                        <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                        <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
                   <li class="dropdown">
@@ -226,6 +230,11 @@
                         <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                      </ul>
+                     	<% }else{%>
+	                     <div class="navbar-btn navbar-btn-right"> 
+	                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+	                     </div>
+	                     <%} %>
                   </li>
                   <!-- 로그아웃시 삭제1 end-->
 
@@ -253,9 +262,10 @@
                   <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                   <!-- 로그아웃시 삭제2 start -->
+                  <% if(info != null){%>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-user"></i>
-                        <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
                            <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
@@ -263,6 +273,7 @@
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
+                     <%} %>
                   </li>
                   <!-- 로그아웃시 삭제2 end -->
 
@@ -294,15 +305,17 @@
                         <div class="profile-detail">
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
+                              <% FarmDTO Farminfo = new FarmDAO().myFarm(info.getM_id()); %>
                               <h4 class="heading">회원정보</h4>
                               <ul class="list-unstyled list-justify">
-                                 <li>농장주소 <span>광주광역시 풍영로330번길 16</span></li>
-                                 <li>재배작목 <span>딸기</span></li>
-                                 <li>재배시설 <span>유리온실</span></li>
+                                 <li>농장주소 <span><%= Farminfo.getF_region() %></span></li>
+                                 <li>재배작목 <span><%= Farminfo.getF_crops() %></span></li>
+                                 <li>재배시설 <span><%= Farminfo.getF_facility() %></span></li>
                               </ul>
                               <br>
                               
                               <!-- 변경 : 환경정보에 따라서 바뀌어야 함. 정보가 범주를 벗어나면 글자색 빨간색  경고창 기능 추가-->
+                              
                               <span class="fa fa-bell award-icon"></span> <span style="color:#3f7647"><strong>현재 온실은 정상 범위 입니다.</strong></span>
                           <!--<span class="fa fa-bell award-icon"></span>  <span style="color:red">현재 온실의[]이 정상 범위를 넘어섰습니다. 환경을 조정해주세요.</span>  -->
                            <!-- 실시간현재 날짜/시간 -->

@@ -7,7 +7,7 @@
 <%@page import="Model.FarmDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
-    <!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -32,20 +32,20 @@
    <!-- 댓글 -->
    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-   <!-- 부트스트랩아이콘 -->
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+
 </head>
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
-ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
+	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
       <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-             <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+             <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
                      class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -79,10 +79,10 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                  <ul class="nav navbar-nav navbar-right">
 
                      <!-- 로그아웃시 삭제1 start-->
-                     <% if(info != null){%>
+                      <% if(info != null){%>
                      <li class="dropdown">
                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                                 class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
+                                 class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i
                                  class="icon-submenu lnr lnr-chevron-down"></i></a>
                          <ul class="dropdown-menu">
                              <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
@@ -93,36 +93,37 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                      <li class="dropdown">
                          <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                              <i class="lnr lnr-bubble"></i>
-                             <span class="badge bg-danger"> <%
-                        MemberDAO mdao = new MemberDAO();
-                       MemberDTO mdto = new MemberDTO(); 
-                       mdao.updatecomment(info.getM_id());
-                        mdao.updatefcomment(info.getM_id());
-                        int totalalam = mdao.commentalam(info.getM_id()) + mdao.fcommentalam(info.getM_id());
+                             <span class="badge bg-danger">5</span>
+                         <%
+                        MemberDAO dao = new MemberDAO();
+                    	MemberDTO dto = new MemberDTO(); 
+                    	dao.updatecomment(info.getM_id());
+                     	dao.updatefcomment(info.getM_id());
+                        int totalalam = dao.commentalam(info.getM_id()) + dao.fcommentalam(info.getM_id());
                         %>
                         <%=totalalam %>
                         </span>
                      </a>
                      <ul class="dropdown-menu notifications">
                        <% CommunityDTO codto = new CommunityDTO();
-                        CommunityDAO codao = new CommunityDAO(); 
-                        ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
-                        ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
-                        
-                        cmtlist = codao.newcomment(info.getM_id(), mdao.commentalam(info.getM_id()));
-                        fcmtlist = codao.newfcomment(info.getM_id(), mdao.fcommentalam(info.getM_id()));
-                        
-                        for(int i = 0; i < cmtlist.size(); i++){
-                        
-                        %><li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 글 <%=cmtlist.get(i).getArticle_title() %>에 <%=cmtlist.get(i).getM_id() %>님이 댓글을 작성하였습니다 </a></li>
+                     	CommunityDAO codao = new CommunityDAO(); 
+                     	ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
+                     	ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
+                     	
+                     	cmtlist = codao.newcomment(info.getM_id(), dao.commentalam(info.getM_id()));
+                     	fcmtlist = codao.newfcomment(info.getM_id(), dao.fcommentalam(info.getM_id()));
+                     	
+                     	for(int i = 0; i < cmtlist.size(); i++){
+                     	
+                     	%><li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 글 <%=cmtlist.get(i).getArticle_title() %>에 <%=cmtlist.get(i).getM_id() %>님이 댓글을 작성하였습니다 </a></li>
                               <%} %>
                         <%for(int i = 0; i< fcmtlist.size(); i++){
-                        %>
-                        <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 농장에<%=fcmtlist.get(i).getM_id()%>님이 댓글을 작성하였습니다 </a></li>
-                        <%} %>
+                     	%>
+                     	<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 농장에<%=fcmtlist.get(i).getM_id()%>님이 댓글을 작성하였습니다 </a></li>
+                     	<%} %>
                         <li><a href="SeenotificationService.do" class="more">See all notifications</a></li>
-                         </ul>
-                     </li>
+                     </ul>
+                  </li>
                      <!-- 이웃목록
                      추가할 기능
                         1. 구독(이웃추가)을 눌렀을 때, 자동으로 class="dropdown-menu notifications으로 들어가고,
@@ -139,22 +140,23 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                          <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                          <ul id='neighbor' class="dropdown-menu notifications">
-                             <li><a href="OtherFarm.jsp" class="notification-item"><span
+                             <li><a href="OtherFarm.html" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                             <li><a href="OtherFarm.jsp" class="notification-item"><span
+                             <li><a href="OtherFarm.html" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                             <li><a href="OtherFarm.jsp" class="notification-item"><span
+                             <li><a href="OtherFarm.html" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                             <li><a href="OtherFarm.jsp" class="notification-item"><span
+                             <li><a href="OtherFarm.html" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                             <li><a href="OtherFarm.jsp" class="notification-item"><span
+                             <li><a href="OtherFarm.html" class="notification-item"><span
                                          class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                          </ul>
                          <% }else{%>
-	                     <div class="navbar-btn navbar-btn-right"> 
-	                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
-	                     </div>
-	                     <%} %>
+		                     <div class="navbar-btn navbar-btn-right"> 
+		                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+		                     </div>
+		                     <%} %>
+               
                      </li>
                      <!-- 로그아웃시 삭제1 end-->
 
@@ -171,29 +173,30 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
 
       <!-- END NAVBAR -->
       <!-- LEFT SIDEBAR -->
+      <a name ="top">맨위</a>
       <div id="sidebar-nav" class="sidebar">
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav">
-                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-                  <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.html" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+                  <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                   <!-- 로그아웃시 삭제2 start -->
-                 	<% if(info != null){%>
+                  <% if(info != null){%>
                   <li>
-                     <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-user"></i>
+                     <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i>
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-                     <div id="subPages" class="collapse in">
+                     <div id="subPages" class="collapse ">
                         <ul class="nav">
-                           <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                           <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                           <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                           <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.html" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
-                     <%} %>
+                      <%} %>
                   </li>
                   <!-- 로그아웃시 삭제2 end -->
                </ul>
@@ -201,6 +204,7 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
          </div>
       </div>
       <!-- END LEFT SIDEBAR -->
+
       <!-- MAIN -->
       <div class="main">
          <!-- MAIN CONTENT -->
@@ -215,8 +219,8 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                            <div class="overlay"></div>
                            <div class="profile-main">
                               <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
-                              <!-- 로그인한 회원 이름변수 ㄱ -->
-                              <h3 class="name">송다민</h3>
+                              <!-- 선택한 농장의 이름변수 ㄱ -->
+                              <h3 class="name">송찬영</h3>
                            </div>
                         </div>
                         <!-- END PROFILE HEADER -->
@@ -225,17 +229,19 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
                               <!-- 선택한 농장의 이름  -->
-                              <h4 class="heading">대매니의 토마토농장</h4>
+                              <h4 class="heading">찬영이의 토마토농장</h4>
                               <ul class="list-unstyled list-justify">
                                  <li>농장주소 <span>광주광역시 풍영로330번길 16</span></li>
                                  <li>재배작목 <span>토마토</span></li>
                                  <li>재배시설 <span>유리온실</span></li>
                               </ul>
                               <br>
+
+                     
                               <br>
                               <center>
-                                 <!--  나의 농장 첫번째 화면으로 돌아가기 -->
-                                 <a href="myFarm.jsp"> <button type="button" class="btn btn-primary">농장홈화면</button></a>
+                                 <!-- 자세히 보기 클릭시 현재 선택한 농장정보 페이지(차트,테이블 있는 곳)로 이동  -->
+                                 <a href="OtherFarm.html"> <button type="button" class="btn btn-primary">농장홈화면</button></a>
                               </center>
                            </div>
                            <!-- current_date끝 -->
@@ -303,14 +309,6 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                            </tbody>
                         </table>
                         <!-- 농장정보 테이블 끝  -->
-                        <!-- 차트버튼 -->
-                        <center>
-                           <!-- 농장하루평균차트 -->
-                           <a href="ChartDay.jsp"> <button type="button" class="btn btn-primary btn-lg"><i class="lnr lnr-chevron-left-circle"></i>&nbsp;&nbsp;일일차트&nbsp;&nbsp;<i class="bi bi-graph-up-arrow"></i></button></a>
-                           <!-- 농장평균차트 -->
-                           <a href="ChartAvg.jsp"> <button type="button" class="btn btn-primary btn-lg">평균차트&nbsp;&nbsp;<i class="bi bi-bar-chart-line"></i>&nbsp;&nbsp;<i class="lnr lnr-chevron-right-circle"></i></button></a>
-                        </center>
-                        <br>
                         <!-- 댓글달기 Start -->
                         <div class="panel panel-scrolling">
                            <div class="panel-heading">
@@ -352,7 +350,7 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
                               </ul>
                            </div>
                         </div>
-                        <!-- 댓글 END -->
+                        <!-- END 댓글 -->
                         <form action="#" method="" >
                            <div class="input-group">
                               <input class="form-control" type="text">
@@ -382,11 +380,11 @@ ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
    <!-- Javascript -->
 
    <!-- 현재날짜 기본값으로 세팅하는 js -->
-    <script>
+   <script>
       document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
     </script>
     <!-- 현재날짜 기본값으로 세팅하는 js 끝.-->
-
+    
    <script src="assets/vendor/jquery/jquery.min.js"></script>
    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>

@@ -2,8 +2,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.SubscriptionDAO"%>
 <%@page import="Model.MemberDTO"%>
+<%@page import="Model.MemberDAO"%>
 <%@page import="Model.FarmDTO"%>
 <%@page import="Model.FarmDAO"%>
+<%@page import="Model.CommunityDAO"%>
+<%@page import="Model.CommunityDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -114,6 +117,7 @@
 	int f_seq = Integer.parseInt(request.getParameter("seq")); 
 	FarmDTO fdto = new FarmDAO().selectFarm(f_seq);
 	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
+	ArrayList<String> farmlist = new FarmDAO().myfarm(info.getM_id());
 %>
     <!-- WRAPPER -->
     <div id="wrapper">
@@ -139,39 +143,41 @@
                     <ul class="nav navbar-nav navbar-right">
 
                         <!-- 로그아웃시 삭제1 start-->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
-                                    class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
-                                    class="icon-submenu lnr lnr-chevron-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="myFarm.html"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-                                <li><a href="updateMember.html"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                                <li><a href="index.html"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
-                            </ul>
-                        </li>
+                        <% if(info != null){%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-                                <i class="lnr lnr-bubble"></i>
-                                <span class="badge bg-danger">5</span>
-                            </a>
-                            <ul class="dropdown-menu notifications">
-                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System
-                                        space is
-                                        almost full</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
-                                        unfinished tasks</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly
-                                        report is
-                                        available</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly
-                                        meeting in
-                                        1 hour</a></li>
-                                <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your
-                                        request has
-                                        been approved</a></li>
-                                <li><a href="#" class="more">See all notifications</a></li>
-                            </ul>
-                        </li>
+                        <i class="lnr lnr-bubble"></i>
+                        <span class="badge bg-danger">
+                        <%
+                        MemberDAO dao = new MemberDAO();
+                    	MemberDTO dto = new MemberDTO(); 
+                    	dao.updatecomment(info.getM_id());
+                     	dao.updatefcomment(info.getM_id());
+                        int totalalam = dao.commentalam(info.getM_id()) + dao.fcommentalam(info.getM_id());
+                        %>
+                        <%=totalalam %>
+                        </span>
+                     </a>
+                     <ul class="dropdown-menu notifications">
+                       <% CommunityDTO codto = new CommunityDTO();
+                     	CommunityDAO codao = new CommunityDAO(); 
+                     	ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
+                     	ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
+                     	
+                     	cmtlist = codao.newcomment(info.getM_id(), dao.commentalam(info.getM_id()));
+                     	fcmtlist = codao.newfcomment(info.getM_id(), dao.fcommentalam(info.getM_id()));
+                     	
+                     	for(int i = 0; i < cmtlist.size(); i++){
+                     	
+                     	%><li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 글 <%=cmtlist.get(i).getArticle_title() %>에 <%=cmtlist.get(i).getM_id() %>님이 댓글을 작성하였습니다 </a></li>
+                              <%} %>
+                        <%for(int i = 0; i< fcmtlist.size(); i++){
+                     	%>
+                     	<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 농장에<%=fcmtlist.get(i).getM_id()%>님이 댓글을 작성하였습니다 </a></li>
+                     	<%} %>
+                        <li><a href="SeenotificationService.do" class="more">See all notifications</a></li>
+                     </ul>
+                  </li>
                         <!-- 이웃목록
                         추가할 기능
                            1. 구독(이웃추가)을 눌렀을 때, 자동으로 class="dropdown-menu notifications으로 들어가고,
@@ -197,6 +203,11 @@
                             	<%} 
                             	};%>
                             </ul>
+                            <% }else{%>
+		                     <div class="navbar-btn navbar-btn-right"> 
+		                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+		                     </div>
+		                     <%} %>
                         </li>
                         <!-- 로그아웃시 삭제1 end-->
 
@@ -224,9 +235,10 @@
                     <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
   
                     <!-- 로그아웃시 삭제2 start -->
+                    <% if(info != null){%>
                     <li>
                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i>
-                          <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                          <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                        <div id="subPages" class="collapse ">
                           <ul class="nav">
                              <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
@@ -234,6 +246,7 @@
                              <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                           </ul>
                        </div>
+                       <%} %>
                     </li>
                     <!-- 로그아웃시 삭제2 end -->
                  </ul>

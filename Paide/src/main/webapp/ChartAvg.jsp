@@ -93,7 +93,7 @@
                 <div id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right">
 
-                                          <!-- 로그아웃시 삭제1 start-->
+                   <!-- 로그아웃시 삭제1 start-->
                    <% if(info != null){%>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"

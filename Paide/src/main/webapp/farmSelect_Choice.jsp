@@ -1,10 +1,10 @@
-<%@page import="Model.MemberDAO"%>
-<%@page import="Model.CommunityDAO"%>
-<%@page import="Model.CommunityDTO"%>
-<%@page import="Model.MemberDTO"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="Model.FarmDAO"%>
 <%@page import="Model.FarmDTO"%>
+<%@page import="Model.CommunityDAO"%>
+<%@page import="Model.CommunityDTO"%>
+<%@page import="Model.MemberDAO"%>
+<%@page import="Model.MemberDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
@@ -89,6 +89,7 @@
                <ul class="nav navbar-nav navbar-right">
 
                   <!-- 로그아웃시 삭제1 start-->
+                  <% if(info != null){%>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
                            class="img-circle" alt="Avatar"> <span> 송다민 </span> <i
@@ -96,7 +97,7 @@
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                        <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                        <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
                   <li class="dropdown">
@@ -160,6 +161,11 @@
                         <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                      </ul>
+                     <% }else{%>
+                     <div class="navbar-btn navbar-btn-right"> 
+                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+                     </div>
+                     <%} %>
                   </li>
                   <!-- 로그아웃시 삭제1 end-->
 
@@ -184,9 +190,11 @@
                   <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
                   <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
                   <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                 <!-- 로그아웃시 삭제2 start -->
+                  <% if(info != null){%>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="active" class="collapsed"><i
-                           class="lnr lnr-user"></i> <span>송다민</span> <i
+                           class="lnr lnr-user"></i> <span><%= info.getM_name() %></span> <i
                            class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
@@ -195,6 +203,7 @@
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
+                      <%} %>
                   </li>
 
                </ul>

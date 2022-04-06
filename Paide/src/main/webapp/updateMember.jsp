@@ -1,10 +1,10 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
 <%@page import="Model.MemberDAO"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="Model.FarmDAO"%>
-<%@page import="Model.FarmDTO"%>
 <%@page import="Model.MemberDTO"%>
+<%@page import="Model.FarmDTO"%>
+<%@page import="Model.FarmDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8"
     pageEncoding="UTf-8"%>
 <!doctype html>
@@ -75,16 +75,17 @@
                <ul class="nav navbar-nav navbar-right">
 
                   <!-- 로그아웃시 삭제1 start-->
+                  <% if(info != null){%>
                   <li class="dropdown">
                      <!-- ?대매니 등록된 프로필 사진 경로 지정 onerror="지정된 경로에 사진이 없을 경우 띄우는 이미지경로"  
                            프로필 사진을 등록하지 않았을 경우 기본이미지 = 프로필기본이미지.png -->
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
                            class="img-circle" alt="Avatar" onerror="this.src ='assets/img/프로필기본이미지.png'">
-                        <span> 송다민 </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-                        <li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                        <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
                   </li>
 
@@ -148,6 +149,11 @@
                         <li><a href="OtherFarm.jsp" class="notification-item"><span
                                  class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
                      </ul>
+                     <% }else{%>
+                     <div class="navbar-btn navbar-btn-right"> 
+                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
+                     </div>
+                     <%} %>
                   </li>
                   <!-- 로그아웃시 삭제1 end-->
 
@@ -174,9 +180,10 @@
                   <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                   <!-- 로그아웃시 삭제2 start -->
+                  <% if(info != null){%>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-user"></i>
-                        <span>송다민</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
                            <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
@@ -184,6 +191,7 @@
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
+                     <%} %>
                   </li>
                   <!-- 로그아웃시 삭제2 end -->
                </ul>
@@ -222,28 +230,30 @@
                                  </div>
                                  <!-- 변경  -->
                                  <!-- action 회원정보수정서비스콘으로-->
-                                 <form action="#" method="">
+                                  <% if(info != null){%>
+                                 <form action="updateMemberServiceCon.do" method="">
                                     <div class="panel-body">
                                        <!--                                     value 에 사용자의 기존정보넣기 -->
-                                       이름<input type="text" name="m_name" class="form-control" value="송다민">
+                                       이름<input type="text" name="m_name" class="form-control" value="<%= info.getM_name() %>">
                                        <br>
-                                       휴대전화<input type="text" name="m_phone" class="form-control" value="01071215056">
+                                       휴대전화<input type="text" name="m_phone" class="form-control" value="<%= info.getM_phone() %>">
                                        <br>
                                        비밀번호<input id="updatePW" type="password" name="m_pw" class="form-control"
-                                          value="회원비밀번호">
+                                          value="<%= info.getM_pw() %>">
                                        <br>
                                        새 비밀번호 확인 <font id="chkNotice" size="2"></font><input id="updatePwChk"
                                           type="password" name="m_pw" class="form-control" placeholder="비밀번호확인">
                                        <br>
                                        이메일<input type="email" name="m_email" class="form-control"
-                                          value="damin0722@naver.com">
+                                          value="<%= info.getM_email() %>">
                                        <br>
                                        <center>
-                                          <button type="submit" class="btn btn-primary">완료</button>
+                                          <input type="submit" value="완료" class="btn btn-primary"/>
                                        </center>
                                        <br><br>
                                     </div>
                                  </form>
+                                 <%} %>
                               </div>
                            </div>
                              
