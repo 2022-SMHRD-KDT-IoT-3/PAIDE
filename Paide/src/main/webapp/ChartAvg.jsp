@@ -1,3 +1,6 @@
+<%@page import="Service.ChartDrowService"%>
+<%@page import="Model.FarmDTO"%>
+<%@page import="Model.FarmDAO"%>
 <%@page import="Model.SubscriptionDTO"%>
 <%@page import="Model.SubscriptionDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -369,6 +372,11 @@
 
     <!-- 온도차트 -->
     <script>
+    <%FarmDAO fdao = new FarmDAO(); 
+      FarmDTO fdto = new FarmDTO();
+      ChartDrowService cds = new ChartDrowService();
+      
+    %>
         const labels1 = ['어제평균', '7일평균', '30일평균'];
         const data1 = {
             labels: labels1,

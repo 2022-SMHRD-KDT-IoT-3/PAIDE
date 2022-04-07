@@ -342,6 +342,39 @@ public class FarmDAO {
 	      return gdto;
 	   }
 
+   // 어제 온도,습도,일사량,토양습도,co2
+   public GraphDTO avgGraph_yesterday(int seq) {
+	      dbconn();
+	      try {
+	         String sql = "SELECT round(avg(temperature_outer),2), round(avg(temperature),2), round(avg(humidity_outer),2), round(avg(humidity),2), round(avg(insolation),2),round(avg(co2),2),round(avg(humidity_soil),2) "
+	               + " FROM T_ENV " 
+	               + " WHERE f_seq = ? "
+	               + " and to_char(env_date, 'YYYY-MM-DD') = (SELECT TO_CHAR(TRUNC(SYSDATE) - 1, 'YYYY-MM-DD') "
+	               + "FROM DUAL)";
+	         psmt = conn.prepareStatement(sql);
+	         psmt.setInt(1, seq);
+	         rs = psmt.executeQuery();
+	         if (rs.next()) {
+	            int avg_temperature_outer = rs.getInt(1);
+	            int avg_temperature = rs.getInt(2);
+	            int avg_humidity_outer = rs.getInt(3);
+	            int avg_humidity = rs.getInt(4);
+	            int avg_insolation = rs.getInt(5);
+	            int avg_co2 = rs.getInt(6);
+	            int avg_humidity_soil = rs.getInt(7);
+
+	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
+	                  avg_insolation, avg_co2, avg_humidity_soil);
+	         }
+
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbclose();
+	      }
+	      return gdto;
+	   }
+   
    // 당일 온도,습도,일사량,토양습도,co2
    public GraphDTO avgGraph_today(int seq) {
 	      dbconn();
