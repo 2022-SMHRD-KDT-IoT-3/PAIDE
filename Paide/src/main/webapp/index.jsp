@@ -1,3 +1,5 @@
+<%@page import="Model.SubscriptionDTO"%>
+<%@page import="Model.SubscriptionDAO"%>
 <%@page import="Model.FarmDTO"%>
 <%@page import="java.lang.ProcessHandle.Info"%>
 <%@page import="Model.FarmDAO"%>
@@ -85,7 +87,8 @@
                <ul class="nav navbar-nav navbar-right">
                   <!-- 로그아웃시 삭제1 start-->
                    <% if(info != null){
-                   ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
+                   ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
+                   ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());%>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
                            class="img-circle" alt="Avatar" id="profile"> <%= info.getM_name() %> 
@@ -150,16 +153,15 @@
                      <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                      <ul id='neighbor' class="dropdown-menu notifications">
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
+                        <%if(sublist.size() == 0){ %>
+                        <li><a><span
+                           class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
+                       	<%}else {%>
+                         	<% for(int i = 0; i<sublist.size(); i++){ %>
+                        <li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
+                               class="lnr lnr-user"></span>&nbsp;<%=sublist.get(i).getF_name() %></a></li>
+                            <%} 
+                         };%>
                      </ul>
                      <% }else{%>
                      <div class="navbar-btn navbar-btn-right"> 

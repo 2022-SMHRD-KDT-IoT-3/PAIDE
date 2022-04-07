@@ -1,3 +1,5 @@
+<%@page import="Model.SubscriptionDTO"%>
+<%@page import="Model.SubscriptionDAO"%>
 <%@page import="java.net.URLDecoder"%>
 <%@page import="Model.FarmDAO"%>
 <%@page import="Model.FarmDTO"%>
@@ -92,7 +94,8 @@ td {
 					<ul class="nav navbar-nav navbar-right">
 
 						<!-- 로그아웃시 삭제1 start-->
-						<% if(info != null){%>
+						<% if(info != null){
+						ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());%>
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>" class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %>
 							</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
@@ -133,16 +136,20 @@ td {
                               1. 구독(이웃추가)을 눌렀을 때, 자동으로 class="dropdown-menu notifications으로 들어가고,
                               2.  class="dropdown-menu notifications에 있는 다른 농장의 수 만큼 자동으로 class="badge rounded-pill bg-success"에서 count가 들어가야 함.
                               3. 구독을 다시 한 번 눌렀을 때, 구독이 취소되고, 자동으로 class="badge rounded-pill bg-success"에서 카운트가 내려가고, class="dropdown-menu notifications"에서 목록이 빠져야 함. -->
-						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-users"></i> <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. --> <span class="badge rounded-pill bg-success">5</span>
+						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-users"></i> <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. --> <span class="badge rounded-pill bg-success"></span>
 						</a> <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                                 사용자의 이웃의 수 만큼 li 반복 되어야합니다  --> <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
 							<ul id='neighbor' class="dropdown-menu notifications">
-								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
+								<%if(sublist.size() == 0){ %>
+                       			 <li><a><span
+                           			class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
+                       			<%}else {%>
+                         			<% for(int i = 0; i<sublist.size(); i++){ %>
+                        		<li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
+                               		class="lnr lnr-user"></span>&nbsp;<%=sublist.get(i).getF_name() %></a></li>
+                            		<%} 
+                         		};%>
 							</ul> <% }else{%>
 							<div class="navbar-btn navbar-btn-right">
 								<a class="btn btn-primary" href="page-login.jsp"><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>

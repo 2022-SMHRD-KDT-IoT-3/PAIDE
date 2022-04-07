@@ -1,3 +1,6 @@
+<%@page import="Model.GraphDTO"%>
+<%@page import="Model.SubscriptionDTO"%>
+<%@page import="Model.SubscriptionDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
@@ -44,6 +47,12 @@
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
+	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
+	int f_seq = Integer.parseInt(request.getParameter("seq"));
+	String startday = request.getParameter("startday");
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
+	FarmDTO fdto = new FarmDAO().selectFarm(f_seq);
+	MemberDTO otherinfo = new MemberDAO().otherinfo(fdto.getF_owner_id());
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -90,7 +99,7 @@
                                  class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                                  class="icon-submenu lnr lnr-chevron-down"></i></a>
                          <ul class="dropdown-menu">
-                             <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                             <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                              <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                              <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                          </ul>
@@ -138,23 +147,22 @@
                          <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                              <i class="lnr lnr-users"></i>
                                                              <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
-                             <span class="badge rounded-pill bg-success">5</span>
+                             <span class="badge rounded-pill bg-success"></span>
                          </a>
                          <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                           사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->
                          <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                          <ul id='neighbor' class="dropdown-menu notifications">
-                             <li><a href="OtherFarm.html" class="notification-item"><span
-                                         class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
-                                         class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
-                                         class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
-                                         class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                             <li><a href="OtherFarm.html" class="notification-item"><span
-                                         class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
+                             <%if(sublist.size() == 0){ %>
+                        	<li><a><span
+                          		 class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
+                       		<%}else {%>
+                         	<% for(int i = 0; i<sublist.size(); i++){ %>
+                        	<li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
+                               class="lnr lnr-user"></span>&nbsp;<%=sublist.get(i).getF_name() %></a></li>
+                            	<%} 
+                        	 };%>
                          </ul>
                          <% }else{%>
 		                     <div class="navbar-btn navbar-btn-right"> 
@@ -196,9 +204,9 @@
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
-                           <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                           <li><a href="farmSelect.html" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                           <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                           <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
+                           <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
                      </div>
                       <%} %>
@@ -225,7 +233,7 @@
                            <div class="profile-main">
                               <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
                               <!-- 선택한 농장의 이름변수 ㄱ -->
-                              <h3 class="name">송찬영</h3>
+                              <h3 class="name"><%=otherinfo.getM_name() %></h3>
                            </div>
                         </div>
                         <!-- END PROFILE HEADER -->
@@ -234,11 +242,16 @@
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
                               <!-- 선택한 농장의 이름  -->
-                              <h4 class="heading">찬영이의 토마토농장</h4>
+                              <% FarmDTO Farminfo = new FarmDAO().myFarm(f_seq); %>
+                              <h4 class="heading"><%=fdto.getF_name() %></h4>
                               <ul class="list-unstyled list-justify">
-                                 <li>농장주소 <span>광주광역시 풍영로330번길 16</span></li>
-                                 <li>재배작목 <span>토마토</span></li>
+                                 <li>농장지역 <span><%=fdto.getF_region() %></span></li>
+                                 <li>재배작목 <span><%=fdto.getF_crops() %></span></li>
+                                 <%if("P".equals(Farminfo.getF_facility())){ %>
+                                 <li>재배시설 <span>비닐온실</span></li>
+                                 <%}else if("G".equals(Farminfo.getF_facility())){ %>
                                  <li>재배시설 <span>유리온실</span></li>
+                                 <%}; %>
                               </ul>
                               <br>
 
@@ -246,7 +259,7 @@
                               <br>
                               <center>
                                  <!-- 자세히 보기 클릭시 현재 선택한 농장정보 페이지(차트,테이블 있는 곳)로 이동  -->
-                                 <a href="OtherFarm.html"> <button type="button" class="btn btn-primary">농장홈화면</button></a>
+                                 <a href="OtherFarm.jsp?seq=<%=f_seq%>"> <button type="button" class="btn btn-primary">농장홈화면</button></a>
                               </center>
                            </div>
                            <!-- current_date끝 -->
@@ -258,15 +271,20 @@
                      <div class="profile-right">
                         <h4 class="heading">날짜선택</h4>
                         <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
-                        <form action="">
+                        <form action="OtherFarm_detail.jsp" method="get">
                            <div class="input-group">
                               <input type="date" name="startday" id='currentDate'/>
-
+							  <input type="hidden" name="seq" value="<%= f_seq %>">
                               <input type="submit" value="선택" class="btn btn-primary"/>
                            </div>
                         </form>
                         <br>
                         <!-- 선택한 농장의 정보테이블  -->
+                        <%  ArrayList<GraphDTO> temp = new FarmDAO().temp_HL(f_seq, startday);
+                         	ArrayList<GraphDTO> humi = new FarmDAO().humi_HL(f_seq, startday);
+                         	ArrayList<GraphDTO> soil = new FarmDAO().soil_HL(f_seq, startday);
+                         	ArrayList<GraphDTO> insol = new FarmDAO().insol_HL(f_seq, startday);
+                        %>
                         <table class="table table-bordered">
                            <thead>
                               <tr>
@@ -280,36 +298,64 @@
                            </thead>
                            <tbody>
                               <tr>
+                              <%if (temp.size()!=0){ %>
                                  <td>온도</td>
-                                 <td>25℃</td>
-                                 <td>29℃</td>
-                                 <td>15:32</td>
-                                 <td>24℃</td>
-                                 <td>09:30</td>
+                                 <td><%=temp.get(0).getEnv_HL() %>°C</td>
+                                 <td><%=temp.get(0).getTime() %></td>
+                                 <td><%=temp.get(1).getEnv_HL() %>°C</td>
+                                 <td><%=temp.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>온도</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                               <tr>
+                                 <%if (humi.size()!=0){ %>
                                  <td>습도</td>
-                                 <td>89%</td>
-                                 <td>90%</td>
-                                 <td>06:40</td>
-                                 <td>87%</td>
-                                 <td>13:05</td>
+                                 <td><%=humi.get(0).getEnv_HL() %>%</td>
+                                 <td><%=humi.get(0).getTime() %></td>
+                                 <td><%=humi.get(1).getEnv_HL() %>%</td>
+                                 <td><%=humi.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>습도</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                               <tr>
+                                 <%if (insol.size()!=0){ %>
                                  <td>일사량</td>
-                                 <td>1200W/㎡</td>
-                                 <td>1300W/㎡</td>
-                                 <td>14:05</td>
-                                 <td>0W/㎡</td>
-                                 <td>19:30</td>
+                                 <td><%=insol.get(0).getEnv_HL() %>kWh/㎡</td>
+                                 <td><%=insol.get(0).getTime() %></td>
+                                 <td><%=insol.get(1).getEnv_HL() %>kWh/㎡</td>
+                                 <td><%=insol.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>일사량</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                               <tr>
+                                <%if (soil.size()!=0){ %>
                                  <td>토양습도</td>
-                                 <td>99%</td>
-                                 <td>99%</td>
-                                 <td>15:32</td>
-                                 <td>89%</td>
-                                 <td>09:30</td>
+                                 <td><%=soil.get(0).getEnv_HL() %>%</td>
+                                 <td><%=soil.get(0).getTime() %></td>
+                                 <td><%=soil.get(1).getEnv_HL() %>%</td>
+                                 <td><%=soil.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>토양습도</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                            </tbody>
                         </table>

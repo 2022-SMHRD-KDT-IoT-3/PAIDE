@@ -124,7 +124,8 @@
 	int f_seq = Integer.parseInt(request.getParameter("seq")); 
 	FarmDTO fdto = new FarmDAO().selectFarm(f_seq);
 	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
-	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(fdto.getF_owner_id()); 
+    MemberDTO otherinfo = new MemberDAO().otherinfo(fdto.getF_owner_id());
 %>
     <!-- WRAPPER -->
     <div id="wrapper">
@@ -262,9 +263,9 @@
                           <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                        <div id="subPages" class="collapse ">
                           <ul class="nav">
-                             <li><a href="myFarm.html" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                             <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
                              <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
-                             <li><a href="commuWrite.html" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
+                             <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                           </ul>
                        </div>
                        <%} %>
@@ -289,7 +290,7 @@
                                 <div class="profile-header">
                                     <div class="overlay"></div>
                                     <div class="profile-main">
-                                        <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
+                                        <img src="assets/img/<%=otherinfo.getM_profile() %>" class="img-circle" alt="Avatar">
                                         <!-- (여기는 다른농장회원(사용자가 선택한 사람) 이름이 와야함!!! 로그인한 회원 이름변수 ㄱ -->
                                         <h3 class="name"><%=fdto.getF_owner_id() %></h3>
                                     </div>
@@ -299,20 +300,25 @@
                                 <div class="profile-detail">
                                     <div class="profile-info">
                                         <!-- 변경 선택한 농장의 정보로 변경 -->
-                                        <h4 class="heading">농장정보 (chanyoung0831)</h4>
+                                        <h4 class="heading">농장정보 (<%=fdto.getF_owner_id() %>)</h4>
                                         <ul class="list-unstyled list-justify">
                                             <!-- 농장선택을 누르면 <span>안의 선택한 농장의 정보가 떠야한다 -->
+                                            <% FarmDTO Farminfo = new FarmDAO().myFarm(f_seq); %>
                                             <li>농장이름 <span id="farmname"><%=fdto.getF_name() %></span></li>
-                                            <li>농장주소 <span>광주광역시 풍영로330번길 16</span></li>
+                                            <li>농장지역 <span><%=fdto.getF_region() %></span></li>
                                             <li>재배작목 <span><%=fdto.getF_crops() %></span></li>
-                                            <li>재배시설 <span><%=fdto.getF_facility() %></span></li>
+                                            <%if("P".equals(Farminfo.getF_facility())){ %>
+                                			<li>재배시설 <span>비닐온실</span></li>
+                                 			<%}else if("G".equals(Farminfo.getF_facility())){ %>
+                                 			<li>재배시설 <span>유리온실</span></li>
+                                 			<%} %>
                                         </ul>
                                         <input type = "hidden" name="m_id" value="<%=info.getM_id() %>">
                                         <input type = "hidden" name="f_seq" value="<%=fdto.getF_seq() %>">
 
                                         <br>
                                         <center>
-                                            <a href="OtherFarm_detail.html"> <button type="button"
+                                            <a href="OtherFarm_detail.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="button"
                                                     class="btn btn-primary">자세히보기</button></a>
                                          <% 
                                          int check = 0;
@@ -352,18 +358,17 @@
                             <div class="profile-right">
                                 <strong>농장선택</strong>
                                 <!-- 변경 회원의 등록된 농장으로 변경 -->
+                                <form action = myFarm.jsp method="get">
                                 <div class="input-group">
-                                    <select class="form-control">
-                                        <option value="cheese">차뇬이 농장</option>
-                                        <option value="tomatoes">찬영이의 토마토농장</option>
-                                        <option value="mozarella">Mozzarella</option>
-                                        <option value="mushrooms">Mushrooms</option>
-                                        <option value="pepperoni">Pepperoni</option>
-                                        <option value="onions">Onions</option>
+                                    <select name="seq" class="form-control">
+                                       <%for(int i = 0; i<farmlist.size(); i++){%>
+                              			<option value="<%=farmlist.get(i).getF_seq()%>"><%=farmlist.get(i).getF_name()%></option>
+                           				<%} %>
                                     </select>
                                     <span class="input-group-btn"><button class="btn btn-primary"
                                             type="button">선택</button></span>
                                 </div>
+                                </form>
                                 <br><br>
                                 <!-- 게시판 목록 -->
                                 <!--  변경 '송찬영'이라는 자리에는 선택한 subscriptioned_id가 와야함. -->

@@ -1,3 +1,5 @@
+<%@page import="Model.SubscriptionDAO"%>
+<%@page import="Model.SubscriptionDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
@@ -108,6 +110,12 @@
       }
    </style>
 <style>
+
+   	#profileimg{
+   	width: 110px;
+      height: 110px;
+      object-fit: cover;
+   	}
 	#profile {
 		width: 20px;
 		height: 20px;
@@ -120,7 +128,7 @@
 	<% 
       	MemberDTO info = (MemberDTO)session.getAttribute("info");
 	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());  
-	
+	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
 		String userID = null;
 		if (session.getAttribute("info") != null) {
 			userID = info.getM_id();
@@ -172,7 +180,7 @@
                            class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
-                        <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <li><a href="myFarm.jsp?seq=<%=f_seq%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -219,23 +227,22 @@
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="lnr lnr-users"></i>
                         <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
-                        <span class="badge rounded-pill bg-success">5</span>
+                        <span class="badge rounded-pill bg-success"></span>
                      </a>
                      <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                                 사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->
                      <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                      <ul id='neighbor' class="dropdown-menu notifications">
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
+                        <%if(sublist.size() == 0){ %>
+                        <li><a><span
+                           class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
+                       	<%}else {%>
+                         	<% for(int i = 0; i<sublist.size(); i++){ %>
+                        <li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
+                               class="lnr lnr-user"></span>&nbsp;<%=sublist.get(i).getF_name() %></a></li>
+                            <%} 
+                         };%>
                      </ul>
                      	<% }else{%>
 	                     <div class="navbar-btn navbar-btn-right"> 
@@ -302,7 +309,7 @@
                         <div class="profile-header">
                            <div class="overlay"></div>
                            <div class="profile-main">
-                              <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
+                              <img src="assets/img/<%=info.getM_profile() %>" id="profileimg" class="img-circle" alt="Avatar">
                               <!-- 로그인한 회원 이름변수 ㄱ -->
                               <h3 class="name"><%= info.getM_name() %></h3>
                            </div>
@@ -315,9 +322,13 @@
                               <% FarmDTO Farminfo = new FarmDAO().myFarm(farmlist.get(0).getF_seq()); %>
                               <h4 class="heading">회원정보</h4>
                               <ul class="list-unstyled list-justify">
-                                 <li>농장주소 <span><%= Farminfo.getF_region() %></span></li>
+                                 <li>농장지역 <span><%= Farminfo.getF_region() %></span></li>
                                  <li>재배작목 <span><%= Farminfo.getF_crops() %></span></li>
-                                 <li>재배시설 <span><%= Farminfo.getF_facility() %></span></li>
+                                 <%if(Farminfo.getF_facility().equals("P")){ %>
+                                 <li>재배시설 <span>비닐온실</span></li>
+                                 <%}else if(Farminfo.getF_facility().equals("G")){ %>
+                                 <li>재배시설 <span>유리온실</span></li>
+                                 <%} %>
                               </ul>
                               <br>
                               
@@ -355,18 +366,17 @@
                      <div class="profile-right">
                         <strong>농장선택</strong>
                         <!-- 변경 회원의 등록된 농장으로 변경 -->
+                        <form action = myFarm.jsp method="get">
                         <div class="input-group">
-                           <select class="form-control">
-                              <option value="cheese">대매니 농장</option>
-                              <option value="tomatoes">다민이의 토마토농장</option>
-                              <option value="mozarella">Mozzarella</option>
-                              <option value="mushrooms">Mushrooms</option>
-                              <option value="pepperoni">Pepperoni</option>
-                              <option value="onions">Onions</option>
+                           <select name="seq" class="form-control">
+                           <%for(int i = 0; i<farmlist.size(); i++){%>
+                              <option value="<%=farmlist.get(i).getF_seq()%>"><%=farmlist.get(i).getF_name()%></option>
+                           <%}; %>
                            </select>
                            <span class="input-group-btn"><button class="btn btn-primary"
-                                 type="button">선택</button></span>
+                                 type="submit">선택</button></span>
                         </div>
+                        </form>
                         <br><br>
                         <h4 class="heading">농장정보</h4>
 
@@ -381,7 +391,7 @@
                                        </svg>
                                     </div>
                                     <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>일사량(1200W/㎡)</span>
+                                    <span>일사량(<%=Farminfo.getInsolation() %>)</span>
                                  </div>
                               </div>
                               <div class="col-md-3 col-sm-6">
@@ -393,7 +403,7 @@
                                         </svg>
                                     </div>
                                      <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>토양습도(99%)</span>
+                                    <span>토양습도(<%=Farminfo.getHumidity_soil() %>)</span>
                                  </div>
                               </div>
                               <div class="col-md-3 col-sm-6">
@@ -405,7 +415,7 @@
                                         </svg>
                                     </div>
                                      <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>기온(25℃)</span>
+                                    <span>기온(<%=Farminfo.getTemperature() %>)</span>
                                  </div>
                               </div>
                               <div class="col-md-3 col-sm-6">
@@ -416,7 +426,7 @@
                                         </svg>
                                     </div>
                                      <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>습도(89%)</span>
+                                    <span>습도(<%= Farminfo.getHumidity() %>)</span>
                                  </div>
                               </div>
                            </div>

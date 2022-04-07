@@ -657,4 +657,31 @@ public class MemberDAO {
 		}
 		return cnt2;
 	}
+	
+	// 다른사람 회원정보 가져오기 메소드
+	public MemberDTO otherinfo(String id) {
+		dbconn();
+		try {
+			String sql = "select * from t_member where m_id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				String m_id = rs.getString(1);
+				String m_pw = rs.getString(2);
+				String m_name = rs.getString(3);
+				String m_phone = rs.getString(4);
+				String m_email = rs.getString(7);
+				String m_profile = rs.getString(10);
+				
+				dto = new MemberDTO(m_id, m_pw, m_name, m_phone, m_email, m_profile);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dbclose();
+		}
+		return dto;
+		
+	}
 }

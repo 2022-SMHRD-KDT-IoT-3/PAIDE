@@ -1,3 +1,5 @@
+<%@page import="Model.SubscriptionDTO"%>
+<%@page import="Model.SubscriptionDAO"%>
 <%@page import="Model.FarmDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.CommunityDAO"%>
@@ -118,13 +120,15 @@
                <ul class="nav navbar-nav navbar-right">
 
                   <!-- 로그아웃시 삭제1 start-->
-                  <% if(info != null){%>
+                  <% if(info != null){
+                  ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
+                  ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
                            class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
-                        <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -172,23 +176,22 @@
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="lnr lnr-users"></i>
                         <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
-                        <span class="badge rounded-pill bg-success">5</span>
+                        <span class="badge rounded-pill bg-success"></span>
                      </a>
                      <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                                 사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->
                      <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                      <ul id='neighbor' class="dropdown-menu notifications">
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
+                        <%if(sublist.size() == 0){ %>
+                        <li><a><span
+                           class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
+                       	<%}else {%>
+                         	<% for(int i = 0; i<sublist.size(); i++){ %>
+                        <li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
+                               class="lnr lnr-user"></span>&nbsp;<%=sublist.get(i).getF_name() %></a></li>
+                            <%} 
+                         };%>
                      </ul>
                      <% }else{%>
                      <div class="navbar-btn navbar-btn-right"> 
@@ -282,8 +285,8 @@
                   
                      <center>
                         <!-- 저장을 누르면 자신이 선택한 카테고리 게시판으로 넘어가야함. -->
-                       <input type="button" class="btn btn-primary" value="저장" onClick="javascript:writeCheck();"> 
-                       <a href="myFarm.jsp"><button type="button" class="btn btn-primary" value="취소">취소</button></a>
+                       <input type="submit" class="btn btn-primary" value="저장" onClick="javascript:writeCheck();"> 
+                       <a href="index.jsp"><button type="button" class="btn btn-primary" value="취소">취소</button></a>
                      </center>
                 </form>  
                   <!-- form태그 버튼 까지 씌워서 버튼 값이 넘어갈 수 있게 함. -->

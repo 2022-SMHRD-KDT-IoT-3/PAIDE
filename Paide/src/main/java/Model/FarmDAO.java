@@ -247,16 +247,16 @@ public class FarmDAO {
 				String f_facility = rs.getString(5);
 				String f_name = rs.getString(7);
 				int env_seq = rs.getInt(8);
-				double temperature = rs.getDouble(9);
-				double temperature_outer = rs.getDouble(10);
-				double humidity = rs.getDouble(11);
-				double hmidity_outer = rs.getDouble(12);
-				double humidity_soil = rs.getDouble(13);
-				double insolation = rs.getDouble(14);
-				double window_opened = rs.getDouble(15);
-				double co2 = rs.getDouble(16);
-				double dew_point = rs.getDouble(17);
-				String env_date = rs.getString(18);
+				double temperature = rs.getDouble(10);
+				double temperature_outer = rs.getDouble(11);
+				double humidity = rs.getDouble(12);
+				double hmidity_outer = rs.getDouble(13);
+				double humidity_soil = rs.getDouble(14);
+				double insolation = rs.getDouble(15);
+				double window_opened = rs.getDouble(16);
+				double co2 = rs.getDouble(17);
+				double dew_point = rs.getDouble(18);
+				String env_date = rs.getString(19);
 				
 				fdto = new FarmDTO(f_seq,f_owner_id,f_region,f_crops, f_facility,f_name, env_seq, temperature, temperature_outer,humidity,hmidity_outer,humidity_soil,insolation,window_opened,co2,dew_point,env_date);
 			}
