@@ -7,7 +7,11 @@
    
    <link rel="stylesheet" href="assets/css/style.css">
    <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
-   
+   <style>
+     .swal-button {
+	  background-color: #357653;
+	}
+   </style>
 </head>
 
 <style>
