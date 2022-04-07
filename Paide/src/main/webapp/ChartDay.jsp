@@ -86,7 +86,10 @@
 </head>
 
 <body>
-<% MemberDTO info = (MemberDTO)session.getAttribute("info"); %>
+<% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
+	int f_seq = Integer.parseInt(request.getParameter("seq"));
+	String startday = request.getParameter("startday");
+%>
     <!-- WRAPPER -->
     <div id="wrapper">
         <!-- NAVBAR -->
