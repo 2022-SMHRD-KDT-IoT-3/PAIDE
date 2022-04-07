@@ -217,7 +217,8 @@
 
                             <ul id='neighbor' class="dropdown-menu notifications">
                             <%if(sublist.size() == 0){ %>
-                            <li> 이웃 목록이 없습니다 </li>
+                            <li><a><span
+                                 class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
                             <%}else {%>
                             	<% for(int i = 0; i<sublist.size(); i++){ %>
                             	<li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
@@ -231,8 +232,6 @@
 		                     </div>
 		                     <%} %>
                         </li>
-                        <!-- 로그아웃시 삭제1 end-->
-
                         <!-- 로그아웃시 추가 start : 로그인버튼 -->
                         <!-- <div class="navbar-btn navbar-btn-right"> 
                   <a class="btn btn-primary" href="page-login.html"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>

@@ -1,3 +1,5 @@
+<%@page import="Model.SubscriptionDAO"%>
+<%@page import="Model.SubscriptionDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
@@ -48,6 +50,7 @@
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info");
 	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
+	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -94,7 +97,11 @@
                            class="img-circle" alt="Avatar" id="profile" onerror="this.src ='assets/img/프로필기본이미지.png'">
                         <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
-                        <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <% if(farmlist.size()>0){ %>
+                        <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <%}else{ %>
+                        <li><a><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <%} %>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -149,16 +156,15 @@
                      <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
                      <ul id='neighbor' class="dropdown-menu notifications">
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
-                        <li><a href="OtherFarm.jsp" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
+                        <%if(sublist.size() == 0){ %>
+                        <li><a><span
+                           class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
+                        <%}else {%>
+                         <% for(int i = 0; i<sublist.size(); i++){ %>
+                          <li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
+                                 class="lnr lnr-user"></span>&nbsp;<%=sublist.get(i).getF_name() %></a></li>
+                            <%} 
+                         };%>
                      </ul>
                      <% }else{%>
                      <div class="navbar-btn navbar-btn-right"> 
@@ -197,7 +203,11 @@
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
-                           <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                            <%if(farmlist.size()>0){ %>
+                           <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                        <%}else{ %>
+                           <li><a><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                          <%} %>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>

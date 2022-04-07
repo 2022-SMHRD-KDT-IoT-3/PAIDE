@@ -63,7 +63,9 @@
 </head>
 
 <body>
-<% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
+<% MemberDTO info = (MemberDTO)session.getAttribute("info");
+	int f_seq = Integer.parseInt(request.getParameter("seq"));
+	String startday = request.getParameter("startday");
 %>
     <!-- WRAPPER -->
     <div id="wrapper">
@@ -207,7 +209,8 @@
                         <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                         <!-- 로그아웃시 삭제2 start -->
-                      	<% if(info != null){%>
+                      	<% if(info != null){
+                      	%>
                         <li>
                             <a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-user"></i>
                                 <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
@@ -257,10 +260,11 @@
                                     </p>
                                     <h3 class="panel-title" style="padding-bottom: 15px;"><span
                                             class="lnr lnr-calendar-full"></span>&nbsp;&nbsp;조회하고싶은 날짜를 선택해주세요</h3>
-                                    <form action="">
+                                    <form action="myFarm_ChartDay.jsp" method="get">
                                         <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
                                         <div class="input-group">
                                             <input type="date" name="startday" id='currentDate' />
+                                            <input type="hidden" name="seq" value="<%=f_seq%>">
                                             <input type="submit" value="선택" class="btn btn-primary" />
                                         </div>
                                     </form>
