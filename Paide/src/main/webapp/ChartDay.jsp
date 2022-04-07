@@ -281,7 +281,7 @@
                             <div class="col-md-4" >
                                 <div id="top-btn1">
                                 <!-- 평균차트  -->
-                                <a href="ChartAvg.jsp"> <button type="button"
+                                <a href="ChartAvg.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="button"
                                     class="btn btn-primary btn-lg"><i
                                     class="lnr lnr-chevron-left-circle"></i>&nbsp;평균차트&nbsp;&nbsp;<i
                                         class="bi bi-bar-chart-line"></i>&nbsp;&nbsp;</button></a>
@@ -297,9 +297,10 @@
                                     <h3 class="panel-title" style="padding-bottom: 15px;"><span
                                             class="lnr lnr-calendar-full"></span>&nbsp;&nbsp;조회하고싶은 날짜를 선택해주세요</h3>
                                     <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
-                                    <form action="ChartDay.jsp">
+                                    <form action="ChartDay.jsp" method="get">
                                         <div class="input-group" id="input_date">
                                             <input type="date" name="startday" id='currentDate' />
+                                            <input type="hidden" name="seq" value="<%=f_seq %>">
                                             <input type="submit" value="선택" class="btn btn-primary" />
                                         </div>
                                     </form>
@@ -312,7 +313,7 @@
                             <!-- <div class="col-md-4" style="padding-bottom: 2%;  padding-top:5%; text-align: left;" > -->
                                 <div id="top-btn2">
                                     <!-- 농장자세히보기 -->
-                                    <a href="myFarm_detail.jsp"> <button type="button"
+                                    <a href="myFarm_detail.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="button"
                                             class="btn btn-primary btn-lg">&nbsp;&nbsp;자세히보기&nbsp;<i
                                             class="lnr lnr-chevron-right-circle"></i></button></a>
                                 </div>

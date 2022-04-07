@@ -267,11 +267,11 @@
                             </div>
                             <center style="padding-bottom: 3%;">
                                 <!-- 농장자세히보기 -->
-                                <a href="myFarm_detail.jsp"> <button type="button" class="btn btn-primary btn-lg"
+                                <a href="myFarm_detail.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="button" class="btn btn-primary btn-lg"
                                         style="margin: 1%;"><i
                                             class="lnr lnr-chevron-left-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자세히보기</button></a>
                                 <!-- 평균차트-->
-                                <a href="ChartDay.jsp"> <button type="button"
+                                <a href="ChartDay.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="button"
                                         class="btn btn-primary btn-lg">일일차트&nbsp;&nbsp;&nbsp;<i
                                             class="bi bi-graph-up-arrow"></i>&nbsp;&nbsp;<i
                                             class="lnr lnr-chevron-right-circle"></i></button></a>
