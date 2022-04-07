@@ -46,7 +46,7 @@
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info");
-	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
+	
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -84,13 +84,18 @@
             <div id="navbar-menu">
                <ul class="nav navbar-nav navbar-right">
                   <!-- 로그아웃시 삭제1 start-->
-                   <% if(info != null){%>
+                   <% if(info != null){
+                   ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
                            class="img-circle" alt="Avatar" id="profile"> <%= info.getM_name() %> 
                             <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
+                     <% if(farmlist.size()>0){ %>
                         <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <%}else{ %>
+                        <li><a><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <%} %>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -188,13 +193,18 @@
                   <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                   <!-- 로그아웃시 삭제2 start -->
-                  <% if(info != null){%>
+                  <% if(info != null){
+                  ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
                   <li>
                      <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i>
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
-                           <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                        <%if(farmlist.size()>0){ %>
+                           <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                        <%}else{ %>
+                           <li><a><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                          <%} %>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>

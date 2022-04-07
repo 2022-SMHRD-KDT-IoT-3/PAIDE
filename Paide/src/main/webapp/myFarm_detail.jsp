@@ -47,12 +47,8 @@
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
 	int f_seq = Integer.parseInt(request.getParameter("seq"));
-	String startday = "2022-03-27";
-	/* if(request.getParameter("startday").equals(null)){
-		startday = "TO_CHAR(SYSDATE, 'YYYY-MM-DD')";
-	}else{
-		startday = request.getParameter("startday");
-	} */
+	String startday = request.getParameter("startday");
+	System.out.println(startday);
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -278,7 +274,6 @@
                          	System.out.println(f_seq);
                          	System.out.println(startday);
                         %>
-                        <%if (temp.size()!=0){ %>
                         <table class="table table-bordered">
                            <thead>
                               <tr>
@@ -291,38 +286,67 @@
                            </thead>
                            <tbody>
                               <tr>
+                              <%if (temp.size()!=0){ %>
                                  <td>온도</td>
                                  <td><%=temp.get(0).getEnv_HL() %></td>
                                  <td><%=temp.get(0).getTime() %></td>
                                  <td><%=temp.get(1).getEnv_HL() %></td>
                                  <td><%=temp.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>온도</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                               <tr>
+                                 <%if (humi.size()!=0){ %>
                                  <td>습도</td>
-                                 <td>90%</td>
-                                 <td>06:40</td>
-                                 <td>87%</td>
-                                 <td>13:05</td>
+                                 <td><%=humi.get(0).getEnv_HL() %></td>
+                                 <td><%=humi.get(0).getTime() %></td>
+                                 <td><%=humi.get(1).getEnv_HL() %></td>
+                                 <td><%=humi.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>습도</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                               <tr>
+                                 <%if (insol.size()!=0){ %>
                                  <td>일사량</td>
-                                 <td>1300W/㎡</td>
-                                 <td>14:05</td>
-                                 <td>0W/㎡</td>
-                                 <td>19:30</td>
+                                 <td><%=insol.get(0).getEnv_HL() %></td>
+                                 <td><%=insol.get(0).getTime() %></td>
+                                 <td><%=insol.get(1).getEnv_HL() %></td>
+                                 <td><%=insol.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>일사량</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                               <tr>
+                                <%if (soil.size()!=0){ %>
                                  <td>토양습도</td>
-                                 <td>99%</td>
-                                 <td>15:32</td>
-                                 <td>89%</td>
-                                 <td>09:30</td>
+                                 <td><%=soil.get(0).getEnv_HL() %></td>
+                                 <td><%=soil.get(0).getTime() %></td>
+                                 <td><%=soil.get(1).getEnv_HL() %></td>
+                                 <td><%=soil.get(1).getTime() %></td>
+                                <%}else{ %>
+                                 <td>토양습도</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <td>없음</td>
+                                 <%} %>
                               </tr>
                            </tbody>
                         </table>
-                        <%}else{%>
-                        	<span>환경정보가 없습니다</span>
-                        <%}%>
                         <!-- 농장정보 테이블 끝  -->
                         <!-- 차트버튼 -->
                         <center>
