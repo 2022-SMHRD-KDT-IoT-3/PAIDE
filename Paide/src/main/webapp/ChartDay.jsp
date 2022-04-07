@@ -96,8 +96,8 @@
 	int f_seq = Integer.parseInt(request.getParameter("seq"));
 	String startday = request.getParameter("startday");
 	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
-	System.out.println("농장번호 : " + f_seq);
-	System.out.println("선택한 날짜 : "+startday);
+	System.out.println("농장번호 : "+f_seq);
+	System.out.println("날짜 : " + startday);
 	
 %>
     <!-- WRAPPER -->
