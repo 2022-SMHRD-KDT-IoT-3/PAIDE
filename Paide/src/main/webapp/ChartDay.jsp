@@ -1,3 +1,6 @@
+<%@page import="Service.ChartDrowService"%>
+<%@page import="Model.FarmDTO"%>
+<%@page import="Model.FarmDAO"%>
 <%@page import="Model.SubscriptionDTO"%>
 <%@page import="Model.SubscriptionDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -89,9 +92,13 @@
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
+	System.out.println("아이디 : "+info.getM_id());
 	int f_seq = Integer.parseInt(request.getParameter("seq"));
 	String startday = request.getParameter("startday");
 	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
+	System.out.println("농장번호 : " + f_seq);
+	System.out.println("선택한 날짜 : "+startday);
+	
 %>
     <!-- WRAPPER -->
     <div id="wrapper">
@@ -289,7 +296,7 @@
                                     <h3 class="panel-title" style="padding-bottom: 15px;"><span
                                             class="lnr lnr-calendar-full"></span>&nbsp;&nbsp;조회하고싶은 날짜를 선택해주세요</h3>
                                     <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
-                                    <form action="">
+                                    <form action="ChartDay.jsp">
                                         <div class="input-group" id="input_date">
                                             <input type="date" name="startday" id='currentDate' />
                                             <input type="submit" value="선택" class="btn btn-primary" />
@@ -380,7 +387,7 @@
         let minutes = today.getMinutes();  // 분
         document.write('(' + hours + ':' + minutes + ')');
 
-        //날짜계산 뻘짓헀네 .................
+        //날짜계산 뻘짓헀네 .................ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
         today = new Date();
         yesterday = new Date();
         weekago = new Date();
@@ -412,13 +419,17 @@
 
     <!-- 멀티차트 -->
     <script>
-        const labels1111 = ['0','','','3','','','6','','','9','','','12','','','15','','','18','','','21','','','24'];
+    <%FarmDAO fdao = new FarmDAO();
+      FarmDTO fdto = new FarmDTO();
+      ChartDrowService cds = new  ChartDrowService();
+    %>
+        const labels1111 = [<%=cds.timedrow(f_seq, startday)%>];
         const data1111 = {
             labels: labels1111,
             datasets: [{
                 label: '이슬점',
                 //100= 마지막에 넣어주기 최대범위설정 
-                data: [40,50,30,25,45,80,20,45,50,60,45,50,40,50,30,25,45,80,20,45,50,60,45,50,60,100],
+                data: [<%=cds.depodrow(f_seq, startday)%>],
                 backgroundColor: [
                      //라인선 색(0.2 = 투명도 )
                      'rgb( 100, 110, 255, 0.5)',
@@ -439,7 +450,7 @@
                 
             },{
                 label: '내부습도',
-                data: [80,70,80,75,95,90,80,80,70,80,75,95,90,80,80,70,80,75,95,90,80,95,90,80,70],
+                data: [<%=cds.humidrow(f_seq, startday)%>],
                 backgroundColor: [
                     'rgb( 30, 130, 255,0.5 )',
                 ],
@@ -452,7 +463,7 @@
                 
             },{
                 label: '외부습도',
-                data: [90,80,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70],
+                data: [<%=cds.outhumidrow(f_seq, startday)%>],
                 backgroundColor: [
                     'rgb( 80, 200, 255,0.5)',
                     
@@ -467,7 +478,7 @@
            
             },{
                 label: '내부온도',
-                data: [21,22,25,26,21,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70],
+                data: [<%=cds.tempdrow(f_seq, startday)%>],
                 backgroundColor: [
                 'rgb( 255, 80, 80, 0.5)',
                     
@@ -484,7 +495,7 @@
            
             },{
                 label: '외부온도',
-                data: [30,28,23,25,80,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70],
+                data: [<%=cds.outtempdrow(f_seq, startday)%>],
                 backgroundColor: [
                 'rgb( 255, 175, 0, 0.5)',
                     
@@ -499,7 +510,7 @@
            
             },{
                 label: '창문',
-                data: [0,0,0,10,0,20,0,0,50,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70],
+                data: [<%=cds.windowdrow(f_seq, startday)%>],
                 backgroundColor: [
                 'rgb( 30, 170, 170,0.5)', 
                 ],
@@ -514,7 +525,7 @@
            
             },{
                 label: '토양습도',
-                data: [10,11,13,14,15,16,17,18,70,90,80,70,90,80,70,90,80,70,90,80,70,90,80,70],
+                data: [<%=cds.soildrow(f_seq, startday)%>],
                 backgroundColor: [
                 'rgb( 184, 149, 99)', 
                 ],
@@ -555,12 +566,12 @@
 
     <!-- co2 시작-->
     <script>
-        labels2 = ['0','','','3','','','6','','','9','','','12','','','15','','','18','','','21','','','24'];
+        labels2 = [<%=cds.timedrow(f_seq, startday)%>];
         data2 = {
             labels: labels2,
             datasets:[{
                 label:'CO2',
-                data :[ 750,754,730,720,710,700,600,750,754,730,720,710,700,600,750,754,730,720,710,700,600,750,754,730,720,710,700,300,1500],
+                data :[ <%=cds.co2drow(f_seq, startday)%>],
                 backgroundColor : [
                 'rgb( 34, 214, 178, 0.2)',
                 ],
@@ -609,12 +620,12 @@
 
     <!-- 일사량 시작-->
     <script>
-        labels3 = ['0','','','3','','','6','','','9','','','12','','','15','','','18','','','21','','','24'];
+        labels3 = [<%=cds.timedrow(f_seq, startday)%>];
         data3 = {
             labels: labels3,
             datasets:[{
                 label:'일사량',
-                data :[ 0,0,0,20,30,40,50,60,70,80,90,100,200,300,350,454,530,520,600,600,600,650,654,600,500,500,500,300,],
+                data :[ <%=cds.isoldrow(f_seq, startday)%>],
                 backgroundColor : [
                     'rgb( 255, 160, 30, 1)',
                 ],

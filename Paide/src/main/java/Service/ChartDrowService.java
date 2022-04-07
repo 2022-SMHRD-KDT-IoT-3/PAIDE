@@ -42,10 +42,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(templist.get(0).getTemperature());
-		result = "'" + templist.get(0).getTemperature() + "'";
+		result = "" + templist.get(0).getTemperature();
 
 		for (int i = 1; i < templist.size(); i++) {
-			result += ", '" + templist.get(i).getTemperature() + "'";
+			result += ", " + templist.get(i).getTemperature();
 		}
 		}
 		return result;
@@ -61,10 +61,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(humilist.get(0).getHumidity());
-		result = "'" + humilist.get(0).getHumidity() + "'";
+		result = "" + humilist.get(0).getHumidity();
 
 		for (int i = 1; i < humilist.size(); i++) {
-			result += ", '" + humilist.get(i).getHumidity() + "'";
+			result += ", " + humilist.get(i).getHumidity();
 		}
 		}
 		return result;
@@ -80,10 +80,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(outtemplist.get(0).getTemperature_outer());
-		result = "'" + outtemplist.get(0).getTemperature_outer() + "'";
+		result = "" + outtemplist.get(0).getTemperature_outer();
 
 		for (int i = 1; i < outtemplist.size(); i++) {
-			result += ", '" + outtemplist.get(i).getTemperature_outer() + "'";
+			result += ", " + outtemplist.get(i).getTemperature_outer();
 		}
 		}
 		return result;
@@ -99,10 +99,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(outhumilist.get(0).getHumidity_outer());
-		result = "'" + outhumilist.get(0).getHumidity_outer() + "'";
+		result = "" + outhumilist.get(0).getHumidity_outer();
 
 		for (int i = 1; i < outhumilist.size(); i++) {
-			result += ", '" + outhumilist.get(i).getHumidity_outer() + "'";
+			result += ", " + outhumilist.get(i).getHumidity_outer();
 		}
 		}
 		return result;
@@ -118,10 +118,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(soillist.get(0).getHumidity_soil());
-		result = "'" + soillist.get(0).getHumidity_soil() + "'";
+		result = "" + soillist.get(0).getHumidity_soil();
 
 		for (int i = 1; i < soillist.size(); i++) {
-			result += ", '" + soillist.get(i).getHumidity_soil() + "'";
+			result += ", " + soillist.get(i).getHumidity_soil();
 		}
 		}
 		return result;
@@ -137,10 +137,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(depolist.get(0).getDew_point());
-		result = "'" + depolist.get(0).getDew_point() + "'";
+		result = "" + depolist.get(0).getDew_point();
 
 		for (int i = 1; i < depolist.size(); i++) {
-			result += ", '" + depolist.get(i).getDew_point() + "'";
+			result += ", " + depolist.get(i).getDew_point();
 		}
 		}
 		return result;
@@ -156,10 +156,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(windowlist.get(0).getWindow_opened());
-		result = "'" + windowlist.get(0).getWindow_opened() + "'";
+		result = "" + windowlist.get(0).getWindow_opened();
 
 		for (int i = 1; i < windowlist.size(); i++) {
-			result += ", '" + windowlist.get(i).getWindow_opened() + "'";
+			result += ", " + windowlist.get(i).getWindow_opened();
 		}
 		}
 		return result;
@@ -175,10 +175,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(co2list.get(0).getCo2());
-		result = "'" + co2list.get(0).getCo2() + "'";
+		result = "" + co2list.get(0).getCo2();
 
 		for (int i = 1; i < co2list.size(); i++) {
-			result += ", '" + co2list.get(i).getCo2() + "'";
+			result += ", " + co2list.get(i).getCo2();
 		}
 		}
 		return result;
@@ -194,10 +194,10 @@ public class ChartDrowService {
 		}else {
 
 		System.out.println(isollist.get(0).getInsolation());
-		result = "'" + isollist.get(0).getInsolation() + "'";
+		result = "" + isollist.get(0).getInsolation();
 
 		for (int i = 1; i < isollist.size(); i++) {
-			result += ", '" + isollist.get(i).getInsolation() + "'";
+			result += ", " + isollist.get(i).getInsolation();
 		}
 		}
 		return result;
