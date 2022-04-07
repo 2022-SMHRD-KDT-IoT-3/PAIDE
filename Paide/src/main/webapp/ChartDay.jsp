@@ -98,6 +98,7 @@
 	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
 	System.out.println("농장번호 : "+f_seq);
 	System.out.println("날짜 : " + startday);
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 	
 %>
     <!-- WRAPPER -->
@@ -146,7 +147,7 @@
                            class="img-circle" alt="Avatar" id="profile"> <%= info.getM_name() %> 
                             <i class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
-                        <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -251,7 +252,7 @@
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
-                           <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq() %>" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
@@ -350,7 +351,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- END 차트 -->
                 </div>
             </div>
@@ -419,6 +419,7 @@
 
     <!-- 멀티차트 -->
     <script>
+    
     <%FarmDAO fdao = new FarmDAO();
       FarmDTO fdto = new FarmDTO();
       ChartDrowService cds = new  ChartDrowService();

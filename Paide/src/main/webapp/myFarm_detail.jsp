@@ -361,7 +361,7 @@
                         <!-- 차트버튼 -->
                         <center>
                            <!-- 농장하루평균차트 -->
-                           <a href="ChartDay.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="button" class="btn btn-primary btn-lg"><i class="lnr lnr-chevron-left-circle"></i>&nbsp;&nbsp;일일차트&nbsp;&nbsp;<i class="bi bi-graph-up-arrow"></i></button></a>
+                           <a href="ChartDay.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="submit" class="btn btn-primary btn-lg"><i class="lnr lnr-chevron-left-circle"></i>&nbsp;&nbsp;일일차트&nbsp;&nbsp;<i class="bi bi-graph-up-arrow"></i></button></a>
                            <!-- 농장평균차트 -->
                            <a href="ChartAvg.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="button" class="btn btn-primary btn-lg">평균차트&nbsp;&nbsp;<i class="bi bi-bar-chart-line"></i>&nbsp;&nbsp;<i class="lnr lnr-chevron-right-circle"></i></button></a>
                         </center>
