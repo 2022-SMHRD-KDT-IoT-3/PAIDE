@@ -106,6 +106,7 @@
  <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
  <script src="assets/vendor/chartist/js/chartist.min.js"></script>
  <script src="assets/scripts/klorofil-common.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <!-- 변경: 중복확인 불러오는 제이쿼리임. 안되어 있더라.... -->
  <script type="text/javascript">

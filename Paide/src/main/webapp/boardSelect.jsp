@@ -37,6 +37,17 @@
 		height: 20px;
 		object-fit: cover;
 	}
+	#heart{
+	background-color: transparent;
+	border: none;
+	width: 17px;
+	height: 17px;
+	}
+	.heartbtn{
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	}
 </style>
 
 </head>
@@ -54,6 +65,7 @@
 		if (request.getParameter("article_seq") != null) {
 			article_seq = Integer.parseInt(request.getParameter("article_seq"));
 		}
+		String article_category = request.getParameter("article_category");
 	%>
 
 	<!-- WRAPPER -->
@@ -69,24 +81,27 @@
 						<i class="lnr lnr-arrow-left-circle"></i>
 					</button>
 				</div>
-				<form class="navbar-form navbar-left" method="post" name="search" action="SearchArticleService.do">
-					<div class="input-group">
-						<table>
-							<tr>
-								<td><select class="form-control" name="searchField">
-										<option value="0">선택</option>
-										<option value="article_title">제목</option>
-										<option value="writer">작성자</option>
-								</select></td>
-								<td><input type="text" class="form-control" placeholder="Search dashboard..." name="searchText" maxlength="100"></td>
-								<td>
-									<button type="submit" class="btn btn-primary">Go</button>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</form>
-
+				<form action="commu_All.jsp" class="navbar-form navbar-left" method="post">
+               <div class="input-group">
+                  <table>
+                     <tr>
+                        <td>
+                           <select class="form-control" name="searchField">
+                              <option value="0">선택</option>
+                              <option value="article_title">제목</option>
+                              <option value="m_id">작성자</option>
+                           </select>  
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" placeholder="검색" name="searchText" maxlength="100">
+                        </td>
+                        <td>
+                           <button type="submit" class="btn btn-primary">Go</button>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </form>
 				<div id="navbar-menu">
 					<ul class="nav navbar-nav navbar-right">
 
@@ -177,8 +192,11 @@
 						<li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 						<% if(info != null){%>
 						<li>
-						<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> 
-						<span><%= info.getM_name() %>	<div id="subPages" class="collapse in">
+						<a href="#subPages" data-toggle="collapse" class="collapsed">
+						<i class="lnr lnr-user"></i> 
+						<span><%= info.getM_name() %></span>
+						<i class="icon-submenu lnr lnr-chevron-left"></i></a> 	
+						<div id="subPages" class="collapse in">
 								<ul class="nav">
 									<li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
 									<li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
@@ -245,6 +263,15 @@
 															</tr>
 															<tr>
 																<td colspan="2">
+																<a href="commu_<%= article_category %>" class="btn btn-primary" style="float:right; margin-left:5px;">목록</a>
+																<%
+																	if(dto.getM_id().equals(userID)){
+																%>
+																<a href="updateArticle.jsp?article_seq=<%=article_seq%>" class="btn btn-primary" style="float:right; margin-left:5px;">수정</a>
+																<a onClick="deleteArticle(<%= article_seq %>,'<%= article_category %>')" class="btn btn-primary" style="float:right;">삭제</a>
+																<%
+																	}
+																%>
 																	<!-- 변경 start 댓글  --> <!-- 
                                                 댓글 테이블 t_comment
                                                     댓글 순번 cmt_seq
@@ -253,10 +280,13 @@
                                                     댓글 작성일자 cmt_date
                                                     댓글 작성자 m_id
                                                     likes X 
-                                                  --> <%
+                                                  -->   <%
                                                   		CommunityDAO cmt = new CommunityDAO();
                                                   		ArrayList<CommunityDTO> cmtList = cmt.getCmtList(article_seq);
-                                                  	%>
+                                                  		%>
+                                                  		<%
+                                              			if(cmtList.size() != 0){
+                                                  		%>
 
 																	<div class="panel panel-scrolling">
 																		<div class="panel-heading">
@@ -283,13 +313,13 @@
 																						<span> 
 																						<!-- 로그인한 회원이 해당 댓글에 좋아요를 누르지 않은 경우 기본적으로 좋아요 버튼 --> 
 																						<% if(cmt.isLike(cmtList.get(i).getCmt_seq(), userID) == 0){ %>
-																							<button id="like<%= cmtList.get(i).getCmt_seq() %>" onClick="likes(<%= cmtList.get(i).getCmt_seq() %>)">좋아요</button> 
+																							<button class="heartbtn" id="like<%= cmtList.get(i).getCmt_seq() %>" onClick="likes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
 																							<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
-																							<button id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)">좋아요 취소</button>
+																							<button class="heartbtn" id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
 																							<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
 																							<% if(userID.equals(cmtList.get(i).getM_id())) {%>
-																							<button id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)">수정</button>
-																							<button id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)">삭제</button> 
+																							<button id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 11px">수정</button>
+																							<button id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 11px">삭제</button> 
 																							<%} %>
 																						</span>
 																					</p>
@@ -298,16 +328,27 @@
 																			</ul>
 																		</div>
 																	</div> <!-- END 댓글 -->
+																	<%	} %>
 																</td>
 															</tr>
 															<tr>
 																<td colspan="2">
 																	<!-- 댓글입력창 -->
+																	<%
+																		if(info != null){
+																	%>
 																	<form action="WriteCmtService.do?article_seq=<%=dto.getArticle_seq()%>" method="post">
 																		<div class="input-group">
-																			<input type="hidden" name="cmtWriter" placeholder="<%=userID%>" value="<%=userID%>"> <input class="form-control" name="cmtContent" placeholder="댓글을 입력해주세요" type="text"> <span class="input-group-btn"><button class="btn btn-primary" type="submit">작성</button></span>
+																			<input type="hidden" name="cmtWriter" placeholder="<%=userID%>" value="<%=userID%>"> 
+																			<input class="form-control" name="cmtContent" placeholder="댓글을 입력해주세요" type="text">
+																			<span class="input-group-btn">
+																				<button class="btn btn-primary" type="submit">작성</button>
+																			</span>
+																		</div>
 																	</form> <!-- 작성btton 클릭시 =>  댓글 테이블 t_comment -->
-																	</div>
+																	<%
+																		}
+																	%>
 																</td>
 															</tr>
 
@@ -349,13 +390,52 @@
 	<script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 	<script src="assets/vendor/chartist/js/chartist.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script>
    
+	// 게시글 삭제 함수
+	function deleteArticle(article_seq, article_category){
+		Swal.fire({
+			  title: '게시글을 정말 삭제하시겠습니까?',
+			  text: "삭제하시면 다시 복구시킬 수 없습니다.",
+			  showCancelButton: true,
+			  confirmButtonColor: '#357653',
+			  cancelButtonColor: '#EAEAEA',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소'
+			}).then((result) => {
+				if(result.value){
+					$.ajax({
+						url : 'DeleteArticleService.do',
+						type : 'post',
+						data : {
+							'article_seq' : article_seq,
+							'article_category' : article_category
+						},
+						success : 
+							function(data){
+							Swal.fire({
+								  title: '삭제완료',
+								  showCancelButton: false,
+								  confirmButtonColor: '#357653',
+								  confirmButtonText: '확인'
+								}).then((result) => {
+									location.href = "/Paide/commu_" + article_category + ".jsp"
+								})
+						},
+						error : 
+							function(request, status, error){
+							alert("ajax오류")
+						}	
+					})
+				}	
+			})	
+	}
+	
+	
 	// 좋아요 업데이트 함수
 	function likes(cmt_seq){
-		
 		$.ajax({
-			
 			url : 'LikeUpdateService.do',
 			type : 'post',
 			data : {
@@ -365,26 +445,28 @@
 				function(data){
 					console.log(data);
 					$('#likeNum' + cmt_seq).html(data);
-					alert("좋아요가 반영되었습니다.")
+					Swal.fire({
+						  title: '좋아요가 반영되었습니다.',
+						  showCancelButton: false,
+						  confirmButtonColor: '#357653',
+						  confirmButtonText: '확인'
+						}).then((result) => {
+							location.reload();
+						})
 				},
-			
 			error : 
 				function(request, status, error){
 				alert("실패")
 				}
 		});
-		
-		 $('#like' + cmt_seq).text('좋아요 취소');
 		 $('#like' + cmt_seq).attr('onClick', 'dislikes(' + cmt_seq + ')');
 		 $('#like' + cmt_seq).attr('id', 'dislike' + cmt_seq);
-		 
+		 $('#heart').attr('src', 'img/heartfull.png');
 	}
 	
 	// 좋아요 취소 함수
 	function dislikes(cmt_seq){
-		
 		$.ajax({
-			
 			url : 'LikeMupdateService.do',
 			type : 'post',
 			data : {
@@ -394,18 +476,23 @@
 				function(data){
 					console.log(data);
 					$('#likeNum' + cmt_seq).html(data);
-					alert("좋아요 취소가 반영되었습니다.")
+					Swal.fire({
+						  title: '좋아요가 취소되었습니다.',
+						  showCancelButton: false,
+						  confirmButtonColor: '#357653',
+						  confirmButtonText: '확인'
+						}).then((result) => {
+							location.reload();
+						})
 				},
-			
 			error : 
 				function(request, status, error){
 				alert("실패");
 				}
 		});
-		
-		 $('#dislike' + cmt_seq).text('좋아요');
 		 $('#dislike' + cmt_seq).attr('onClick', 'likes(' + cmt_seq + ')');
 		 $('#dislike' + cmt_seq).attr('id', 'like' + cmt_seq);
+		 $('#heart').attr('src', 'img/heart.png');
 		 
 	}
 
@@ -413,7 +500,6 @@
 	function cmtDelete(cmt_seq){
 		
 		$.ajax({
-			 
 			url : 'DeleteCmtService.do',
 			type : 'post',
 			data : {
@@ -421,16 +507,20 @@
 			},
 			success : 
 				function(data){
-				alert("댓글 삭제가 완료되었습니다.");
-				location.reload();
+				Swal.fire({
+					  title: '댓글이 삭제되었습니다.',
+					  showCancelButton: false,
+					  confirmButtonColor: '#357653',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+						location.reload();
+					})
 			},
 			error : 
 				function(request, status, error){
 				alert("ajax오류")
-			}
-				
+			}	
 		});
-	
 	}
 	
 	// 댓글 수정 함수 part1
@@ -445,9 +535,6 @@
 		
 		
 		$('#cmt_edit' + cmt_seq).attr('onClick', 'updateCmt(' + cmt_seq + ')');
-		
-		
-		
 	}
 	
 	// 댓글 수정 함수 part2
@@ -455,7 +542,6 @@
 		input = $('#content'+cmt_seq).val();
 		console.log(input)
 		$.ajax({
-			
 			url : 'UpdateCmtService.do',
 			type : 'post',
 			data : {
@@ -464,15 +550,20 @@
 			},
 			success : 
 				function(data){
-				alert("댓글 수정이 완료되었습니다.");
-				location.reload();
+				Swal.fire({
+					  title: '댓글 수정이 완료되었습니다.',
+					  showCancelButton: false,
+					  confirmButtonColor: '#357653',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+						location.reload();
+					})
 			},
 			error : 
 				function(request, status, error){
 				alert("ajax오류")
 			}	
 		});
-		
 	}
 	
 

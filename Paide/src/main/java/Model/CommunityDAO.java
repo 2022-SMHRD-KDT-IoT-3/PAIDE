@@ -109,7 +109,7 @@ public class CommunityDAO {
 		ResultSet rs2;
 		dbconn();
 		try {
-			String sql = "SELECT COUNT(*) FROM t_community WHERE "
+			String sql = "SELECT COUNT(*) FROM t_community WHERE available = 1 AND "
 					+ searchField.trim();
 
 			if(searchText != null && !searchText.equals("")) {

@@ -52,27 +52,27 @@
             <div class="navbar-btn">
                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
-            <form class ="navbar-form navbar-left" method="post" name="search" action="SearchArticleService.do">
+            <form action="commu_All.jsp" class="navbar-form navbar-left" method="post">
                <div class="input-group">
-               <table>
-                  <tr>
-                     <td>
-                        <select class="form-control" name="searchField">
-                           <option value="0">선택</option>
-                           <option value="article_title">제목</option>
-                           <option value="writer">작성자</option>
-                        </select>
-                     </td>
-                     <td>
-                        <input type="text" class="form-control" placeholder="Search dashboard..." name="searchText" maxlength="100">
-                     </td>
-                     <td>
-                        <button type="submit" class="btn btn-primary">Go</button>
-                     </td>
-                  </tr>
-               </table>
-             </div>
-         </form>
+                  <table>
+                     <tr>
+                        <td>
+                           <select class="form-control" name="searchField">
+                              <option value="0">선택</option>
+                              <option value="article_title">제목</option>
+                              <option value="m_id">작성자</option>
+                           </select>  
+                        </td>
+                        <td>
+                           <input type="text" class="form-control" placeholder="검색" name="searchText" maxlength="100">
+                        </td>
+                        <td>
+                           <button type="submit" class="btn btn-primary">Go</button>
+                        </td>
+                     </tr>
+                  </table>
+               </div>
+            </form>
 
             <div id="navbar-menu">
                <ul class="nav navbar-nav navbar-right">
@@ -308,6 +308,7 @@
    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
    <script src="assets/scripts/klorofil-common.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
    <script>
    
    function CheckForm(Join){

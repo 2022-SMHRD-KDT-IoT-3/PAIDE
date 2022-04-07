@@ -38,6 +38,9 @@
 		height: 20px;
 		object-fit: cover;
 	}
+	.swal-button {
+	background-color: #357653;
+	}
 </style>
 </head>
 
@@ -90,7 +93,7 @@
             <div class="navbar-btn">
                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
-            <form class="navbar-form navbar-left" method="post" name="search" action="SearchArticleService.do">
+           <form action="commu_All.jsp" class="navbar-form navbar-left" method="post">
                <div class="input-group">
                   <table>
                      <tr>
@@ -98,12 +101,11 @@
                            <select class="form-control" name="searchField">
                               <option value="0">선택</option>
                               <option value="article_title">제목</option>
-                              <option value="writer">작성자</option>
-                           </select>
+                              <option value="m_id">작성자</option>
+                           </select>  
                         </td>
                         <td>
-                           <input type="text" class="form-control" placeholder="Search dashboard..." name="searchText"
-                              maxlength="100">
+                           <input type="text" class="form-control" placeholder="검색" name="searchText" maxlength="100">
                         </td>
                         <td>
                            <button type="submit" class="btn btn-primary">Go</button>
@@ -221,8 +223,11 @@
                   <!-- 로그아웃시 삭제2 start -->
                   <% if(info != null){%>
                   <li>
-                     <a href="#subPages" data-toggle="collapse" class="active" class="collapsed"><i class="lnr lnr-user"></i> 
-                     <span><%= info.getM_name() %>          <div id="subPages" class="collapse in">
+                     <a href="#subPages" data-toggle="collapse" class="active" class="collapsed">
+                     <i class="lnr lnr-user"></i> 
+                     <span><%= info.getM_name() %></span>
+                     <i class="icon-submenu lnr lnr-chevron-left"></i></a>       
+                     <div id="subPages" class="collapse in">
                         <ul class="nav">
                            <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
@@ -246,7 +251,7 @@
                <div class="panel">
 
               <!-- 변경 : action값 frontcontroller에서 받아옴. -->
-               <form action="WriteArticleService.do" method="post" enctype = "multipart/form-data">
+               <form action="WriteArticleService.do" method="post" enctype = "multipart/form-data" name=writeform>
                   <div class="panel-heading">
                      <h3 class="panel-title">게시판 선택</h3> 
                      <br>
@@ -277,7 +282,8 @@
                   
                      <center>
                         <!-- 저장을 누르면 자신이 선택한 카테고리 게시판으로 넘어가야함. -->
-                       <input type="submit" class="btn btn-primary" value="저장"> <a href="myFarm.jsp"><button type="button" class="btn btn-primary" value="취소">취소</button></a>
+                       <input type="button" class="btn btn-primary" value="저장" onClick="javascript:writeCheck();"> 
+                       <a href="myFarm.jsp"><button type="button" class="btn btn-primary" value="취소">취소</button></a>
                      </center>
                 </form>  
                   <!-- form태그 버튼 까지 씌워서 버튼 값이 넘어갈 수 있게 함. -->
@@ -315,124 +321,35 @@
    <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
    <script src="assets/vendor/chartist/js/chartist.min.js"></script>
    <script src="assets/scripts/klorofil-common.js"></script>
-   <script>
-   $(function() {
-      var data, options;
-
-      // headline charts
-      data = {
-         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-         series: [
-            [23, 29, 24, 40, 25, 24, 35],
-            [14, 25, 18, 34, 29, 38, 44],
-         ]
-      };
-
-      options = {
-         height: 300,
-         showArea: true,
-         showLine: false,
-         showPoint: false,
-         fullWidth: true,
-         axisX: {
-            showGrid: false
-         },
-         lineSmooth: false,
-      };
-
-      new Chartist.Line('#headline-chart', data, options);
-
-
-      // visits trend charts
-      data = {
-         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-         series: [{
-            name: 'series-real',
-            data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
-         }, {
-            name: 'series-projection',
-            data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
-         }]
-      };
-
-      options = {
-         fullWidth: true,
-         lineSmooth: false,
-         height: "270px",
-         low: 0,
-         high: 'auto',
-         series: {
-            'series-projection': {
-               showArea: true,
-               showPoint: false,
-               showLine: false
-            },
-         },
-         axisX: {
-            showGrid: false,
-
-         },
-         axisY: {
-            showGrid: false,
-            onlyInteger: true,
-            offset: 0,
-         },
-         chartPadding: {
-            left: 20,
-            right: 20
-         }
-      };
-
-      new Chartist.Line('#visits-trends-chart', data, options);
-
-
-      // visits chart
-      data = {
-         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-         series: [
-            [6384, 6342, 5437, 2764, 3958, 5068, 7654]
-         ]
-      };
-
-      options = {
-         height: 300,
-         axisX: {
-            showGrid: false
-         },
-      };
-
-      new Chartist.Bar('#visits-chart', data, options);
-
-
-      // real-time pie chart
-      var sysLoad = $('#system-load').easyPieChart({
-         size: 130,
-         barColor: function(percent) {
-            return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
-         },
-         trackColor: 'rgba(245, 245, 245, 0.8)',
-         scaleColor: false,
-         lineWidth: 5,
-         lineCap: "square",
-         animate: 800
-      });
-
-      var updateInterval = 3000; // in milliseconds
-
-      setInterval(function() {
-         var randomVal;
-         randomVal = getRandomInt(0, 100);
-
-         sysLoad.data('easyPieChart').update(randomVal);
-         sysLoad.find('.percent').text(randomVal);
-      }, updateInterval);
-
-      function getRandomInt(min, max) {
-         return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-
-   });
-   //끝 
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+   <script language = "javascript">
+   
+   function writeCheck(){
+    	var form = document.writeform;
+    	if( !form.title.value ){
+    		Swal.fire({
+				  text : '제목을 입력해주세요',
+				  showCancelButton: false,
+				  confirmButtonColor: '#357653',
+				  confirmButtonText: '확인'
+				}).then(result => {
+					return;
+					})
+		 } else if( !form.content.value ){
+    			  Swal.fire({
+				  text: '내용을 입력해주세요',
+				  showCancelButton: false,
+				  confirmButtonColor: '#357653',
+				  confirmButtonText: '확인'
+				}).then(result => {
+					if(result.isConfirmed){
+						return;
+					}
+				})
+    	   }else{
+	    	  form.submit();  
+    	   }
+    }
    </script>
 </body>
 

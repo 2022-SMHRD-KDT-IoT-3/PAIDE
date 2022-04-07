@@ -128,7 +128,7 @@ div.text1{
       </footer>
       </div>
    </div>
-   
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
    <script type="text/javascript" src="assets/vendor/jquery/jquery.min.js"></script>
    <script type="text/javascript" src="assets/vendor/jquery/jquery.cookie-1.4.1.min.js"></script>
     <script type="text/javascript">
