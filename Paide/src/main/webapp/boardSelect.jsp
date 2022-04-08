@@ -284,7 +284,7 @@
 																<%
 																	}
 																%>
-																	<!-- 변경 start 댓글  --> <!-- 
+																	<!-- 변경 start 댓글2  --> <!-- 
                                                 댓글 테이블 t_comment
                                                     댓글 순번 cmt_seq
                                                     원글 순번 article_seq
