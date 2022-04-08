@@ -50,6 +50,10 @@
 	border: none;
 	cursor: pointer;
 	}
+	
+	*{
+	font-size : 15px
+	}
 </style>
 
 </head>
@@ -247,15 +251,7 @@
 												<div class="col-md-12">
 													<!-- 변경 : 선택한 게시글 제목 article_title -->
 													<h3 style="text-align: center; margin: 3%;"><%=dto.getArticle_title().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></h3>
-													<!--
-                                       글 순번 article_seq 
-                                       글 제목 article_title
-                                       글 작성자 m_id
-                                       글 작성일자 article_date
-                                       글 첨부파일 article_file
-                                       글 카테고리 article_category
-                                       -->
-
+			
 													<table class="table">
 														<thead>
 															<tr>
@@ -275,25 +271,8 @@
 															</tr>
 															<tr>
 																<td colspan="2">
-																<a href="commu_<%= article_category %>" class="btn btn-primary" style="float:right; margin-left:5px;">목록</a>
-																<%
-																	if(dto.getM_id().equals(userID)){
-																%>
-																<a href="updateArticle.jsp?article_seq=<%=article_seq%>" class="btn btn-primary" style="float:right; margin-left:5px;">수정</a>
-																<a onClick="deleteArticle(<%= article_seq %>,'<%= article_category %>')" class="btn btn-primary" style="float:right;">삭제</a>
-																<%
-																	}
-																%>
-																	<!-- 변경 start 댓글2  --> <!-- 
-                                                댓글 테이블 t_comment
-                                                    댓글 순번 cmt_seq
-                                                    원글 순번 article_seq
-                                                    댓글 내용 cmt_content
-                                                    댓글 작성일자 cmt_date
-                                                    댓글 작성자 m_id
-                                                    likes X 
-                                                  -->   <%
-                                                  		CommunityDAO cmt = new CommunityDAO();
+                                               					<!-- 댓글 시작 -->
+                                                  		<%CommunityDAO cmt = new CommunityDAO();
                                                   		ArrayList<CommunityDTO> cmtList = cmt.getCmtList(article_seq);
                                                   		%>
                                                   		<%
@@ -304,7 +283,7 @@
 																		<div class="panel-heading">
 																			<h3 class="panel-title">댓글</h3>
 																			<div class="right">
-																				<button type="button" class="btn-toggle-collapse">
+																				<button type="button" onclick="commu_<%= article_category %>" class="btn-toggle-collapse">
 																					<i class="lnr lnr-chevron-up"></i>
 																				</button>
 																			</div>
@@ -316,30 +295,34 @@
                                                         						 %>
 																				<li>
 																					<!-- 변경 댓글작성자 프로필 사진  --> <img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
-
 																					<p>
 																						<a href="#" id="cmt_writer<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getM_id() %></a> 
 																						<span id="cmt_content<%= cmtList.get(i).getCmt_seq() %>"> <%= cmtList.get(i).getCmt_content() %>
-																						</span> <span class="timestamp" id="cmt_date<%=cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_date() %></span> 
-																						<span id="likeNum<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_like() %></span> 
-																						<span> 
-																						<!-- 로그인한 회원이 해당 댓글에 좋아요를 누르지 않은 경우 기본적으로 좋아요 버튼 --> 
-																						<% if(cmt.isLike(cmtList.get(i).getCmt_seq(), userID) == 0){ %>
-																							<button class="heartbtn" id="like<%= cmtList.get(i).getCmt_seq() %>" onClick="likes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
-																							<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
-																							<button class="heartbtn" id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
-																							<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
-																							<% if(userID.equals(cmtList.get(i).getM_id())) {%>
-																							<button id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 11px">수정</button>
-																							<button id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 11px">삭제</button> 
+																						</span> 
+																						
+																						<span class="timestamp" id="cmt_date<%=cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_date() %></span> 
+																						 <div style ="text-align: right; padding-right: 10%;"">
+																							<span id="likeNum<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_like() %></span> 
+																							<span> 
+																										<!-- 로그인한 회원이 해당 댓글에 좋아요를 누르지 않은 경우 기본적으로 좋아요 버튼 --> 
+																								<% if(cmt.isLike(cmtList.get(i).getCmt_seq(), userID) == 0){ %>
+																								<button class="heartbtn" id="like<%= cmtList.get(i).getCmt_seq() %>" onClick="likes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
+																								<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
+																								<button class="heartbtn" id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heartfull.png" ></button>
+																								<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
+																								<% if(userID.equals(cmtList.get(i).getM_id())) {%>
+																								<button class="btn btn-primary" id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 12px">수정</button>
+																								<button class="btn btn-primary" id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 12px">삭제</button> 
+																							</div>
 																							<%} %>
-																						</span>
+																							</span>
 																					</p>
 																				</li>
 																				<%} %>
 																			</ul>
 																		</div>
-																	</div> <!-- END 댓글 -->
+																	</div> 
+																	<!-- END 댓글 -->
 																	<%	} %>
 																</td>
 															</tr>
@@ -543,7 +526,7 @@
 		console.log(text);
 		
 		$('#cmt_edit' + cmt_seq).text('수정완료');
-		$('#cmt_content' + cmt_seq).html('<input type="textarea" name = "updateCmt" id="content'+ cmt_seq+'" value="' + text + '">');
+		$('#cmt_content' + cmt_seq).html('<input type="textarea" style="width: 100%; name = "updateCmt" id="content'+ cmt_seq+'" value="' + text + '">');
 		
 		
 		$('#cmt_edit' + cmt_seq).attr('onClick', 'updateCmt(' + cmt_seq + ')');
@@ -579,123 +562,6 @@
 	}
 	
 
-   $(function() {
-      var data, options;
-
-      // headline charts
-      data = {
-         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-         series: [
-            [23, 29, 24, 40, 25, 24, 35],
-            [14, 25, 18, 34, 29, 38, 44],
-         ]
-      };
-
-      options = {
-         height: 300,
-         showArea: true,
-         showLine: false,
-         showPoint: false,
-         fullWidth: true,
-         axisX: {
-            showGrid: false
-         },
-         lineSmooth: false,
-      };
-
-      new Chartist.Line('#headline-chart', data, options);
-
-
-      // visits trend charts
-      data = {
-         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-         series: [{
-            name: 'series-real',
-            data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
-         }, {
-            name: 'series-projection',
-            data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
-         }]
-      };
-
-      options = {
-         fullWidth: true,
-         lineSmooth: false,
-         height: "270px",
-         low: 0,
-         high: 'auto',
-         series: {
-            'series-projection': {
-               showArea: true,
-               showPoint: false,
-               showLine: false
-            },
-         },
-         axisX: {
-            showGrid: false,
-
-         },
-         axisY: {
-            showGrid: false,
-            onlyInteger: true,
-            offset: 0,
-         },
-         chartPadding: {
-            left: 20,
-            right: 20
-         }
-      };
-
-      new Chartist.Line('#visits-trends-chart', data, options);
-
-
-      // visits chart
-      data = {
-         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-         series: [
-            [6384, 6342, 5437, 2764, 3958, 5068, 7654]
-         ]
-      };
-
-      options = {
-         height: 300,
-         axisX: {
-            showGrid: false
-         },
-      };
-
-      new Chartist.Bar('#visits-chart', data, options);
-
-
-      // real-time pie chart
-      var sysLoad = $('#system-load').easyPieChart({
-         size: 130,
-         barColor: function(percent) {
-            return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
-         },
-         trackColor: 'rgba(245, 245, 245, 0.8)',
-         scaleColor: false,
-         lineWidth: 5,
-         lineCap: "square",
-         animate: 800
-      });
-
-      var updateInterval = 3000; // in milliseconds
-
-      setInterval(function() {
-         var randomVal;
-         randomVal = getRandomInt(0, 100);
-
-         sysLoad.data('easyPieChart').update(randomVal);
-         sysLoad.find('.percent').text(randomVal);
-      }, updateInterval);
-
-      function getRandomInt(min, max) {
-         return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-
-   });
-   //끝 
    </script>
 </body>
 
