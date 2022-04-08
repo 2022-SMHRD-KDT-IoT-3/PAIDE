@@ -207,7 +207,7 @@ html.fullscreen-bg #wrapper {
 
 .navbar-form {
   padding: 15px;
-  padding-left: ;
+  padding-left: 0;
   border: 0; }
   .navbar-form input[type="text"] {
     min-width: 200px; }

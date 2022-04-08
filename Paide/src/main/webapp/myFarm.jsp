@@ -393,7 +393,7 @@
                                        </svg>
                                     </div>
                                     <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>일사량(<%=Farminfo.getInsolation() %>)</span>
+                                    <span style="font-size: 20px;"><strong>일사량(<%=Farminfo.getInsolation() %>)</strong></span>
                                  </div>
                               </div>
                               <div class="col-md-3 col-sm-6">
@@ -405,7 +405,7 @@
                                         </svg>
                                     </div>
                                      <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>토양습도(<%=Farminfo.getHumidity_soil() %>)</span>
+                                    <span style="font-size: 20px;"><strong>토양습도(<%=Farminfo.getHumidity_soil() %>)</strong></span>
                                  </div>
                               </div>
                               <div class="col-md-3 col-sm-6">
@@ -417,7 +417,7 @@
                                         </svg>
                                     </div>
                                      <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>기온(<%=Farminfo.getTemperature() %>)</span>
+                                    <span style="font-size: 20px;"><strong>기온(<%=Farminfo.getTemperature() %>)</strong></span>
                                  </div>
                               </div>
                               <div class="col-md-3 col-sm-6">
@@ -428,7 +428,7 @@
                                         </svg>
                                     </div>
                                      <!-- 변경 현재 선택한 농장에 대한 현재 값 불러오는 변수설정 -->
-                                    <span>습도(<%= Farminfo.getHumidity() %>)</span>
+                                    <span style="font-size: 20px;"><strong>습도(<%= Farminfo.getHumidity() %>)</strong></span>
                                  </div>
                               </div>
                            </div>
