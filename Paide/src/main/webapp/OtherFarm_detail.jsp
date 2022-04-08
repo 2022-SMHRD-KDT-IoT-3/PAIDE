@@ -107,7 +107,7 @@
                      <li class="dropdown">
                          <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                              <i class="lnr lnr-bubble"></i>
-                             <span class="badge bg-danger">5</span>
+                             <span class="badge bg-danger">
                          <%
                         MemberDAO dao = new MemberDAO();
                     	MemberDTO dto = new MemberDTO(); 

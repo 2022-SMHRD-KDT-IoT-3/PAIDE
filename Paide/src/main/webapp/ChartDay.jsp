@@ -619,7 +619,7 @@
             datasets:[{
                 label:'CO₂',
               //최댓값 맨마지막에 넣어줘야지 y축에 최댓값 보이게 설정 됩니다(y축 개수를 넘어가면 ,그래프엔 보이지않아요)
-                data :[ <%=cds.co2drow(f_seq, startday)%>,1500],
+                data :[ <%=cds.co2drow(f_seq, startday)%>],
                 backgroundColor : [
                 'rgb( 34, 214, 178, 0.2)',
                 ],
@@ -689,7 +689,7 @@
             datasets:[{
                 label:'일사량',
               //최댓값 맨마지막에 넣어줘야지 y축에 최댓값 보이게 설정 됩니다(y축 개수를 넘어가면 ,그래프엔 보이지않아요)
-                data :[ <%=cds.isoldrow(f_seq, startday)%>,700],
+                data :[ <%=cds.isoldrow(f_seq, startday)%>],
                 backgroundColor : [
                     'rgb( 255, 160, 30, 1)',
                 ],
@@ -721,6 +721,7 @@
                         y: {
                             ticks: {
                                 max: 700,
+                                min: 0,
                                 stepSize: 100
                             }
                         },

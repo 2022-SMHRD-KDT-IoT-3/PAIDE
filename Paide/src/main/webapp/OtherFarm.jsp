@@ -132,7 +132,7 @@
         <!-- NAVBAR -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="brand">
-                <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+                <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
                         class="img-responsive logo"></a>
             </div>
             <div class="container-fluid">
@@ -168,7 +168,17 @@
                         <!-- 로그아웃시 삭제1 start-->
                         <% if(info != null){%>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
+                           class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
+                           class="icon-submenu lnr lnr-chevron-down"></i></a>
+                     <ul class="dropdown-menu">
+                        <li><a href="myFarm.jsp?seq=<%=f_seq%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
+                        <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+                     </ul>
+                  </li>
+                  <li class="dropdown">
+                     <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="lnr lnr-bubble"></i>
                         <span class="badge bg-danger">
                         <%
@@ -250,11 +260,11 @@
            <div class="sidebar-scroll">
               <nav>
                  <ul class="nav">
-                    <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                    <li><a href="commu_D.html" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                    <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                    <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-                    <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                    <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                    <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                    <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                    <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+                    <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
   
                     <!-- 로그아웃시 삭제2 start -->
                     <% if(info != null){%>
