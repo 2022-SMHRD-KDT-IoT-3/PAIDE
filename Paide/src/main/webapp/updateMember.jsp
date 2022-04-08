@@ -232,7 +232,7 @@
                         <div class="profile-header">
                            <div class="profile-main">
                               <!-- 기본이미지 -->
-                              <div id="preview"><img id="profileimg" src="assets/img/farmer.png"> </div>
+                              <div id="preview"><img id="profileimg" src="assets/img/basic.png"> </div>
                               <!--변경 action 프로필이미지 넣는 메소드로 -->
                               <form action="UpdateProfileService.do" id="form" name="form" method="POST" enctype="multipart/form-data"
                                  autocomplete="off">
