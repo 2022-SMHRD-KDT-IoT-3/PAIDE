@@ -282,7 +282,7 @@
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
-                           <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="myFarm.jsp?seq=<%=f_seq %>" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
@@ -319,7 +319,7 @@
                         <div class="profile-detail">
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
-                              <% FarmDTO Farminfo = new FarmDAO().myFarm(farmlist.get(0).getF_seq()); %>
+                              <% FarmDTO Farminfo = new FarmDAO().myFarm(f_seq); %>
                               <h4 class="heading">회원정보</h4>
                               <ul class="list-unstyled list-justify">
                                  <li>농장지역 <span><%= Farminfo.getF_region() %></span></li>

@@ -96,8 +96,6 @@
                      <ul class="dropdown-menu">
                      <% if(farmlist.size()>0){ %>
                         <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-                        <%}else{ %>
-                        <li><a><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <%} %>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
@@ -146,7 +144,7 @@
                      <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                         <i class="lnr lnr-users"></i>
                         <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
-                        <span class="badge rounded-pill bg-success">5</span>
+                        <span class="badge rounded-pill bg-success"></span>
                      </a>
                      <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                                 사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->
@@ -204,9 +202,7 @@
                         <ul class="nav">
                         <%if(farmlist.size()>0){ %>
                            <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                        <%}else{ %>
-                           <li><a><i class="lnr lnr-leaf"></i>내 농장</a></li>
-                          <%} %>
+                        <%}%>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>

@@ -75,7 +75,7 @@
 <body>
 	<% 
       	MemberDTO info = (MemberDTO)session.getAttribute("info");
-	
+	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 		String userID = null;
 		if (session.getAttribute("info") != null) {
 			userID = info.getM_id();
@@ -122,13 +122,15 @@
                   <!-- 로그아웃시 삭제1 start-->
                   <% if(info != null){
                   ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
-                  ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
+                  %>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>"
                            class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
+                     <%if(farmlist.size()>0){ %>
                         <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <%} %>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -232,7 +234,9 @@
                      <i class="icon-submenu lnr lnr-chevron-left"></i></a>       
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
+                        <%if(farmlist.size()>0){ %>
                            <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <%} %>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class="active"><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
