@@ -254,7 +254,7 @@
                                  <!-- 변경  -->
                                  <!-- action 회원정보수정서비스콘으로-->
                                   <% if(info != null){%>
-                                 <form action="updateMemberServiceCon.do" method="post">
+                                 <form action="UpdateMemberService.do" method="post">
                                     <div class="panel-body">
                                        <!--                                     value 에 사용자의 기존정보넣기 -->
                                        이름<input type="text" name="m_name" class="form-control" value="<%= info.getM_name() %>">

@@ -40,10 +40,10 @@ public class UpdateMemberService implements Command{
 			HttpSession session = request.getSession();
 			session.setAttribute("info", dto);
 			System.out.println("회원정보수정 성공");
-			nextpage = "";
+			nextpage = "goMain";
 		}else {
 			System.out.println("회원정보수정 실패");
-			nextpage = "";
+			nextpage = "updateMember.jsp";
 		}
 		return nextpage;
 	}
