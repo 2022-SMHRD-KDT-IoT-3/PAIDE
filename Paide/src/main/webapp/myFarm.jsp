@@ -1,3 +1,4 @@
+<%@page import="Model.Std_envDAO"%>
 <%@page import="Model.SubscriptionDAO"%>
 <%@page import="Model.SubscriptionDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -282,7 +283,7 @@
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse in">
                         <ul class="nav">
-                           <li><a href="myFarm.jsp" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <li><a href="myFarm.jsp?seq=<%=f_seq %>" class="active"><i class="lnr lnr-leaf"></i>내 농장</a></li>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
@@ -319,7 +320,7 @@
                         <div class="profile-detail">
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
-                              <% FarmDTO Farminfo = new FarmDAO().myFarm(farmlist.get(0).getF_seq()); %>
+                              <% FarmDTO Farminfo = new FarmDAO().myFarm(f_seq); %>
                               <h4 class="heading">회원정보</h4>
                               <ul class="list-unstyled list-justify">
                                  <li>농장지역 <span><%= Farminfo.getF_region() %></span></li>
@@ -333,8 +334,9 @@
                               <br>
                               
                               <!-- 변경 : 환경정보에 따라서 바뀌어야 함. 정보가 범주를 벗어나면 글자색 빨간색  경고창 기능 추가-->
+                              <% Std_envDAO sdao = new Std_envDAO(); %>
                               
-                              <span class="fa fa-bell award-icon"></span> <span style="color:#3f7647"><strong>현재 온실은 정상 범위 입니다.</strong></span>
+                              <span class="fa fa-bell award-icon"></span> <span style="color:#3f7647"><strong>현재 온실온도는 <%=sdao.tempCheck(f_seq)%>이고 습도는 <%=sdao.humiCheck(f_seq) %> 입니다.</strong></span>
                           <!--<span class="fa fa-bell award-icon"></span>  <span style="color:red">현재 온실의[]이 정상 범위를 넘어섰습니다. 환경을 조정해주세요.</span>  -->
                            <!-- 실시간현재 날짜/시간 -->
                               <div id="current_date"> 

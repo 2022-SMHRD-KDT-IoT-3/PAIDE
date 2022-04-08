@@ -112,7 +112,9 @@
 							ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());%>
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>" class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
+							<%if(farmlist.size()>0){ %>
 								<li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+								<%} %>
 								<li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
 								<li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
 							</ul></li>
@@ -205,7 +207,9 @@
 						<i class="icon-submenu lnr lnr-chevron-left"></i></a> 	
 						<div id="subPages" class="collapse in">
 								<ul class="nav">
+								<%if(farmlist.size()>0){ %>
 									<li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+									<%} %>
 									<li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
 									<li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
 								</ul>
@@ -220,6 +224,7 @@
 		<!-- END LEFT SIDEBAR -->
 		<%
 		CommunityDTO dto = new CommunityDAO().getArticle(article_seq);
+		ArrayList<FarmDTO> otherfarm = new FarmDAO().myfarm(dto.getM_id());
 		%>
 
 
@@ -254,10 +259,10 @@
 													<table class="table">
 														<thead>
 															<tr>
-																<th>작성일 <!-- article_date --> 
+																<th>작성일 <!-- article_date2 --> 
 																<%=dto.getArticle_date()%>
 																</th>
-																<th>작성자 <!-- m_id --> <!-- 작성자 클릭시 작성자(chanyoung0831)의 농장화면으로 이동 --> <a href="OtherFarm.jsp?m_id=<%=dto.getM_id()%>"><%=dto.getM_id()%></a>
+																<th>작성자 <!-- m_id --> <!-- 작성자 클릭시 작성자(chanyoung0831)의 농장화면으로 이동 --> <a href="OtherFarm.jsp?seq=<%=otherfarm.get(0).getF_seq()%>"><%=dto.getM_id()%></a>
 																</th>
 															</tr>
 														</thead>
@@ -279,7 +284,7 @@
 																<%
 																	}
 																%>
-																	<!-- 변경 start 댓글  --> <!-- 
+																	<!-- 변경 start 댓글2  --> <!-- 
                                                 댓글 테이블 t_comment
                                                     댓글 순번 cmt_seq
                                                     원글 순번 article_seq

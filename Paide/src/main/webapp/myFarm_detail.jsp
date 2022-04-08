@@ -151,7 +151,7 @@
                          <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
                              <i class="lnr lnr-users"></i>
                                                              <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. -->
-                             <span class="badge rounded-pill bg-success">5</span>
+                             <span class="badge rounded-pill bg-success"></span>
                          </a>
                          <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                           사용자의 이웃의 수 만큼 li 반복 되어야합니다  -->
@@ -243,7 +243,7 @@
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
                               <!-- 선택한 농장의 이름  -->
-                               <% FarmDTO Farminfo = new FarmDAO().myFarm(farmlist.get(0).getF_seq()); %>
+                               <% FarmDTO Farminfo = new FarmDAO().myFarm(f_seq); %>
                               <h4 class="heading"><%=Farminfo.getF_name() %></h4>
                               <ul class="list-unstyled list-justify">
                                	 <li>농장지역 <span><%= Farminfo.getF_region() %></span></li>

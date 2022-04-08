@@ -1,3 +1,4 @@
+<%@page import="Model.GraphDTO"%>
 <%@page import="Service.ChartDrowService"%>
 <%@page import="Model.FarmDTO"%>
 <%@page import="Model.FarmDAO"%>
@@ -375,6 +376,8 @@
     <%FarmDAO fdao = new FarmDAO(); 
       FarmDTO fdto = new FarmDTO();
       ChartDrowService cds = new ChartDrowService();
+      GraphDTO gdto = new GraphDTO();
+      gdto = fdao.avgGraph_yesterday(f_seq);
       
     %>
         const labels1 = ['어제평균', '7일평균', '30일평균'];
@@ -383,7 +386,7 @@
             datasets: [{
                 label: '온도',
                 //100 = 최대 값 넣어주믄 댐 
-                data: [65, 59, 80,100],
+                data: [<%=gdto.getAvg_temperature()%>, 59, 80,100],
                 backgroundColor: [
                     'rgb( 255, 80, 80, 0.3)',
                     'rgb( 255, 80, 80,  0.6)',
@@ -435,7 +438,7 @@
             datasets: [{
                 label: '습도',
                 //100 = 최대 값 넣어주믄 댐 
-                data: [20, 59, 80,100],
+                data: [<%=gdto.getAvg_humidity()%>, 59, 80,100],
                 backgroundColor: [
                 'rgb( 30, 130, 255,0.3 )',
                 'rgb( 30, 130, 255,0.6 )',
@@ -484,7 +487,7 @@
            datasets: [{
                label: 'co2',
                //100 = 최대 값 넣어주믄 댐 
-               data: [20, 59, 80,100],
+               data: [<%=gdto.getAvg_co2()%>, 550, 660,1500],
                backgroundColor: [
                'rgb( 34, 214, 178, 0.3 )',
                'rgb( 34, 214, 178, 0.6 )',
@@ -534,7 +537,7 @@
            datasets: [{
                label: '일사량',
                //100 = 최대 값 넣어주믄 댐 
-               data: [20, 59, 80,100],
+               data: [<%=gdto.getAvg_co2()%>, 5, 6,10],
                backgroundColor: [
                'rgb( 255, 160, 30, 0.3)',
                'rgb( 255, 160, 30, 0.6)',
@@ -582,7 +585,7 @@
            datasets: [{
                label: '토양습도',
                //100 = 최대 값 넣어주믄 댐 
-               data: [20, 59, 80,100],
+               data: [<%=gdto.getAvg_humidity_soil()%>, 59, 80,100],
                backgroundColor: [
                'rgb( 184, 149, 99, 0.3)',
                'rgb( 184, 149, 99, 0.6)',

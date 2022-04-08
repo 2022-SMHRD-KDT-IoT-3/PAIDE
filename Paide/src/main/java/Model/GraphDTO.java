@@ -2,14 +2,14 @@ package Model;
 
 public class GraphDTO {
 	
-	private int avg_temperature_outer;
-	private int avg_humidity_outer;
-	private int avg_temperature;
-	private int avg_humidity;
-	private int avg_insolation;
+	private double avg_temperature_outer;
+	private double avg_humidity_outer;
+	private double avg_temperature;
+	private double avg_humidity;
+	private double avg_insolation;
 	private String avg_env_date;
-	private int avg_co2;
-	private int avg_humidity_soil;
+	private double avg_co2;
+	private double avg_humidity_soil;
 	
 	private int env_HL;
 	private String time;
@@ -19,8 +19,8 @@ public class GraphDTO {
 	}
 	
 	//평균그래프 생성자
-	public GraphDTO(int avg_temperature_outer, int avg_humidity_outer, int avg_temperature, int avg_humidity,
-			int avg_insolation, String avg_env_date) {
+	public GraphDTO(double avg_temperature_outer, double avg_humidity_outer, double avg_temperature, double avg_humidity,
+			double avg_insolation, String avg_env_date) {
 		super();
 		this.avg_temperature_outer = avg_temperature_outer;
 		this.avg_humidity_outer = avg_humidity_outer;
@@ -31,8 +31,8 @@ public class GraphDTO {
 	}
 	
 	// 두번째 그래프 생성자
-	public GraphDTO(int avg_temperature_outer, int avg_humidity_outer, int avg_temperature, int avg_humidity,
-			int avg_insolation, int avg_co2, int avg_humidity_soil) {
+	public GraphDTO(double avg_temperature_outer, double avg_humidity_outer, double avg_temperature, double avg_humidity,
+			double avg_insolation, double avg_co2, double avg_humidity_soil) {
 		super();
 		this.avg_temperature_outer = avg_temperature_outer;
 		this.avg_humidity_outer = avg_humidity_outer;
@@ -67,7 +67,7 @@ public class GraphDTO {
 		this.time = time;
 	}
 
-	public int getAvg_co2() {
+	public double getAvg_co2() {
 		return avg_co2;
 	}
 
@@ -76,7 +76,7 @@ public class GraphDTO {
 		this.avg_co2 = avg_co2;
 	}
 
-	public int getAvg_humidity_soil() {
+	public double getAvg_humidity_soil() {
 		return avg_humidity_soil;
 	}
 
@@ -84,7 +84,7 @@ public class GraphDTO {
 		this.avg_humidity_soil = avg_humidity_soil;
 	}
 
-	public int getAvg_temperature_outer() {
+	public double getAvg_temperature_outer() {
 		return avg_temperature_outer;
 	}
 
@@ -95,7 +95,7 @@ public class GraphDTO {
 	}
 
 
-	public int getAvg_humidity_outer() {
+	public double getAvg_humidity_outer() {
 		return avg_humidity_outer;
 	}
 
@@ -105,7 +105,7 @@ public class GraphDTO {
 	}
 
 
-	public int getAvg_temperature() {
+	public double getAvg_temperature() {
 		return avg_temperature;
 	}
 
@@ -115,7 +115,7 @@ public class GraphDTO {
 	}
 
 
-	public int getAvg_humidity() {
+	public double getAvg_humidity() {
 		return avg_humidity;
 	}
 
@@ -125,7 +125,7 @@ public class GraphDTO {
 	}
 
 
-	public int getAvg_insolation() {
+	public double getAvg_insolation() {
 		return avg_insolation;
 	}
 

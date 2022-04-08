@@ -47,6 +47,7 @@
 	<%	
 		request.setCharacterEncoding("UTF-8");
   		MemberDTO info = (MemberDTO)session.getAttribute("info");
+  		ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 
 		String userID = null;
 		if(session.getAttribute("useID") != null){
@@ -109,7 +110,9 @@
                            class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i
                            class="icon-submenu lnr lnr-chevron-down"></i></a>
                      <ul class="dropdown-menu">
+                     <%if(farmlist.size()>0){ %>
                         <li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
+                        <%} %>
                         <li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
                         <li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
                      </ul>
@@ -211,7 +214,9 @@
                         <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
+                        <%if(farmlist.size()>0){ %>
                            <li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                           <%} %>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
                         </ul>
