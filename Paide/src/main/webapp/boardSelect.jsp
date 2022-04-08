@@ -50,7 +50,7 @@
 	border: none;
 	cursor: pointer;
 	}
-		
+
 	*{
 	font-size : 15px
 	}

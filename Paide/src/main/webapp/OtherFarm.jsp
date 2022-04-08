@@ -384,7 +384,7 @@
                                 <!--  변경 '송찬영'이라는 자리에는 선택한 subscriptioned_id가 와야함. -->
                                 <div class="panel panel-scrolling">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title">송찬영 님의 게시글 작성 목록</h3>
+                                        <h3 class="panel-title"><%=fdto.getF_name() %> 님의 게시글 작성 목록</h3>
                                         <div class="right">
                                             <button type="button" class="btn-toggle-collapse"><i
                                                     class="lnr lnr-chevron-up"></i></button>

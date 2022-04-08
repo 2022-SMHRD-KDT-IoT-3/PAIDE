@@ -231,7 +231,7 @@
                         <div class="profile-header">
                            <div class="overlay"></div>
                            <div class="profile-main">
-                              <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
+                              <img src="assets/img/<%=otherinfo.getM_profile() %>" class="img-circle" alt="Avatar">
                               <!-- 선택한 농장의 이름변수 ㄱ -->
                               <h3 class="name"><%=otherinfo.getM_name() %></h3>
                            </div>
