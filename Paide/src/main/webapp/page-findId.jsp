@@ -128,11 +128,11 @@ div.text1 {
 			},
 			dataType : "json",
 			success : function(res){ 
-				Swal.fire("본인확인이 완료되었습니다.");
+				alert("본인확인이 완료되었습니다.");
 				$.cookie('mailid', m_id); //아이디, 이메일이]
 			},
 			error : function(){
-				Swal.fire("회원정보가 없습니다.", "error");
+				alert("회원정보가 없습니다.", "error");
 			}
 		})
 	});
@@ -147,15 +147,15 @@ div.text1 {
 			},
 			success : function(res){
 				if(res=='true'){
-					Swal.fire("메일을 보내드렸습니다. 확인 후 다시 로그인해주세요.");
+					alert("메일을 보내드렸습니다. 확인 후 다시 로그인해주세요.");
 				}else{
-					Swal.fire("등록된 이메일이 아닙니다.");
+					alert("등록된 이메일이 아닙니다.");
 				}
 				console.log(res)
 				
 			},
 			error : function(){
-				Swal.fire("등록된 이메일이 아닙니다.");
+				alert("등록된 이메일이 아닙니다.");
 			}
 		})
 	});
