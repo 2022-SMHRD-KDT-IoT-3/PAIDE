@@ -1,12 +1,7 @@
-<%@page import="Model.SubscriptionDAO"%>
-<%@page import="Model.SubscriptionDTO"%>
-<%@page import="Model.FarmDAO"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="Model.MemberDTO"%>
 <%@page import="Model.CommunityDAO"%>
 <%@page import="Model.CommunityDTO"%>
-<%@page import="Model.MemberDAO"%>
-<%@page import="Model.MemberDTO"%>
-<%@page import="Model.FarmDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTf-8" pageEncoding="UTf-8"%>
 
 <!doctype html>
@@ -34,26 +29,19 @@
 <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 <style>
-	#profile {
-		width: 20px;
-		height: 20px;
-		object-fit: cover;
-	}
-	#heart{
+#heart{
 	background-color: transparent;
 	border: none;
 	width: 17px;
 	height: 17px;
 	}
-	.heartbtn{
+.heartbtn{
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
 	}
 	
-	*{
-	font-size : 15px
-	}
+	
 </style>
 
 </head>
@@ -61,8 +49,7 @@
 <body>
 	<% 
       	MemberDTO info = (MemberDTO)session.getAttribute("info");
-		ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
-		
+      
 		String userID = null;
 		if (session.getAttribute("info") != null) {
 			userID = info.getM_id();
@@ -71,6 +58,7 @@
 		if (request.getParameter("article_seq") != null) {
 			article_seq = Integer.parseInt(request.getParameter("article_seq"));
 		}
+		
 		String article_category = request.getParameter("article_category");
 	%>
 
@@ -112,73 +100,38 @@
 					<ul class="nav navbar-nav navbar-right">
 
 						<!-- 로그아웃시 삭제1 start-->
-						<% if(info != null){
-							ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());%>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>" class="img-circle" alt="Avatar" id="profile"> <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user1.png" class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-							<%if(farmlist.size()>0){ %>
 								<li><a href="myFarm.jsp"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
-								<%} %>
 								<li><a href="updateMember.jsp"><i class="lnr lnr-cog"></i> <span>회원정보수정</span></a></li>
-								<li><a href="LogoutServiceCon.do"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
+								<li><a href="index.jsp"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
 							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-bubble"></i> <span class="badge bg-danger">
-						 <%
-                        MemberDAO mdao = new MemberDAO();
-                    	MemberDTO mdto = new MemberDTO(); 
-                    	mdao.updatecomment(info.getM_id());
-                     	mdao.updatefcomment(info.getM_id());
-                        int totalalam = mdao.commentalam(info.getM_id()) + mdao.fcommentalam(info.getM_id());
-                        %>
-                        <%=totalalam %>
-						
-						</span>
+						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-bubble"></i> <span class="badge bg-danger">5</span>
 						</a>
 							<ul class="dropdown-menu notifications">
-						<% CommunityDTO codto = new CommunityDTO();
-                     	CommunityDAO codao = new CommunityDAO(); 
-                     	ArrayList<CommunityDTO> cmtlist = new ArrayList<CommunityDTO>();
-                     	ArrayList<CommunityDTO> fcmtlist = new ArrayList<CommunityDTO>();
-                     	
-                     	cmtlist = codao.newcomment(info.getM_id(), mdao.commentalam(info.getM_id()));
-                     	fcmtlist = codao.newfcomment(info.getM_id(), mdao.fcommentalam(info.getM_id()));
-                     	
-                     	for(int i = 0; i < cmtlist.size(); i++){
-                     	
-                     	%><li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 글 <%=cmtlist.get(i).getArticle_title() %>에 <%=cmtlist.get(i).getM_id() %>님이 댓글을 작성하였습니다 </a></li>
-                              <%} %>
-                        <%for(int i = 0; i< fcmtlist.size(); i++){
-                     	%>
-                     	<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>회원님의 농장에<%=fcmtlist.get(i).getM_id()%>님이 댓글을 작성하였습니다 </a></li>
-                     	<%} %>
-								<li><a href="SeenotificationService.do" class="more">See all notifications</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
+								<li><a href="#" class="more">See all notifications</a></li>
 							</ul></li>
 						<!-- 이웃목록
                      추가할 기능
                         1. 구독(이웃추가)을 눌렀을 때, 자동으로 class="dropdown-menu notifications으로 들어가고,
                         2.  class="dropdown-menu notifications에 있는 다른 농장의 수 만큼 자동으로 class="badge rounded-pill bg-success"에서 count가 들어가야 함.
                         3. 구독을 다시 한 번 눌렀을 때, 구독이 취소되고, 자동으로 class="badge rounded-pill bg-success"에서 카운트가 내려가고, class="dropdown-menu notifications"에서 목록이 빠져야 함. -->
-						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-users"></i> <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. --> <span class="badge rounded-pill bg-success"></span>
+						<li class="dropdown"><a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown"> <i class="lnr lnr-users"></i> <!-- 변경 5 =  이웃의 수 만큼 count가 되어야 함. --> <span class="badge rounded-pill bg-success">5</span>
 						</a> <!-- ? 대매니 : m_id가 아니라 subscriptioned_id (이웃의 아이디)가  들어가야하는 거 아닌가요? 
                           사용자의 이웃의 수 만큼 li 반복 되어야합니다  --> <!-- "m_id"의 코드가 들어가고, 클릭 시, 해당 회원의 농장화면으로 넘어감. -->
 
 							<ul id='neighbor' class="dropdown-menu notifications">
-								<%if(sublist.size() == 0){ %>
-                        		<li><a><span
-                           		class="lnr lnr-user"></span> 이웃 목록이 없습니다 </a></li>
-                       			<%}else {%>
-                         			<% for(int i = 0; i<sublist.size(); i++){ %>
-                          		<li><a href="OtherFarm.jsp?seq=<%=sublist.get(i).getSubscriptioned_id()%>" class="notification-item"><span
-                                 class="lnr lnr-user"></span>&nbsp;<%=sublist.get(i).getF_name() %></a></li>
-                            		<%} 
-                         		};%>
-							</ul>
-							 <% }else{%>
-		                     <div class="navbar-btn navbar-btn-right"> 
-		                     <a class="btn btn-primary" href="page-login.jsp"  ><i class="lnr lnr-leaf"></i> <span> 로그인</span></a>
-		                     </div>
-                             <%} %>
-						</li>
+								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;damin0722</a></li>
+								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;chanyoung0831</a></li>
+								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;seolmi0303</a></li>
+								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;hyeonji2231</a></li>
+								<li><a href="OtherFarm.jsp" class="notification-item"><span class="lnr lnr-user"></span>&nbsp;jingwan1996</a></li>
+							</ul></li>
 						<!-- 로그아웃시 삭제1 end-->
 
 						<!-- 로그아웃시 추가 start : 로그인버튼 -->
@@ -203,23 +156,14 @@
 						<li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
 						<li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
 						<li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
-						<% if(info != null){%>
-						<li>
-						<a href="#subPages" data-toggle="collapse" class="collapsed">
-						<i class="lnr lnr-user"></i> 
-						<span><%= info.getM_name() %></span>
-						<i class="icon-submenu lnr lnr-chevron-left"></i></a> 	
-						<div id="subPages" class="collapse in">
+						<li><a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages" class="collapse ">
 								<ul class="nav">
-								<%if(farmlist.size()>0){ %>
 									<li><a href="myFarm.jsp" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
-									<%} %>
 									<li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
 									<li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
 								</ul>
-							</div>
-							<%} %>
-							</li>
+							</div></li>
 
 					</ul>
 				</nav>
@@ -228,7 +172,6 @@
 		<!-- END LEFT SIDEBAR -->
 		<%
 		CommunityDTO dto = new CommunityDAO().getArticle(article_seq);
-		ArrayList<FarmDTO> otherfarm = new FarmDAO().myfarm(dto.getM_id());
 		%>
 
 
@@ -251,14 +194,22 @@
 												<div class="col-md-12">
 													<!-- 변경 : 선택한 게시글 제목 article_title -->
 													<h3 style="text-align: center; margin: 3%;"><%=dto.getArticle_title().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></h3>
-			
+													<!--
+                                       글 순번 article_seq 
+                                       글 제목 article_title
+                                       글 작성자 m_id
+                                       글 작성일자 article_date
+                                       글 첨부파일 article_file
+                                       글 카테고리 article_category
+                                       -->
+
 													<table class="table">
 														<thead>
 															<tr>
-																<th>작성일 <!-- article_date2 --> 
+																<th>작성일 :  <!-- article_date --> 
 																<%=dto.getArticle_date()%>
 																</th>
-																<th>작성자 <!-- m_id --> <!-- 작성자 클릭시 작성자(chanyoung0831)의 농장화면으로 이동 --> <a href="OtherFarm.jsp?seq=<%=otherfarm.get(0).getF_seq()%>"><%=dto.getM_id()%></a>
+																<th>작성자 :  <!-- m_id --> <!-- 작성자 클릭시 작성자(chanyoung0831)의 농장화면으로 이동 --> <a href="OtherFarm.jsp?m_id=<%=dto.getM_id()%>"><%=dto.getM_id()%></a>
 																</th>
 															</tr>
 														</thead>
@@ -267,23 +218,35 @@
 																<td colspan="2"><%=dto.getArticle_content().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
 															</tr>
 															<tr>
-																<td colspan="2"><img id="boardimg2" alt="첨부된사진이 없습니다." src="assets/img/loginbg.jpg" /></td>
+																<td colspan="2"><img style="text-align:center;" id="boardimg2" alt="첨부된사진이 없습니다." src="assets/img/loginbg.jpg" /></td>
 															</tr>
 															<tr>
 																<td colspan="2">
-                                               					<!-- 댓글 시작 -->
-                                                  		<%CommunityDAO cmt = new CommunityDAO();
+																<a href="commu_<%= article_category %>" class="btn btn-primary" style="float:right; margin-left:5px;">목록</a>
+																<%
+																	if(dto.getM_id().equals(userID)){
+																%>
+																<a href="updateArticle.jsp?article_seq=<%=article_seq%>" class="btn btn-primary" style="float:right; margin-left:5px;">수정</a>
+																<a onClick="deleteArticle(<%= article_seq %>,'<%= article_category %>')" class="btn btn-primary" style="float:right;">삭제</a>
+																<%
+																	}
+																%>
+													<%
+                                                  		CommunityDAO cmt = new CommunityDAO();
                                                   		ArrayList<CommunityDTO> cmtList = cmt.getCmtList(article_seq);
-                                                  		%>
-                                                  		<%
+                                                  	%>
+                                                  	<%
                                               			if(cmtList.size() != 0){
-                                                  		%>
-
+                                                  	%>
+																</td>
+															</tr>
+															<tr>
+																<td colspan="2">
 																	<div class="panel panel-scrolling">
 																		<div class="panel-heading">
 																			<h3 class="panel-title">댓글</h3>
 																			<div class="right">
-																				<button type="button" onclick="commu_<%= article_category %>" class="btn-toggle-collapse">
+																				<button type="button" class="btn-toggle-collapse">
 																					<i class="lnr lnr-chevron-up"></i>
 																				</button>
 																			</div>
@@ -294,35 +257,35 @@
                                                         							for(int i = 0; i < cmtList.size(); i++){
                                                         						 %>
 																				<li>
-																					<!-- 변경 댓글작성자 프로필 사진  --> <img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
+																					<!-- 변경 댓글작성자 프로필 사진  --> 
+																					<img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
 																					<p>
-																						<a href="#" id="cmt_writer<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getM_id() %></a> 
-																						<span id="cmt_content<%= cmtList.get(i).getCmt_seq() %>"> <%= cmtList.get(i).getCmt_content() %>
-																						</span> 
+																						<a style="font-size : 18px; font-weight:bolder;" href="#" id="cmt_writer<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getM_id() %>&nbsp;&nbsp;</a> 
 																						
+																						<span  style="font-size : 16px" id="cmt_content<%= cmtList.get(i).getCmt_seq() %>"> <%= cmtList.get(i).getCmt_content() %></span>
 																						<span class="timestamp" id="cmt_date<%=cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_date() %></span> 
-																						 <div style ="text-align: right; padding-right: 10%;"">
+																							
+																						<div style ="text-align: right; padding-right: 5%;">
 																							<span id="likeNum<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_like() %></span> 
 																							<span> 
-																										<!-- 로그인한 회원이 해당 댓글에 좋아요를 누르지 않은 경우 기본적으로 좋아요 버튼 --> 
+																							<!-- 로그인한 회원이 해당 댓글에 좋아요를 누르지 않은 경우 기본적으로 좋아요 버튼 --> 
 																								<% if(cmt.isLike(cmtList.get(i).getCmt_seq(), userID) == 0){ %>
 																								<button class="heartbtn" id="like<%= cmtList.get(i).getCmt_seq() %>" onClick="likes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
 																								<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
-																								<button class="heartbtn" id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heartfull.png" ></button>
+																								<button class="heartbtn" id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
 																								<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
 																								<% if(userID.equals(cmtList.get(i).getM_id())) {%>
-																								<button class="btn btn-primary" id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 12px">수정</button>
-																								<button class="btn btn-primary" id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 12px">삭제</button> 
-																							</div>
+																								<button class="btn btn-default" id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 13px">수정</button>
+																								<button class="btn btn-default" id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 13px">삭제</button> 
+																						</div>
 																							<%} %>
-																							</span>
+																						</span>
 																					</p>
 																				</li>
 																				<%} %>
 																			</ul>
 																		</div>
-																	</div> 
-																	<!-- END 댓글 -->
+																	</div> <!-- END 댓글 -->
 																	<%	} %>
 																</td>
 															</tr>
@@ -339,11 +302,11 @@
 																			<span class="input-group-btn">
 																				<button class="btn btn-primary" type="submit">작성</button>
 																			</span>
-																		</div>
 																	</form> <!-- 작성btton 클릭시 =>  댓글 테이블 t_comment -->
 																	<%
 																		}
 																	%>
+																	</div>
 																</td>
 															</tr>
 
@@ -389,6 +352,7 @@
 	<script>
    
 	// 게시글 삭제 함수
+	
 	function deleteArticle(article_seq, article_category){
 		Swal.fire({
 			  title: '게시글을 정말 삭제하시겠습니까?',
@@ -415,7 +379,8 @@
 								  confirmButtonColor: '#357653',
 								  confirmButtonText: '확인'
 								}).then((result) => {
-									location.href = "/Paide/commu_" + article_category + ".jsp"
+									// Paide이동시 Paide_test -> Paide로 변경
+									location.href = "/Paide_test/commu_" + article_category + ".jsp"
 								})
 						},
 						error : 
@@ -426,7 +391,6 @@
 				}	
 			})	
 	}
-	
 	
 	// 좋아요 업데이트 함수
 	function likes(cmt_seq){
@@ -526,7 +490,7 @@
 		console.log(text);
 		
 		$('#cmt_edit' + cmt_seq).text('수정완료');
-		$('#cmt_content' + cmt_seq).html('<input type="textarea" style="width: 100%; name = "updateCmt" id="content'+ cmt_seq+'" value="' + text + '">');
+		$('#cmt_content' + cmt_seq).html('<input type="textarea" name = "updateCmt" id="content'+ cmt_seq+'" value="' + text + '">');
 		
 		
 		$('#cmt_edit' + cmt_seq).attr('onClick', 'updateCmt(' + cmt_seq + ')');
@@ -562,6 +526,7 @@
 	}
 	
 
+  
    </script>
 </body>
 
