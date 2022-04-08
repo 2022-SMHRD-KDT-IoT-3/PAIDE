@@ -56,8 +56,6 @@
 		if(request.getParameter("pageNumber") != null){
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
-		
-		
 		String category = "D";
 	%>
 	<!-- WRAPPER -->
