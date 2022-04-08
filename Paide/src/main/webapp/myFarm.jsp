@@ -1,3 +1,4 @@
+<%@page import="Model.Std_envDAO"%>
 <%@page import="Model.SubscriptionDAO"%>
 <%@page import="Model.SubscriptionDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -333,8 +334,9 @@
                               <br>
                               
                               <!-- 변경 : 환경정보에 따라서 바뀌어야 함. 정보가 범주를 벗어나면 글자색 빨간색  경고창 기능 추가-->
+                              <% Std_envDAO sdao = new Std_envDAO(); %>
                               
-                              <span class="fa fa-bell award-icon"></span> <span style="color:#3f7647"><strong>현재 온실은 정상 범위 입니다.</strong></span>
+                              <span class="fa fa-bell award-icon"></span> <span style="color:#3f7647"><strong>현재 온실온도는 <%=sdao.tempCheck(f_seq)%>이고 습도는 <%=sdao.humiCheck(f_seq) %> 입니다.</strong></span>
                           <!--<span class="fa fa-bell award-icon"></span>  <span style="color:red">현재 온실의[]이 정상 범위를 넘어섰습니다. 환경을 조정해주세요.</span>  -->
                            <!-- 실시간현재 날짜/시간 -->
                               <div id="current_date"> 

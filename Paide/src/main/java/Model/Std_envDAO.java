@@ -74,6 +74,69 @@ public class Std_envDAO {
 	    	 return result;
 	     }
 		
+		public String tempCheck(int f_seq) {
+	    	 envCheckService ecs = new envCheckService();
+	    	 String result = "";
+	    	 dbconn();
+	    	 
+	    	 try {
+	    		 String sql = "select * from v_env_check where f_seq = ? ";
+	    		 
+	    		 psmt = conn.prepareStatement(sql);
+	    		 
+	    		 psmt.setInt(1, f_seq);
+	    		 
+	    		 rs = psmt.executeQuery();
+	    		 
+	    		 if(rs.next()) {
+	    			 double temp = rs.getDouble(2);
+	    			 double humi = rs.getDouble(3);
+	    			 int hour = rs.getInt(4);
+	    			 String crop = rs.getString(5);
+	    			 
+	    			 result = ecs.tempCheck(crop, hour, temp);
+	    			 
+	    		 }
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				dbclose();
+			}
+	    	 return result;
+	     }
+		
+		public String humiCheck(int f_seq) {
+	    	 envCheckService ecs = new envCheckService();
+	    	 String result = "";
+	    	 dbconn();
+	    	 
+	    	 try {
+	    		 String sql = "select * from v_env_check where f_seq = ? ";
+	    		 
+	    		 psmt = conn.prepareStatement(sql);
+	    		 
+	    		 psmt.setInt(1, f_seq);
+	    		 
+	    		 rs = psmt.executeQuery();
+	    		 
+	    		 if(rs.next()) {
+	    			 double temp = rs.getDouble(2);
+	    			 double humi = rs.getDouble(3);
+	    			 int hour = rs.getInt(4);
+	    			 String crop = rs.getString(5);
+	    			 
+	    			 result = ecs.humiCheck(crop, hour, humi);
+	    			 
+	    		 }
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				dbclose();
+			}
+	    	 return result;
+	     }
 		
 
 }

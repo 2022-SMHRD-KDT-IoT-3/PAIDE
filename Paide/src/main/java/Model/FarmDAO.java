@@ -285,15 +285,15 @@ public class FarmDAO {
 
 	         rs = psmt.executeQuery();
 	         while (rs.next()) {
-	            int temperature_outer = rs.getInt(1);
-	            int humidity_outer = rs.getInt(2);
-	            int temperature = rs.getInt(3);
-	            int humidity = rs.getInt(4);
-	            int dew_point = rs.getInt(5);
-	            int co2 = rs.getInt(6);
-	            int window_opened = rs.getInt(7);
-	            int humidity_soil = rs.getInt(8);
-	            int insolation = rs.getInt(9);
+	            double temperature_outer = rs.getDouble(1);
+	            double humidity_outer = rs.getDouble(2);
+	            double temperature = rs.getDouble(3);
+	            double humidity = rs.getDouble(4);
+	            double dew_point = rs.getDouble(5);
+	            double co2 = rs.getDouble(6);
+	            double window_opened = rs.getDouble(7);
+	            double humidity_soil = rs.getDouble(8);
+	            double insolation = rs.getDouble(9);
 	            String env_date = rs.getString(10);
 	            int f_seq = rs.getInt(11);
 
@@ -322,13 +322,13 @@ public class FarmDAO {
 	         psmt.setInt(1, seq);
 	         rs = psmt.executeQuery();
 	         if (rs.next()) {
-	            int avg_temperature_outer = rs.getInt(1);
-	            int avg_temperature = rs.getInt(2);
-	            int avg_humidity_outer = rs.getInt(3);
-	            int avg_humidity = rs.getInt(4);
-	            int avg_insolation = rs.getInt(5);
-	            int avg_co2 = rs.getInt(6);
-	            int avg_humidity_soil = rs.getInt(7);
+	        	 double avg_temperature_outer = rs.getDouble(1);
+	        	 double avg_temperature = rs.getDouble(2);
+	        	 double avg_humidity_outer = rs.getDouble(3);
+	        	 double avg_humidity = rs.getDouble(4);
+	        	 double avg_insolation = rs.getDouble(5);
+	        	 double avg_co2 = rs.getDouble(6);
+	        	 double avg_humidity_soil = rs.getDouble(7);
 
 	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
 	                  avg_insolation, avg_co2, avg_humidity_soil);
@@ -355,13 +355,13 @@ public class FarmDAO {
 	         psmt.setInt(1, seq);
 	         rs = psmt.executeQuery();
 	         if (rs.next()) {
-	            int avg_temperature_outer = rs.getInt(1);
-	            int avg_temperature = rs.getInt(2);
-	            int avg_humidity_outer = rs.getInt(3);
-	            int avg_humidity = rs.getInt(4);
-	            int avg_insolation = rs.getInt(5);
-	            int avg_co2 = rs.getInt(6);
-	            int avg_humidity_soil = rs.getInt(7);
+	        	 double avg_temperature_outer = rs.getDouble(1);
+	        	 double avg_temperature = rs.getDouble(2);
+	        	 double avg_humidity_outer = rs.getDouble(3);
+	        	 double avg_humidity = rs.getDouble(4);
+	        	 double avg_insolation = rs.getDouble(5);
+	        	 double avg_co2 = rs.getDouble(6);
+	        	 double avg_humidity_soil = rs.getDouble(7);
 
 	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
 	                  avg_insolation, avg_co2, avg_humidity_soil);
@@ -386,13 +386,13 @@ public class FarmDAO {
 	         psmt.setInt(1, seq);
 	         rs = psmt.executeQuery();
 	         if (rs.next()) {
-	            int avg_temperature_outer = rs.getInt(1);
-	            int avg_temperature = rs.getInt(2);
-	            int avg_humidity_outer = rs.getInt(3);
-	            int avg_humidity = rs.getInt(4);
-	            int avg_insolation = rs.getInt(5);
-	            int avg_co2 = rs.getInt(6);
-	            int avg_humidity_soil = rs.getInt(7);
+	        	 double avg_temperature_outer = rs.getDouble(1);
+	        	 double avg_temperature = rs.getDouble(2);
+	        	 double avg_humidity_outer = rs.getDouble(3);
+	        	 double avg_humidity = rs.getDouble(4);
+	        	 double avg_insolation = rs.getDouble(5);
+	        	 double avg_co2 = rs.getDouble(6);
+	        	 double avg_humidity_soil = rs.getDouble(7);
 
 	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
 	                  avg_insolation, avg_co2, avg_humidity_soil);
@@ -417,13 +417,13 @@ public class FarmDAO {
 	         psmt.setInt(1, seq);
 	         rs = psmt.executeQuery();
 	         if (rs.next()) {
-	            int avg_temperature_outer = rs.getInt(1);
-	            int avg_temperature = rs.getInt(2);
-	            int avg_humidity_outer = rs.getInt(3);
-	            int avg_humidity = rs.getInt(4);
-	            int avg_insolation = rs.getInt(5);
-	            int avg_co2 = rs.getInt(6);
-	            int avg_humidity_soil = rs.getInt(7);
+	        	 double avg_temperature_outer = rs.getDouble(1);
+	        	 double avg_temperature = rs.getDouble(2);
+	        	 double avg_humidity_outer = rs.getDouble(3);
+	        	 double avg_humidity = rs.getDouble(4);
+	        	 double avg_insolation = rs.getDouble(5);
+	        	 double avg_co2 = rs.getDouble(6);
+	        	 double avg_humidity_soil = rs.getDouble(7);
 
 	            gdto = new GraphDTO(avg_temperature_outer, avg_humidity_outer, avg_temperature, avg_humidity,
 	                  avg_insolation, avg_co2, avg_humidity_soil);
