@@ -285,7 +285,7 @@
                   
                      <center>
                         <!-- 저장을 누르면 자신이 선택한 카테고리 게시판으로 넘어가야함. -->
-                       <input type="submit" class="btn btn-primary" value="저장" onClick="javascript:writeCheck();"> 
+                       <input type="button" class="btn btn-primary" value="저장" onClick="javascript:writeCheck();"> 
                        <a href="index.jsp"><button type="button" class="btn btn-primary" value="취소">취소</button></a>
                      </center>
                 </form>  
