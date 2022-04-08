@@ -37,7 +37,9 @@ public class LoginService implements Command{
 			nextpage="goMain";
 		}else {
 			System.out.println("로그인 실패");
-			nextpage="page-login.jsp";
+			out.print("fail");
+			out.close();
+			nextpage=null;
 		}
 		
 		
