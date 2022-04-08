@@ -594,7 +594,7 @@
                         beginAtZero: true
                     },
                     X: {
-                    showGrid: false
+                    showGrid: false,
                     display:false
                 	},
                 },
@@ -612,7 +612,7 @@
     </script>
 
     <!-- co2 시작-->
-    <script>
+    <script type='text/javascript'>
         labels2 = [<%=cds.timedrow(f_seq, startday)%>];
         data2 = {
             labels: labels2,
@@ -682,7 +682,7 @@
     <!-- co2 끝-->
 
     <!-- 일사량 시작-->
-    <script>
+    <script type='text/javascript'>
         labels3 = [<%=cds.timedrow(f_seq, startday)%>];
         data3 = {
             labels: labels3,
