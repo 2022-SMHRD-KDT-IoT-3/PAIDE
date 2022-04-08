@@ -367,6 +367,10 @@
                         </center>
                         <br>
                         <!-- 댓글달기 Start -->
+                <%
+                    CommunityDAO fcmt = new CommunityDAO();
+                	ArrayList<CommunityDTO> fcmtList = fcmt.getFcmtList(f_seq);
+                %> 
                         <div class="panel panel-scrolling">
                            <div class="panel-heading">
                               <h3 class="panel-title">댓글</h3>
@@ -377,41 +381,42 @@
                            </div>
                            <div class="panel-body">
                               <ul class="list-unstyled activity-list">
+                              	<%
+                              		for(int i = 0; i < fcmtList.size(); i++){
+                              	%>
                                  <!-- 변경 댓글   -->
                                  <li>
                                     <img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#"> 댓글 작성자 m_id </a> 댓글 내용 cmt_content <span class="timestamp"> 댓글 작성일자 cmt_date </span></p>
-                                 </li>
-                                 <li>
-                                    <img src="assets/img/user2.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Daniel</a> has been added as a team member to project <a
-                                          href="#">System Update</a> <span class="timestamp">Yesterday</span></p>
-                                 </li>
-                                 <li>
-                                    <img src="assets/img/user3.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Martha</a> created a new heatmap view <a href="#">Landing Page</a>
-                                       <span class="timestamp">2 days ago</span>
+                                    <p>
+                                    	<a href="#" id="fcmt_writer<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getM_id() %></a> 
+                                    	<span id="fcmt_content<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_content() %></span>
+                                    	<span class="timestamp" id=""><%= fcmtList.get(i).getFcmt_date() %></span>
+                                    	<span id="flikeNum<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_like() %></span>
+                                    	<span>
+                                    	<% if(fcmt.isLike(fcmtList.get(i).getFcmt_seq(), info.getM_id()) == 0){ %>
+											<button id="flike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="flikes(<%= fcmtList.get(i).getFcmt_seq() %>)">좋아요</button> 
+											<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
+											<button id="fdislike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fdislikes(<%= fcmtList.get(i).getFcmt_seq() %>)">좋아요 취소</button>
+											<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
+											<% if(info.getM_id().equals(fcmtList.get(i).getM_id())) {%>
+											<button id="fcmt_edit<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtEdit(<%= fcmtList.get(i).getFcmt_seq() %>)">수정</button>
+											<button id="fcmt_delete<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtDelete(<%= fcmtList.get(i).getFcmt_seq() %>)">삭제</button> 
+											<%} %>
+                                    	</span>
                                     </p>
                                  </li>
-                                 <li>
-                                    <img src="assets/img/user4.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Jane</a> has completed all of the tasks <span class="timestamp">2
-                                          days ago</span></p>
-                                 </li>
-                                 <li>
-                                    <img src="assets/img/user5.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Jason</a> started a discussion about <a href="#">Weekly Meeting</a>
-                                       <span class="timestamp">3 days ago</span>
-                                    </p>
-                                 </li>
+                          		<%} %>
                               </ul>
                            </div>
                         </div>
                         <!-- 댓글 END -->
-                        <form action="#" method="" >
+                         <form action="WriteFCmtService.do?f_Seq=<%= f_seq %>" method="post">
                            <div class="input-group">
-                              <input class="form-control" type="text">
-                              <span class="input-group-btn"><button class="btn btn-primary" type="submit">입력</button></span>
+                           	  <input type="hidden" name="fcmtWriter" placeholder="<%= info.getM_id() %>">
+                              <input class="form-control" name="fcmtContent" placeholder="댓글을 입력해주세요" type="text">
+                              <span class="input-group-btn">
+                              	<button class="btn btn-primary" type="submit">입력</button>
+                              </span>
                            </div>
                         </form>
                      </div>
@@ -447,6 +452,111 @@
    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
    <script src="assets/scripts/klorofil-common.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+   <script>
+   /* 			농장 댓글 좋아요,수정,삭제 			*/
+
+	// 좋아요 업데이트 함수
+	function flikes(fcmt_seq){
+		$.ajax({
+			url : 'FcmtLikeUpdateService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq
+			},
+			success :
+				function(data){
+					console.log(data);
+					$('#flikeNum' + fcmt_seq).html(data);
+					alert("좋아요가 반영되었습니다.")
+				},
+			error : 
+				function(request, status, error){
+				alert("실패")
+				}
+		});
+		 $('#flike' + fcmt_seq).text('좋아요 취소');
+		 $('#flike' + fcmt_seq).attr('onClick', 'fdislikes(' + fcmt_seq + ')');
+		 $('#flike' + fcmt_seq).attr('id', 'fdislike' + fcmt_seq);
+	}
+	
+	// 좋아요 취소 함수
+	function fdislikes(fcmt_seq){
+		$.ajax({
+			url : 'FcmtLikeMupdateService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq
+			},
+			success :
+				function(data){
+					console.log(data);
+					$('#flikeNum' + fcmt_seq).html(data);
+					alert("좋아요 취소가 반영되었습니다.")
+				},
+			error : 
+				function(request, status, error){
+				alert("실패");
+				}
+		});
+		 $('#fdislike' + fcmt_seq).text('좋아요');
+		 $('#fdislike' + fcmt_seq).attr('onClick', 'flikes(' + fcmt_seq + ')');
+		 $('#fdislike' + fcmt_seq).attr('id', 'flike' + fcmt_seq);
+	}
+	
+	// 댓글 삭제 함수
+	function fcmtDelete(fcmt_seq){
+		$.ajax({
+			url : 'DeleteFCmtService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq
+			},
+			success : 
+				function(data){
+				alert("댓글 삭제가 완료되었습니다.");
+				location.reload();
+			},
+			error : 
+				function(request, status, error){
+				alert("ajax오류")
+			}	
+		});
+	}
+	
+	// 댓글 수정 함수 part1
+	function fcmtEdit(fcmt_seq){
+		let text = $('#fcmt_content' + fcmt_seq).html();
+		console.log(text);
+		
+		$('#fcmt_edit' + fcmt_seq).text('수정완료');
+		$('#fcmt_content' + fcmt_seq).html('<input type="textarea" name = "updateFcmt" id="content'+ fcmt_seq+'" value="' + text + '">');
+		
+		$('#fcmt_edit' + fcmt_seq).attr('onClick', 'updateFcmt(' + fcmt_seq + ')');
+	}
+	
+	// 댓글 수정 함수 part2
+	function updateFcmt(fcmt_seq){
+		input = $('#content'+fcmt_seq).val();
+		console.log(input)
+		$.ajax({
+			url : 'UpdateFcmtService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq,
+				'fcmt_content' : input
+			},
+			success : 
+				function(data){
+				alert("댓글 수정이 완료되었습니다.");
+				location.reload();
+			},
+			error : 
+				function(request, status, error){
+				alert("ajax오류")
+			}	
+		});
+	}
+   </script>
 
 </body>
 
