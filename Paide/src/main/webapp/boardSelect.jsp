@@ -259,7 +259,7 @@
 													<table class="table">
 														<thead>
 															<tr>
-																<th>작성일 <!-- article_date --> 
+																<th>작성일 <!-- article_date2 --> 
 																<%=dto.getArticle_date()%>
 																</th>
 																<th>작성자 <!-- m_id --> <!-- 작성자 클릭시 작성자(chanyoung0831)의 농장화면으로 이동 --> <a href="OtherFarm.jsp?seq=<%=otherfarm.get(0).getF_seq()%>"><%=dto.getM_id()%></a>
