@@ -336,7 +336,7 @@
                     <!-- CO2차트 -->
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="panel-subtitle">CO2</h3>
+                            <h3 class="panel-subtitle">CO₂</h3>
                             <div class="panel" id="chart_p" style="padding:4%; height: 500px; " >
                                 <canvas id="co2chart_d"></canvas>
                             </div>
@@ -415,23 +415,23 @@
     <script src="assets/scripts/klorofil-common.js"></script>
     <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
     <script src="assets/vendor/chartist/js/chartist.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-    <!-- 멀티차트 -->
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
+    <!-- 멀티차트 -->
+   	<script type='text/javascript'>    
     <%FarmDAO fdao = new FarmDAO();
       FarmDTO fdto = new FarmDTO();
       ChartDrowService cds = new  ChartDrowService();
     %>
-        const labels1111 = [<%=cds.timedrow(f_seq, startday)%>];
-        const data1111 = {
-            labels: labels1111,
+        const labels1 = [<%=cds.timedrow(f_seq, startday)%>];
+        const data1 = {
+            labels: labels1,
             datasets: [{
                 label: '이슬점',
                 //100= 마지막에 넣어주기 최대범위설정 
-                data: [<%=cds.depodrow(f_seq, startday)%>],
+                data: [<%=cds.depodrow(f_seq, startday)%>,100],
                 backgroundColor: [
                      //라인선 색(0.2 = 투명도 )
                      'rgb( 100, 110, 255, 0.5)',
@@ -446,9 +446,8 @@
                 //둥근선 
                 tension: 0.3,
                 
-                //꼭지점 사이즈, 모양 (세모)
-                pointBorderWidth: 2,
-                pointStyle : 'triangle',
+                pointBorderWidth: 0,
+                pointStyle: 'star',
                 
             },{
                 label: '내부습도',
@@ -461,7 +460,9 @@
                 ],
                 borderWidth: 2,
                 tension: 0.3,
-                pointBorderWidth: 1,
+                
+                pointBorderWidth: 0,
+                pointStyle: 'star',
                 
             },{
                 label: '외부습도',
@@ -475,8 +476,9 @@
                 ],
 
                 borderWidth: 2,
-                tension: 0.3,
-                pointBorderWidth: 1,
+                
+                pointBorderWidth: 0,
+                pointStyle: 'star',
            
             },{
                 label: '내부온도',
@@ -490,10 +492,9 @@
                 ],
                 borderWidth: 2,
                 tension: 0.3,
-                pointBorderWidth: 3, 
-                pointStyle : 'cross',
-                pointBorderWidth: 4,
-
+               
+                pointBorderWidth: 0,
+                pointStyle: 'star',
            
             },{
                 label: '외부온도',
@@ -505,10 +506,12 @@
                 borderColor: [
                 'rgb( 255, 175, 0)',
                 ],
+                
                 borderWidth: 2,
                 tension: 0.3,
-                pointBorderWidth: 3,
-                pointStyle : 'star',
+                
+                pointBorderWidth: 0,
+                pointStyle: 'star',
            
             },{
                 label: '창문',
@@ -534,17 +537,57 @@
                 borderColor: [
                 'rgb( 184, 149, 99)', 
                 ],
+                
                 borderWidth: 2,
+            
                 pointBorderWidth: 0,
+                pointStyle: 'star',
             }]
             
         };
+        
+      //subLabels 
+        const subLabels = {
+            id: 'subLabels',
+            afterDatasetsDraw(chart, args, PluginOptions) {
+                console.log(chart)
+                const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
+                chart;
+
+                ctx.save();
+
+                sublabelText('0:00AM', width / 8 * 0);
+                sublabelText('3:00AM', width / 8 * 1);
+                sublabelText('6:00AM', width / 8 * 2);
+                sublabelText('9:00AM', width / 8 * 3);
+                sublabelText('12:00PM', width / 8 * 4);
+                sublabelText('15:00PM', width / 8 * 5);
+                sublabelText('18:00PM', width / 8 * 6);
+                sublabelText('21:00PM', width / 8 * 7);
+                sublabelText('24:00PM', width / 8 * 8);
+
+                function sublabelText(text, x) {
+                    ctx.font = 'bolder 12px sans - serif';
+                    ctx.fillStyle = 'rgba(102,102,102,1)';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(text, x + left, bottom + 35);
+
+                }
+
+            }
+        }
 
         //그래프설정 
-        const config1111 = {
+        const config1 = {
             type: 'line',
-            data: data1111,
+            data: data1,
             options: {
+            	 layout : {
+                     padding : {
+                         bottom :40,
+                         right :30,
+                     }
+                 },
                 scales: {
                     y: {
                         //0부터 시작하기
@@ -552,18 +595,20 @@
                     },
                     X: {
                     showGrid: false
-                },
+                    display:false
+                	},
                 },
                 //비율유지 하지마라 
                 maintainAspectRatio:false
-            }
-            
-
+            },
+            plugins: [subLabels]
         };
+      
         const multichart_d = new Chart(
             document.getElementById('multichart_d'),
-            config1111
+            config1
         );
+        
     </script>
 
     <!-- co2 시작-->
@@ -572,8 +617,9 @@
         data2 = {
             labels: labels2,
             datasets:[{
-                label:'CO2',
-                data :[ <%=cds.co2drow(f_seq, startday)%>],
+                label:'CO₂',
+              //최댓값 맨마지막에 넣어줘야지 y축에 최댓값 보이게 설정 됩니다(y축 개수를 넘어가면 ,그래프엔 보이지않아요)
+                data :[ <%=cds.co2drow(f_seq, startday)%>,1500],
                 backgroundColor : [
                 'rgb( 34, 214, 178, 0.2)',
                 ],
@@ -582,41 +628,56 @@
                      'rgb( 34, 214, 178 )',
                 ],
                 //선두께
-                borderWidth: 1,
+                borderWidth: 2,
                 //포인터 모양
-                pointStyle : ''
+              
+                pointBorderWidth: 0,
+                pointStyle: 'star',
             }]
         };
-         config2 = {
-            type: 'line',
-            data: data2,
-            options: {
-                scales: {
-                   
-                    yAxes: [{
-                        showGrid:true,
-                        ticks:{
-                            min:300,
-                            max:1500,
-                            stepSize: 100,
+        
+        config2 = {
+                type: 'line',
+                data: data2,
+                options: {
+                    layout: {
+                        padding : {
+                            bottom :40,
+                            right :30,
+                            
                         }
-                    } ],
-                    X: {
-                    showGrid: false,
                     },
+                    scales: {
+                        y: {
+                            min: 300,
+                            max: 1500,
+                            ticks: {
+                                stepSize: 100
+                            }
+                        },
+                        X: {
+                            showGrid: false,
+                            display : false
+                        }
+                    },
+                    //비율유지 하지마라 
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: { 
+                            display: false ,
+                        }
+                    }
+
                 },
-                //비율유지 하지마라 
-                maintainAspectRatio:false,
-                //범례는 플러그인 씨워줘야댐 
-                plugins: {
-                     legend : {display : false}
-                }
-            }
-        };
-        const co2chart_d = new Chart(
-            document.getElementById('co2chart_d'),
-            config2
-        );
+                plugins: [subLabels]
+            };
+
+            const co2chart_d = new Chart(
+                document.getElementById('co2chart_d'),
+                config2
+            );
+
     </script>
     <!-- co2 끝-->
 
@@ -627,7 +688,8 @@
             labels: labels3,
             datasets:[{
                 label:'일사량',
-                data :[ <%=cds.isoldrow(f_seq, startday)%>],
+              //최댓값 맨마지막에 넣어줘야지 y축에 최댓값 보이게 설정 됩니다(y축 개수를 넘어가면 ,그래프엔 보이지않아요)
+                data :[ <%=cds.isoldrow(f_seq, startday)%>,700],
                 backgroundColor : [
                     'rgb( 255, 160, 30, 1)',
                 ],
@@ -637,47 +699,53 @@
                 ],
                 //선두께
                 borderWidth: 2,
-                //포인터 모양
-                pointStyle : 'line',
-                tension: 0.3
+                tension: 0.3,
+                
+                pointBorderWidth: 0,
+                pointStyle: 'star',
             }]
         };
-         config3 = {
-            type: 'line',
-            data: data3,
-            options: {
-                scales: {
-                    yAxes: [{
-                        showGrid:true,
-                        ticks:{
-                            min:0,
-                            max:700,
-                            stepSize: 100,
+        
+        config3 = {
+                type: 'line',
+                data: data3,
+                options: {
+                    layout :{
+                        padding : {
+                            bottom :40,
+                            right :30,
+                            
                         }
-                    } ],
-                    X: {
-                    showGrid: false,
                     },
+                    scales: {
+                        y: {
+                            ticks: {
+                                max: 700,
+                                stepSize: 100
+                            }
+                        },
+                        X: {
+                            showGrid: false,
+                            display : false
+                        },
+                    },
+                    //비율유지 하지마라 
+                    maintainAspectRatio: false,
+                    //범례는 플러그인 씨워줘야댐 
+                    plugins: {
+                        legend: { display: false }
+                    }
                 },
-                //비율유지 하지마라 
-                maintainAspectRatio:false,
-                //범례는 플러그인 씨워줘야댐 
-                plugins: {
-                     legend : {display : false}
-                }
-            }
-        };
-        const insolchart_d = new Chart(
-            document.getElementById('insolchart_d'),
-            config3
-        );
+                plugins: [subLabels]
+
+            };
+            const insolchart_d = new Chart(
+                document.getElementById('insolchart_d'),
+                config3
+            );
+
     </script>
-    <!-- co2 끝-->
-
-
-
-
-   
+    <!-- 일사량 끝-->
 
 </body>
 
