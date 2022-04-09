@@ -299,7 +299,11 @@
                                     <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
                                     <form action="ChartDay.jsp" method="get">
                                         <div class="input-group" id="input_date">
-                                            <input type="date" name="startday" id='currentDate' />
+											<%if(startday.equals("TO_CHAR(SYSDATE, 'YYYY-MM-DD')")){ %>
+			                              <input type="date" name="startday" id='currentDate'/>
+			                              <%}else{ %>
+			                              <input type="date" name="startday" value="<%=startday %>"/>
+			                              <%} %>
                                             <input type="hidden" name="seq" value="<%=f_seq %>">
                                             <input type="submit" value="선택" class="btn btn-primary" />
                                         </div>

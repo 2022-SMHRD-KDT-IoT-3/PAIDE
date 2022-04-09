@@ -115,6 +115,11 @@
 		height: 20px;
 		object-fit: cover;
 	}
+	#profileimg{
+   	width: 110px;
+      height: 110px;
+      object-fit: cover;
+   	}
 </style>
 
 </head>
@@ -300,7 +305,7 @@
                                 <div class="profile-header">
                                     <div class="overlay"></div>
                                     <div class="profile-main">
-                                        <img src="assets/img/<%=otherinfo.getM_profile() %>" class="img-circle" alt="Avatar">
+                                        <img src="assets/img/<%=otherinfo.getM_profile() %>" id="profileimg" class="img-circle" alt="Avatar">
                                         <!-- (여기는 다른농장회원(사용자가 선택한 사람) 이름이 와야함!!! 로그인한 회원 이름변수 ㄱ -->
                                         <h3 class="name"><%=fdto.getF_owner_id() %></h3>
                                     </div>
@@ -368,7 +373,7 @@
                             <div class="profile-right">
                                 <strong>농장선택</strong>
                                 <!-- 변경 회원의 등록된 농장으로 변경 -->
-                                <form action = myFarm.jsp method="get">
+                                <form action = "OtherFarm.jsp" method="get">
                                 <div class="input-group">
                                     <select name="seq" class="form-control">
                                        <%for(int i = 0; i<farmlist.size(); i++){%>
@@ -376,7 +381,7 @@
                            				<%} %>
                                     </select>
                                     <span class="input-group-btn"><button class="btn btn-primary"
-                                            type="button">선택</button></span>
+                                            type="submit">선택</button></span>
                                 </div>
                                 </form>
                                 <br><br>
@@ -394,10 +399,6 @@
                                     <div class="panel-body">
                                         <!-- 변경 클릭 시, 해당 게시글으로 가는 기능 구현해야한당. -->
                                         <ul class="list-unstyled activity-list">
-                                            <li>
-                                                <p><a href="boardSelect.html"> 게시글제목 </a> <span class="timestamp">
-                                                       게시글 내용 </span></p>
-                                            </li>
                                             <li>
 
                                                 <p><a href="boardSelect.html">PAIDE에서 딸기 직거래 하실 분</a><span

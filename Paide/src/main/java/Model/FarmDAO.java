@@ -442,18 +442,20 @@ public class FarmDAO {
 	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
 	      dbconn();
 	      try {
-	         String sql = "SELECT TEMPERATURE, TO_CHAR (ENV_DATE, 'HH24:MI') " 
-	        		 	+ " FROM T_ENV "
-	        		 	+ " WHERE TEMPERATURE =(SELECT MAX(TEMPERATURE) " 
-	        		 							+ " FROM T_ENV " 
-	        		 							+ " WHERE f_seq = ? "
-	        		 							+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) UNION ALL "
-	               + " SELECT TEMPERATURE, TO_CHAR (ENV_DATE, 'HH24:MI') " 
-	        		+ " FROM T_ENV "
-	               + " WHERE TEMPERATURE = (SELECT MIN(TEMPERATURE) " 
-	        							+ " FROM T_ENV " 
-	        							+ " WHERE f_seq = ? "
-	        							+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) ";
+	         String sql = "SELECT TEMPERATURE, TO_CHAR(ENV_DATE, 'HH24:MI') "
+	         		+ " FROM T_ENV "
+	         		+ " WHERE TEMPERATURE =(SELECT MAX(TEMPERATURE) "
+	         		+ " FROM T_ENV "
+	         		+ " WHERE f_seq = ? "
+	         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+	         		+ " and ROWNUM <= 1 UNION ALL "
+	         		+ " SELECT TEMPERATURE, TO_CHAR(ENV_DATE, 'HH24:MI') "
+	         		+ " FROM T_ENV "
+	         		+ " WHERE TEMPERATURE =(SELECT MIN(TEMPERATURE) "
+	         		+ " FROM T_ENV "
+	         		+ " WHERE f_seq = ? "
+	         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+	         		+ " and ROWNUM <= 1 ";
 
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setInt(1, seq);
@@ -482,12 +484,20 @@ public class FarmDAO {
 	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
 	      dbconn();
 	      try {
-	         String sql = "SELECT HUMIDITY, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
-	               + " WHERE HUMIDITY =(SELECT MAX(HUMIDITY) " + " FROM T_ENV " + " WHERE f_seq = ? "
-	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ?) UNION ALL "
-	               + " SELECT HUMIDITY, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
-	               + " WHERE HUMIDITY =(SELECT MIN(HUMIDITY) " + " FROM T_ENV " + " WHERE f_seq = ? "
-	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ?) ";
+	         String sql = "SELECT HUMIDITY, TO_CHAR(ENV_DATE, 'HH24:MI') "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE HUMIDITY =(SELECT MAX(HUMIDITY) "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE f_seq = ? "
+		         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+		         		+ " and ROWNUM <= 1 UNION ALL "
+		         		+ " SELECT HUMIDITY, TO_CHAR(ENV_DATE, 'HH24:MI') "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE HUMIDITY =(SELECT MIN(HUMIDITY) "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE f_seq = ? "
+		         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+		         		+ " and ROWNUM <= 1 ";
 
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setInt(1, seq);
@@ -516,12 +526,20 @@ public class FarmDAO {
 	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
 	      dbconn();
 	      try {
-	         String sql = "SELECT INSOLATION, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
-	               + " WHERE INSOLATION =(SELECT MAX(INSOLATION) " + " FROM T_ENV " + " WHERE f_seq = ? "
-	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ?) UNION ALL "
-	               + " SELECT INSOLATION, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
-	               + " WHERE INSOLATION =(SELECT MIN(INSOLATION) " + " FROM T_ENV " + " WHERE f_seq = ? "
-	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ?) ";
+	         String sql = "SELECT INSOLATION, TO_CHAR(ENV_DATE, 'HH24:MI') "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE INSOLATION =(SELECT MAX(INSOLATION) "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE f_seq = ? "
+		         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+		         		+ " and ROWNUM <= 1 UNION ALL "
+		         		+ " SELECT INSOLATION, TO_CHAR(ENV_DATE, 'HH24:MI') "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE INSOLATION =(SELECT MIN(INSOLATION) "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE f_seq = ? "
+		         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+		         		+ " and ROWNUM <= 1 ";
 
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setInt(1, seq);
@@ -550,12 +568,20 @@ public class FarmDAO {
 	      ArrayList<GraphDTO> env_HL = new ArrayList<GraphDTO>();
 	      dbconn();
 	      try {
-	         String sql = "SELECT HUMIDITY_SOIL, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
-	               + " WHERE HUMIDITY_SOIL =(SELECT MAX(HUMIDITY_SOIL) " + " FROM T_ENV " + " WHERE f_seq = ? "
-	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ?) UNION ALL "
-	               + " SELECT HUMIDITY_SOIL, TO_CHAR (ENV_DATE, 'HH24:MI') " + " FROM T_ENV "
-	               + " WHERE HUMIDITY_SOIL =(SELECT MIN(HUMIDITY_SOIL) " + " FROM T_ENV " + " WHERE f_seq = ? "
-	               + " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ?) ";
+	         String sql = "SELECT HUMIDITY_SOIL, TO_CHAR(ENV_DATE, 'HH24:MI') "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE HUMIDITY_SOIL =(SELECT MAX(HUMIDITY_SOIL) "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE f_seq = ? "
+		         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+		         		+ " and ROWNUM <= 1 UNION ALL "
+		         		+ " SELECT HUMIDITY_SOIL, TO_CHAR(ENV_DATE, 'HH24:MI') "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE HUMIDITY_SOIL =(SELECT MIN(HUMIDITY_SOIL) "
+		         		+ " FROM T_ENV "
+		         		+ " WHERE f_seq = ? "
+		         		+ " AND TO_CHAR(ENV_DATE, 'YYYY-MM-DD') = ? ) "
+		         		+ " and ROWNUM <= 1 ";
 
 	         psmt = conn.prepareStatement(sql);
 	         psmt.setInt(1, seq);
@@ -797,5 +823,33 @@ public class FarmDAO {
  		}
   		return cnt;
   	}
+  	
+ // 날짜시간 메소드
+    public String myFarmDate(int seq) {
+    	String env_date = null;
+ 	   dbconn();
+ 		try {
+ 			String sql = "select TO_CHAR(ENV_DATE, 'YYYY-MM-DD HH24:MI:SS') "
+ 					+ " from t_farm t, t_env e "
+ 					+ " where t.f_seq = e.f_seq "
+ 					+ " and e.env_date = "
+ 					+ " (select MAX(env_date) from t_env where f_seq = ?)";
+ 			
+ 			psmt = conn.prepareStatement(sql);
+ 			psmt.setInt(1, seq);
+ 			
+ 			rs = psmt.executeQuery();
+ 			if(rs.next()) {
+ 				env_date = rs.getString(1);
+ 				
+ 			}
+ 			
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}finally {
+ 			dbclose();
+ 		}
+ 		return env_date;
+    }
 
 }

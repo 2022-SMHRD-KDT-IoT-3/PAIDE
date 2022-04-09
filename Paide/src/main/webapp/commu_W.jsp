@@ -43,7 +43,6 @@
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
-ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 %>
 	<!-- WRAPPER -->
 	<div id="wrapper">
@@ -85,7 +84,8 @@ ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 
 						<!-- 로그아웃시 삭제1 start-->
 						 <% if(info != null){
-						 ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());%>
+						 ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
+						 ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/<%= info.getM_profile() %>" id="profile" class="img-circle" alt="Avatar"> <span> <%= info.getM_name() %> </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 							<%if(farmlist.size()>0){ %>
@@ -174,7 +174,8 @@ ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 						<li><a href="commu_W.jsp" class="active"><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
 						<li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 						<!-- 로그아웃시 삭제2 start -->
-                 		<% if(info != null){%>
+                 		<% if(info != null){
+                 		ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
 						<li><a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> 
 						<span><%= info.getM_name() %></span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse ">

@@ -208,7 +208,7 @@ td {
 								<thead>
 									<tr>
 										<!-- 대맨 : 넘버링은 중요하지 않을것 같아서 삭제함 확인하면 삭제하셔도 되는 주석입니다 -->
-										<th>이름</th>
+										<th>농장이름</th>
 										<th>지역</th>
 										<th>작목</th>
 										<th>시설</th>
@@ -216,21 +216,6 @@ td {
 									</tr>
 								</thead>
 								<tbody>
-									<!-- 변경 -->
-									<!-- 대맨 farmSelect에서 선택한 농장의 조건과 일치하는 농장정보를 가져오기  -->
-									<!-- 조건과 일치하는 농장의 개수대로 반복-->
-									<!-- 반복 Start -->
-									<tr>
-										<!-- ?대맨 : 농장의 이름이 뭐지  -->
-										<td>농장이름</td>
-										<td>(f_region)</td>
-										<td>(f_crops)</td>
-										<td>(f_facility)</td>
-										<td>
-											<!--대맨 해당 (농장의 이름)값을 가지고 OtherFarm_detail에서 해당 농장의 정보를 보여줘야함--> <a href="OtherFarm_detail.jsp"><span style="color: #3f7647"><span class="fa fa-line-chart"></span> <span class="cssclass"></span></span></a>
-										</td>
-									</tr>
-									<!-- 반복 end -->
 									<% for(int i = 0; i<farmlist.size(); i++){ %>
 									<tr>
 										<% if(!"delete".equals(farmlist.get(i).getF_owner_id()) && !info.getM_id().equals(farmlist.get(i).getF_owner_id())){ %>

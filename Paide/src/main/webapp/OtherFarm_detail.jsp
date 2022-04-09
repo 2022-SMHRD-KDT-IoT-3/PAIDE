@@ -41,6 +41,11 @@
 		height: 20px;
 		object-fit: cover;
 	}
+	#profileimg{
+   	width: 110px;
+      height: 110px;
+      object-fit: cover;
+   	}	
 </style>
 
 </head>
@@ -53,6 +58,10 @@
 	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 	FarmDTO fdto = new FarmDAO().selectFarm(f_seq);
 	MemberDTO otherinfo = new MemberDAO().otherinfo(fdto.getF_owner_id());
+	String userID = null;
+	if (session.getAttribute("info") != null) {
+		userID = info.getM_id();
+	}
 %>
    <!-- WRAPPER -->
    <div id="wrapper">
@@ -231,7 +240,7 @@
                         <div class="profile-header">
                            <div class="overlay"></div>
                            <div class="profile-main">
-                              <img src="assets/img/<%=otherinfo.getM_profile() %>" class="img-circle" alt="Avatar">
+                              <img src="assets/img/<%=otherinfo.getM_profile() %>" id="profileimg" class="img-circle" alt="Avatar">
                               <!-- 선택한 농장의 이름변수 ㄱ -->
                               <h3 class="name"><%=otherinfo.getM_name() %></h3>
                            </div>
@@ -273,7 +282,11 @@
                         <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
                         <form action="OtherFarm_detail.jsp" method="get">
                            <div class="input-group">
+							<%if(startday.equals("TO_CHAR(SYSDATE, 'YYYY-MM-DD')")){ %>
                               <input type="date" name="startday" id='currentDate'/>
+                              <%}else{ %>
+                              <input type="date" name="startday" value="<%=startday %>"/>
+                              <%} %>
 							  <input type="hidden" name="seq" value="<%= f_seq %>">
                               <input type="submit" value="선택" class="btn btn-primary"/>
                            </div>
@@ -359,8 +372,17 @@
                               </tr>
                            </tbody>
                         </table>
-                        <!-- 농장정보 테이블 끝  -->
-                        <!-- 댓글달기 Start -->
+                        <center>
+                           <!-- 농장하루평균차트 -->
+                           <a href="ChartDay.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="submit" class="btn btn-primary btn-lg"><i class="lnr lnr-chevron-left-circle"></i>&nbsp;&nbsp;일일차트&nbsp;&nbsp;<i class="bi bi-graph-up-arrow"></i></button></a>
+                           <!-- 농장평균차트 -->
+                           <a href="ChartAvg.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="submit" class="btn btn-primary btn-lg">평균차트&nbsp;&nbsp;<i class="bi bi-bar-chart-line"></i>&nbsp;&nbsp;<i class="lnr lnr-chevron-right-circle"></i></button></a>
+                        </center>
+                        <br>                        
+   <%
+ 		CommunityDAO cmt = new CommunityDAO();
+ 		ArrayList<CommunityDTO> cmtList = cmt.getFcmtList(f_seq);
+ 	%>
                         <div class="panel panel-scrolling">
                            <div class="panel-heading">
                               <h3 class="panel-title">댓글</h3>
@@ -370,44 +392,54 @@
                               </div>
                            </div>
                            <div class="panel-body">
+                           <%
+	if(cmtList.size() != 0){
+ 	%>
                               <ul class="list-unstyled activity-list">
-                                 <!-- 변경 댓글   -->
-                                 <li>
-                                    <img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#"> 댓글 작성자 m_id </a> 댓글 내용 cmt_content <span class="timestamp"> 댓글 작성일자 cmt_date </span></p>
+                              <%for(int i = 0; i<cmtList.size(); i++){ 
+                              		MemberDTO otherprofile = new MemberDAO().otherinfo(cmtList.get(i).getM_id());%>
+                                <li>
+                                   <img src="assets/img/<%=otherprofile.getM_profile() %>" alt="Avatar" class="img-circle pull-left avatar">
+                                   <p>
+								<a style="font-size : 18px; font-weight:bolder;" href="#" id="cmt_writer<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getM_id() %>&nbsp;&nbsp;</a> 
+								
+								<span  style="font-size : 16px" id="cmt_content<%= cmtList.get(i).getCmt_seq() %>"> <%= cmtList.get(i).getCmt_content() %></span>
+								<span class="timestamp" id="cmt_date<%=cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_date() %></span> 
+									
+								<div style ="text-align: right; padding-right: 5%;">
+									<span id="likeNum<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_like() %></span> 
+									<span> 
+									<!-- 로그인한 회원이 해당 댓글에 좋아요를 누르지 않은 경우 기본적으로 좋아요 버튼 --> 
+										<% if(cmt.isLike(cmtList.get(i).getCmt_seq(), userID) == 0){ %>
+										<button class="heartbtn" id="like<%= cmtList.get(i).getCmt_seq() %>" onClick="likes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
+										<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
+										<button class="heartbtn" id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
+										<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
+										<% if(userID.equals(cmtList.get(i).getM_id())) {%>
+										<button class="btn btn-default" id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 13px">수정</button>
+										<button class="btn btn-default" id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 13px">삭제</button> 
+								</div>
+										<%} %>
+								</span>
+								</p>
                                  </li>
-                                 <li>
-                                    <img src="assets/img/user2.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Daniel</a> has been added as a team member to project <a
-                                          href="#">System Update</a> <span class="timestamp">Yesterday</span></p>
-                                 </li>
-                                 <li>
-                                    <img src="assets/img/user3.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Martha</a> created a new heatmap view <a href="#">Landing Page</a>
-                                       <span class="timestamp">2 days ago</span>
-                                    </p>
-                                 </li>
-                                 <li>
-                                    <img src="assets/img/user4.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Jane</a> has completed all of the tasks <span class="timestamp">2
-                                          days ago</span></p>
-                                 </li>
-                                 <li>
-                                    <img src="assets/img/user5.png" alt="Avatar" class="img-circle pull-left avatar">
-                                    <p><a href="#">Jason</a> started a discussion about <a href="#">Weekly Meeting</a>
-                                       <span class="timestamp">3 days ago</span>
-                                    </p>
-                                 </li>
+                                 <%}
+                              }%>
                               </ul>
                            </div>
                         </div>
                         <!-- END 댓글 -->
-                        <form action="#" method="" >
-                           <div class="input-group">
-                              <input class="form-control" type="text">
-                              <span class="input-group-btn"><button class="btn btn-primary" type="submit">입력</button></span>
-                           </div>
-                        </form>
+                        <%
+							if(info != null){
+						%>
+						<form action="WriteFCmtService.do?t_farm_seq=<%=f_seq%>" method="post">
+							<div class="input-group">
+								<input type="hidden" name="fcmtWriter" placeholder="<%=userID%>" value="<%=userID%>"> 
+								<input class="form-control" name="fcmtContent" placeholder="댓글을 입력해주세요" type="text">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="submit">작성</button>
+								</span>
+						</form> <!-- 작성btton 클릭시 =>  댓글 테이블 t_comment --><%} %>
                      </div>
                      <!-- 댓글달기 end -->
                   </div>

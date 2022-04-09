@@ -436,13 +436,13 @@
                         </div>
                         <!-- END AWARDS -->
                         <!-- TABBED CONTENT -->
-                           <!-- 이모티콘 왜안대액 <i class="fa fa-refresh"></i> -->
+                           <%String maxEnv = new FarmDAO().myFarmDate(f_seq);%>
                            <!-- 업데이트 버튼을 누를시에 현재 선택한 농장의 실시간 정보가 넘어와야함  -->
                            <center>
                               <button type="button" class="btn btn-primary" onClick="window.location.reload()">
                               <i class="fa fa-refresh"></i> 업데이트</button>
                               <!-- 변경 마지막으로업데이트된시간 -->
-                               <p class="text-success"> (2022/03/26 12:21)</p>
+                               <p class="text-success"> <%= maxEnv %></p>
                            </center>
                         </div>
                         <!-- END TABBED CONTENT -->

@@ -55,7 +55,8 @@
 <% MemberDTO info = (MemberDTO)session.getAttribute("info"); 
 	int f_seq = Integer.parseInt(request.getParameter("seq"));
 	String startday = request.getParameter("startday");
-	System.out.println(startday);
+	
+	System.out.println("날짜 : " + startday);
 	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
 	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());
 %>
@@ -272,14 +273,19 @@
                         <!-- 변경 입력 : 조회하고싶은 날짜 선택  -->
                         <form action="myFarm_detail.jsp" method="get">
                            <div class="input-group">
+                           <%if(startday.equals("TO_CHAR(SYSDATE, 'YYYY-MM-DD')")){ %>
                               <input type="date" name="startday" id='currentDate'/>
+                              <%}else{ %>
+                              <input type="date" name="startday" value="<%=startday %>"/>
+                              <%} %>
 								<input type="hidden" name="seq" value="<%=f_seq%>">
                               <input type="submit" value="선택" class="btn btn-primary"/>
                            </div>
                         </form>
                         <br>
                         <!-- 선택한 농장의 정보테이블  -->
-                        <% ArrayList<GraphDTO> temp = new FarmDAO().temp_HL(f_seq, startday);
+                        <% 
+                        ArrayList<GraphDTO> temp = new FarmDAO().temp_HL(f_seq, startday);
                          	ArrayList<GraphDTO> humi = new FarmDAO().humi_HL(f_seq, startday);
                          	ArrayList<GraphDTO> soil = new FarmDAO().soil_HL(f_seq, startday);
                          	ArrayList<GraphDTO> insol = new FarmDAO().insol_HL(f_seq, startday);
