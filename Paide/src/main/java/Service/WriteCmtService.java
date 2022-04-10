@@ -19,6 +19,8 @@ public class WriteCmtService implements Command {
 
 		request.setCharacterEncoding("UTF-8");
 		
+		String page = request.getHeader("referer");
+		
 		
 		// encoding : ¹æ½Ä
 		String encoding = "UTF-8";

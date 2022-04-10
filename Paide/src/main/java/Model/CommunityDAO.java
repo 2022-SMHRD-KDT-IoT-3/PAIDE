@@ -362,10 +362,10 @@ public class CommunityDAO {
 			String sql = "insert into t_comment_farm values(t_comment_farm_seq.nextval, ?, ?, sysdate, ?, 0, 1)";
 			psmt = conn.prepareStatement(sql);
 
-			psmt.setInt(1, dto.getArticle_seq());
-			System.out.println("글번호 : " + dto.getArticle_seq());
-			psmt.setString(2, dto.getCmt_content());
-			System.out.println("댓글내용 : " + dto.getCmt_content());
+			psmt.setInt(1, dto.getT_farm_seq());
+			System.out.println("농장번호 : " + dto.getT_farm_seq());
+			psmt.setString(2, dto.getFcmt_content());
+			System.out.println("댓글내용 : " + dto.getFcmt_content());
 			psmt.setString(3, dto.getM_id());
 			System.out.println("댓글작성자 : " + dto.getM_id());
 
@@ -581,7 +581,7 @@ public class CommunityDAO {
 		return cnt;
 	}
 
-	// 좋아요 정보 업데이트(추가)
+	// 좋아요 정보 업데이트(추가)_게시판 댓글
 	public void addLikeInfo(int cmt_seq, String m_id) {
 		dbconn();
 		try {
@@ -602,7 +602,28 @@ public class CommunityDAO {
 		}
 	}
 
-	// 좋아요 정보 업데이트(삭제)
+	// 좋아요 정보 업데이트(추가)_농장 댓글
+			public void addfLikeInfo(int fcmt_seq, String m_id) {
+				dbconn();
+				try {
+
+					String sql2 = "insert into infolike_f values(?,?)";
+					PreparedStatement psmt2 = conn.prepareStatement(sql2);
+
+					psmt2.setInt(1, fcmt_seq);
+					psmt2.setString(2, m_id);
+
+					int cnt = psmt2.executeUpdate();
+					System.out.println(cnt);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					dbclose();
+				}
+			}
+	
+	// 좋아요 정보 업데이트(삭제)_게시판 댓글
 	public void deleteLikeInfo(int cmt_seq, String m_id) {
 		dbconn();
 		try {
@@ -620,8 +641,27 @@ public class CommunityDAO {
 		}
 
 	}
+	
+	// 좋아요 정보 업데이트(삭제)_농장 댓글
+	public void deletefLikeInfo(int fcmt_seq, String m_id) {
+		dbconn();
+		try {
 
-	// 좋아요 누른 댓글인지 확인
+			String sql = "delete from infolike_f where fcmt_seq = ? and m_id = ?";
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setInt(1, fcmt_seq);
+			psmt.setString(2, m_id);
+
+			psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	// 좋아요 누른 댓글인지 확인_게시판 댓글
 	public int isLike(int cmt_seq, String m_id) {
 		dbconn();
 		try {
@@ -647,13 +687,40 @@ public class CommunityDAO {
 		return 0;
 
 	}
+	
+	// 좋아요 누른 댓글인지 확인_농장 댓글
+		public int isfLike(int fcmt_seq, String m_id) {
+			dbconn();
+			try {
+				String sql = "select * from infolike_f where fcmt_seq = ? and m_id = ?";
+				psmt = conn.prepareStatement(sql);
+
+				psmt.setInt(1, fcmt_seq);
+				psmt.setString(2, m_id);
+
+				rs = psmt.executeQuery();
+
+				if (rs.next()) {
+
+					return 1;
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			} finally {
+				dbclose();
+			}
+			return 0;
+
+		}
 
 	// 게시글 댓글 전체 조회(게시판 댓글)
 	public ArrayList<CommunityDTO> getCmtList(int article_seq) {
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
 		dbconn();
 		try {
-			String sql = "select * from t_comment where article_seq = ? and CMTAVAILABLE = 1";
+			String sql = "select * from t_comment where article_seq = ? and CMTAVAILABLE = 1 ORDER BY cmt_date desc";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, article_seq);
 
@@ -684,21 +751,21 @@ public class CommunityDAO {
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
 		dbconn();
 		try {
-			String sql = "select * from t_comment_farm where t_farm_seq = ? and FCMTAVAILABLE = 1";
+			String sql = "select * from t_comment_farm where t_farm_seq = ? and FCMTAVAILABLE = 1 ORDER BY fcmt_date desc";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, t_farm_seq);
 
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-				int cmt_seq = rs.getInt(1);
+				int fcmt_seq = rs.getInt(1);
 				t_farm_seq = rs.getInt(2);
-				String cmt_content = rs.getString(3);
-				String m_id = rs.getString(4);
-				String cmt_date = rs.getString(5);
-				int like = rs.getInt(6);
+				String fcmt_content = rs.getString(3);
+				String fcmt_date = rs.getString(4);
+				String m_id = rs.getString(5);
+				int flike = rs.getInt(6);
 
-				codto = new CommunityDTO(cmt_seq, t_farm_seq, cmt_content, m_id, cmt_date, like);
+				codto = new CommunityDTO(m_id, fcmt_seq, t_farm_seq, fcmt_content, fcmt_date, flike);
 				list.add(codto);
 			}
 

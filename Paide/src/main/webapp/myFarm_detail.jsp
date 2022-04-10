@@ -38,6 +38,18 @@
    <!-- 부트스트랩아이콘 -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 <style>
+#heart{
+	background-color: transparent;
+	border: none;
+	width: 17px;
+	height: 17px;
+	}
+.heartbtn{
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	}
+
 	#profile {
 		width: 20px;
 		height: 20px;
@@ -399,10 +411,10 @@
                                     	<span class="timestamp" id=""><%= fcmtList.get(i).getFcmt_date() %></span>
                                     	<span id="flikeNum<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_like() %></span>
                                     	<span>
-                                    	<% if(fcmt.isLike(fcmtList.get(i).getFcmt_seq(), info.getM_id()) == 0){ %>
-											<button id="flike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="flikes(<%= fcmtList.get(i).getFcmt_seq() %>)">좋아요</button> 
+                                    	<% if(fcmt.isfLike(fcmtList.get(i).getFcmt_seq(), info.getM_id()) == 0){ %>
+											<button class="heartbtn" id="flike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="flikes(<%= fcmtList.get(i).getFcmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
 											<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
-											<button id="fdislike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fdislikes(<%= fcmtList.get(i).getFcmt_seq() %>)">좋아요 취소</button>
+											<button class="heartbtn" id="fdislike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fdislikes(<%= fcmtList.get(i).getFcmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
 											<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
 											<% if(info.getM_id().equals(fcmtList.get(i).getM_id())) {%>
 											<button id="fcmt_edit<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtEdit(<%= fcmtList.get(i).getFcmt_seq() %>)">수정</button>
@@ -416,9 +428,9 @@
                            </div>
                         </div>
                         <!-- 댓글 END -->
-                         <form action="WriteFCmtService.do?f_Seq=<%= f_seq %>" method="post">
+                         <form action="WriteFCmtService.do?f_seq=<%= f_seq %>" method="post">
                            <div class="input-group">
-                           	  <input type="hidden" name="fcmtWriter" placeholder="<%= info.getM_id() %>">
+                           	  <input type="hidden" name="fcmtWriter" value="<%= info.getM_id() %>">
                               <input class="form-control" name="fcmtContent" placeholder="댓글을 입력해주세요" type="text">
                               <span class="input-group-btn">
                               	<button class="btn btn-primary" type="submit">입력</button>
@@ -473,16 +485,23 @@
 				function(data){
 					console.log(data);
 					$('#flikeNum' + fcmt_seq).html(data);
-					alert("좋아요가 반영되었습니다.")
+					Swal.fire({
+						title : '좋아요가 반영되었습니다.',
+						showCancelButton: false,
+						confirmButtonColor : '#357653',
+						confirmButtonText : '확인'
+					}).then((result) => {
+						location.reload();
+					})
 				},
 			error : 
 				function(request, status, error){
 				alert("실패")
 				}
 		});
-		 $('#flike' + fcmt_seq).text('좋아요 취소');
 		 $('#flike' + fcmt_seq).attr('onClick', 'fdislikes(' + fcmt_seq + ')');
 		 $('#flike' + fcmt_seq).attr('id', 'fdislike' + fcmt_seq);
+		 $('#heart').attr('src', 'img/heartfull.png');
 	}
 	
 	// 좋아요 취소 함수
@@ -497,16 +516,23 @@
 				function(data){
 					console.log(data);
 					$('#flikeNum' + fcmt_seq).html(data);
-					alert("좋아요 취소가 반영되었습니다.")
+					Swal.fire({
+						  title: '좋아요가 취소되었습니다.',
+						  showCancelButton: false,
+						  confirmButtonColor: '#357653',
+						  confirmButtonText: '확인'
+						}).then((result) => {
+							location.reload();
+						})
 				},
 			error : 
 				function(request, status, error){
 				alert("실패");
 				}
 		});
-		 $('#fdislike' + fcmt_seq).text('좋아요');
 		 $('#fdislike' + fcmt_seq).attr('onClick', 'flikes(' + fcmt_seq + ')');
 		 $('#fdislike' + fcmt_seq).attr('id', 'flike' + fcmt_seq);
+		 $('#heart').attr('src', 'img/heart.png');
 	}
 	
 	// 댓글 삭제 함수
@@ -519,8 +545,14 @@
 			},
 			success : 
 				function(data){
-				alert("댓글 삭제가 완료되었습니다.");
-				location.reload();
+				Swal.fire({
+					  title: '댓글이 삭제되었습니다.',
+					  showCancelButton: false,
+					  confirmButtonColor: '#357653',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+						location.reload();
+					})
 			},
 			error : 
 				function(request, status, error){
@@ -553,8 +585,14 @@
 			},
 			success : 
 				function(data){
-				alert("댓글 수정이 완료되었습니다.");
-				location.reload();
+				Swal.fire({
+					  title: '댓글 수정이 완료되었습니다.',
+					  showCancelButton: false,
+					  confirmButtonColor: '#357653',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+						location.reload();
+					})
 			},
 			error : 
 				function(request, status, error){

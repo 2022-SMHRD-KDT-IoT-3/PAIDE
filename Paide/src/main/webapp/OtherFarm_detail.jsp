@@ -36,6 +36,17 @@
    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+#heart{
+	background-color: transparent;
+	border: none;
+	width: 17px;
+	height: 17px;
+	}
+.heartbtn{
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	}
 	#profile {
 		width: 20px;
 		height: 20px;
@@ -379,10 +390,11 @@
                            <a href="ChartAvg.jsp?seq=<%=f_seq%>&startday=TO_CHAR(SYSDATE, 'YYYY-MM-DD')"> <button type="submit" class="btn btn-primary btn-lg">평균차트&nbsp;&nbsp;<i class="bi bi-bar-chart-line"></i>&nbsp;&nbsp;<i class="lnr lnr-chevron-right-circle"></i></button></a>
                         </center>
                         <br>                        
-   <%
- 		CommunityDAO cmt = new CommunityDAO();
- 		ArrayList<CommunityDTO> cmtList = cmt.getFcmtList(f_seq);
- 	%>
+						<!-- 댓글달기 Start -->
+                <%
+                    CommunityDAO fcmt = new CommunityDAO();
+                	ArrayList<CommunityDTO> fcmtList = fcmt.getFcmtList(f_seq);
+                %> 
                         <div class="panel panel-scrolling">
                            <div class="panel-heading">
                               <h3 class="panel-title">댓글</h3>
@@ -392,54 +404,45 @@
                               </div>
                            </div>
                            <div class="panel-body">
-                           <%
-	if(cmtList.size() != 0){
- 	%>
                               <ul class="list-unstyled activity-list">
-                              <%for(int i = 0; i<cmtList.size(); i++){ 
-                              		MemberDTO otherprofile = new MemberDAO().otherinfo(cmtList.get(i).getM_id());%>
-                                <li>
-                                   <img src="assets/img/<%=otherprofile.getM_profile() %>" alt="Avatar" class="img-circle pull-left avatar">
-                                   <p>
-								<a style="font-size : 18px; font-weight:bolder;" href="#" id="cmt_writer<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getM_id() %>&nbsp;&nbsp;</a> 
-								
-								<span  style="font-size : 16px" id="cmt_content<%= cmtList.get(i).getCmt_seq() %>"> <%= cmtList.get(i).getCmt_content() %></span>
-								<span class="timestamp" id="cmt_date<%=cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_date() %></span> 
-									
-								<div style ="text-align: right; padding-right: 5%;">
-									<span id="likeNum<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_like() %></span> 
-									<span> 
-									<!-- 로그인한 회원이 해당 댓글에 좋아요를 누르지 않은 경우 기본적으로 좋아요 버튼 --> 
-										<% if(cmt.isLike(cmtList.get(i).getCmt_seq(), userID) == 0){ %>
-										<button class="heartbtn" id="like<%= cmtList.get(i).getCmt_seq() %>" onClick="likes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
-										<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
-										<button class="heartbtn" id="dislike<%= cmtList.get(i).getCmt_seq() %>" onClick="dislikes(<%= cmtList.get(i).getCmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
-										<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
-										<% if(userID.equals(cmtList.get(i).getM_id())) {%>
-										<button class="btn btn-default" id="cmt_edit<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtEdit(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 13px">수정</button>
-										<button class="btn btn-default" id="cmt_delete<%= cmtList.get(i).getCmt_seq() %>" onClick="cmtDelete(<%= cmtList.get(i).getCmt_seq() %>)" style="font-size : 13px">삭제</button> 
-								</div>
-										<%} %>
-								</span>
-								</p>
+                              	<%
+                              		for(int i = 0; i < fcmtList.size(); i++){
+                              	%>
+                                 <!-- 변경 댓글   -->
+                                 <li>
+                                    <img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
+                                    <p>
+                                    	<a href="#" id="fcmt_writer<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getM_id() %></a> 
+                                    	<span id="fcmt_content<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_content() %></span>
+                                    	<span class="timestamp" id=""><%= fcmtList.get(i).getFcmt_date() %></span>
+                                    	<span id="flikeNum<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_like() %></span>
+                                    	<span>
+                                    	<% if(fcmt.isfLike(fcmtList.get(i).getFcmt_seq(), info.getM_id()) == 0){ %>
+											<button class="heartbtn" id="flike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="flikes(<%= fcmtList.get(i).getFcmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
+											<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
+											<button class="heartbtn" id="fdislike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fdislikes(<%= fcmtList.get(i).getFcmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
+											<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
+											<% if(info.getM_id().equals(fcmtList.get(i).getM_id())) {%>
+											<button id="fcmt_edit<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtEdit(<%= fcmtList.get(i).getFcmt_seq() %>)">수정</button>
+											<button id="fcmt_delete<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtDelete(<%= fcmtList.get(i).getFcmt_seq() %>)">삭제</button> 
+											<%} %>
+                                    	</span>
+                                    </p>
                                  </li>
-                                 <%}
-                              }%>
+                          		<%} %>
                               </ul>
                            </div>
                         </div>
-                        <!-- END 댓글 -->
-                        <%
-							if(info != null){
-						%>
-						<form action="WriteFCmtService.do?t_farm_seq=<%=f_seq%>" method="post">
-							<div class="input-group">
-								<input type="hidden" name="fcmtWriter" placeholder="<%=userID%>" value="<%=userID%>"> 
-								<input class="form-control" name="fcmtContent" placeholder="댓글을 입력해주세요" type="text">
-								<span class="input-group-btn">
-									<button class="btn btn-primary" type="submit">작성</button>
-								</span>
-						</form> <!-- 작성btton 클릭시 =>  댓글 테이블 t_comment --><%} %>
+                        <!-- 댓글 END -->
+                         <form action="WriteFCmtService.do?f_seq=<%= f_seq %>" method="post">
+                           <div class="input-group">
+                           	  <input type="hidden" name="fcmtWriter" value="<%= info.getM_id() %>">
+                              <input class="form-control" name="fcmtContent" placeholder="댓글을 입력해주세요" type="text">
+                              <span class="input-group-btn">
+                              	<button class="btn btn-primary" type="submit">입력</button>
+                              </span>
+                           </div>
+                        </form>
                      </div>
                      <!-- 댓글달기 end -->
                   </div>
@@ -473,6 +476,137 @@
    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
    <script src="assets/scripts/klorofil-common.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+ <script>
+   /* 			농장 댓글 좋아요,수정,삭제 			*/
+
+	// 좋아요 업데이트 함수
+	function flikes(fcmt_seq){
+		$.ajax({
+			url : 'FcmtLikeUpdateService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq
+			},
+			success :
+				function(data){
+					console.log(data);
+					$('#flikeNum' + fcmt_seq).html(data);
+					Swal.fire({
+						title : '좋아요가 반영되었습니다.',
+						showCancelButton: false,
+						confirmButtonColor : '#357653',
+						confirmButtonText : '확인'
+					}).then((result) => {
+						location.reload();
+					})
+				},
+			error : 
+				function(request, status, error){
+				alert("실패")
+				}
+		});
+		 $('#flike' + fcmt_seq).attr('onClick', 'fdislikes(' + fcmt_seq + ')');
+		 $('#flike' + fcmt_seq).attr('id', 'fdislike' + fcmt_seq);
+		 $('#heart').attr('src', 'img/heartfull.png');
+	}
+	
+	// 좋아요 취소 함수
+	function fdislikes(fcmt_seq){
+		$.ajax({
+			url : 'FcmtLikeMupdateService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq
+			},
+			success :
+				function(data){
+					console.log(data);
+					$('#flikeNum' + fcmt_seq).html(data);
+					Swal.fire({
+						  title: '좋아요가 취소되었습니다.',
+						  showCancelButton: false,
+						  confirmButtonColor: '#357653',
+						  confirmButtonText: '확인'
+						}).then((result) => {
+							location.reload();
+						})
+				},
+			error : 
+				function(request, status, error){
+				alert("실패");
+				}
+		});
+		 $('#fdislike' + fcmt_seq).attr('onClick', 'flikes(' + fcmt_seq + ')');
+		 $('#fdislike' + fcmt_seq).attr('id', 'flike' + fcmt_seq);
+		 $('#heart').attr('src', 'img/heart.png');
+	}
+	
+	// 댓글 삭제 함수
+	function fcmtDelete(fcmt_seq){
+		$.ajax({
+			url : 'DeleteFCmtService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq
+			},
+			success : 
+				function(data){
+				Swal.fire({
+					  title: '댓글이 삭제되었습니다.',
+					  showCancelButton: false,
+					  confirmButtonColor: '#357653',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+						location.reload();
+					})
+			},
+			error : 
+				function(request, status, error){
+				alert("ajax오류")
+			}	
+		});
+	}
+	
+	// 댓글 수정 함수 part1
+	function fcmtEdit(fcmt_seq){
+		let text = $('#fcmt_content' + fcmt_seq).html();
+		console.log(text);
+		
+		$('#fcmt_edit' + fcmt_seq).text('수정완료');
+		$('#fcmt_content' + fcmt_seq).html('<input type="textarea" name = "updateFcmt" id="content'+ fcmt_seq+'" value="' + text + '">');
+		
+		$('#fcmt_edit' + fcmt_seq).attr('onClick', 'updateFcmt(' + fcmt_seq + ')');
+	}
+	
+	// 댓글 수정 함수 part2
+	function updateFcmt(fcmt_seq){
+		input = $('#content'+fcmt_seq).val();
+		console.log(input)
+		$.ajax({
+			url : 'UpdateFcmtService.do',
+			type : 'post',
+			data : {
+				'fcmt_seq' : fcmt_seq,
+				'fcmt_content' : input
+			},
+			success : 
+				function(data){
+				Swal.fire({
+					  title: '댓글 수정이 완료되었습니다.',
+					  showCancelButton: false,
+					  confirmButtonColor: '#357653',
+					  confirmButtonText: '확인'
+					}).then((result) => {
+						location.reload();
+					})
+			},
+			error : 
+				function(request, status, error){
+				alert("ajax오류")
+			}	
+		});
+	}
+   </script>
 
 </body>
 

@@ -23,6 +23,18 @@ public class CommunityDTO {
 	private String fcmt_date;
 	private int fcmt_like;
 
+	public CommunityDTO(String m_id, int fcmt_seq, int t_farm_seq, String fcmt_content, String fcmt_date,
+			int fcmt_like) {
+		super();
+		this.m_id = m_id;
+		this.fcmt_seq = fcmt_seq;
+		this.t_farm_seq = t_farm_seq;
+		this.fcmt_content = fcmt_content;
+		this.fcmt_date = fcmt_date;
+		this.fcmt_like = fcmt_like;
+	}
+
+
 	// 뉴댓글 생성자(찬영)
 	public CommunityDTO(String article_title, String m_id) {
 		this.article_title = article_title;

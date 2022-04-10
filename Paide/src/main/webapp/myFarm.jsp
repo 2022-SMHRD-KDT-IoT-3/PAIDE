@@ -128,14 +128,13 @@
 <body>
 	<% 
       	MemberDTO info = (MemberDTO)session.getAttribute("info");
-	ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());  
-	ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
+		ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());  
+		ArrayList<SubscriptionDTO> sublist = new SubscriptionDAO().sub_list(info.getM_id());
 		String userID = null;
 		if (session.getAttribute("info") != null) {
 			userID = info.getM_id();
 		}
 		int f_seq = Integer.parseInt(request.getParameter("seq"));
-		
 	%>
 
    <!-- WRAPPER -->

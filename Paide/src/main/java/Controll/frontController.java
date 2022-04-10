@@ -16,9 +16,12 @@ import Service.CheckIDService;
 import Service.CheckInfoService;
 import Service.DeleteArticleService;
 import Service.DeleteCmtService;
+import Service.DeleteFCmtService;
 import Service.DeleteFarmService;
 import Service.DeleteSubscriptionService;
 import Service.EditFarmService;
+import Service.FcmtLikeMupdateService;
+import Service.FcmtLikeUpdateService;
 import Service.IDSendMailService;
 import Service.JoinService;
 import Service.LikeMupdateService;
@@ -33,6 +36,7 @@ import Service.SeenotificationService;
 import Service.UpdateArticleService;
 import Service.UpdateCmtService;
 import Service.UpdateFarmService;
+import Service.UpdateFcmtService;
 import Service.UpdateLevel;
 import Service.UpdateMemberService;
 import Service.UpdateProfileService;
@@ -175,6 +179,19 @@ public class frontController extends HttpServlet {
 			nextpage = com.execute(request, response);
 		} else if (command.equals("UpdateProfileService.do")) {
 			com = new UpdateProfileService();
+			nextpage = com.execute(request, response);
+		}else if(command.equals("FcmtLikeUpdateService.do")) {
+			com = new FcmtLikeUpdateService();
+			nextpage = com.execute(request, response);
+		} else if(command.equals("FcmtLikeMupdateService.do")) {
+			com = new FcmtLikeMupdateService();
+			nextpage = com.execute(request, response);
+		} else if(command.equals("DeleteFCmtService.do")) {
+			com = new DeleteFCmtService();
+			nextpage = com.execute(request, response);
+			
+		} else if(command.equals("UpdateFcmtService.do")) {
+			com = new UpdateFcmtService();
 			nextpage = com.execute(request, response);
 		}
 		
