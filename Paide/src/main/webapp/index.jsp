@@ -44,9 +44,15 @@
    <!-- ICONS -->
    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+
+   <style>
+	#profile {
+		width: 20px;
+		height: 20px;
+		object-fit: cover;
+	}
+</style>
 </head>
-
-
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info");
