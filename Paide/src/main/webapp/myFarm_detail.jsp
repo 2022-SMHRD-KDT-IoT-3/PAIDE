@@ -401,10 +401,11 @@
                               <ul class="list-unstyled activity-list">
                               	<%
                               		for(int i = 0; i < fcmtList.size(); i++){
+                              			MemberDTO otherinfo = new MemberDAO().otherinfo(fcmtList.get(i).getM_id());
                               	%>
                                  <!-- 변경 댓글   -->
                                  <li>
-                                    <img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
+                                    <img src="assets/img/<%=otherinfo.getM_profile()%>" alt="Avatar" class="img-circle pull-left avatar">
                                     <p>
                                     	<a href="#" id="fcmt_writer<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getM_id() %></a> 
                                     	<span id="fcmt_content<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_content() %></span>

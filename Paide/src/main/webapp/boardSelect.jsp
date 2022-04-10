@@ -329,7 +329,7 @@
 																					<p>
 																						<a style="font-size : 18px; font-weight:bolder;" href="#" id="cmt_writer<%= cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getM_id() %>&nbsp;&nbsp;</a> 
 																						
-																						<span  style="font-size : 16px" id="cmt_content<%= cmtList.get(i).getCmt_seq() %>"> <%= cmtList.get(i).getCmt_content() %></span>
+																						<span style="font-size : 16px" id="cmt_content<%= cmtList.get(i).getCmt_seq() %>"> <%= cmtList.get(i).getCmt_content() %></span>
 																						<span class="timestamp" id="cmt_date<%=cmtList.get(i).getCmt_seq() %>"><%= cmtList.get(i).getCmt_date() %></span> 
 																							
 																						<div style ="text-align: right; padding-right: 5%;">
