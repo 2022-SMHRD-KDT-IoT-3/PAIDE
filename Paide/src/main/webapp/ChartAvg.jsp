@@ -537,7 +537,7 @@
            datasets: [{
                label: '일사량',
                //100 = 최대 값 넣어주믄 댐 
-               data: [<%=gdto.getAvg_co2()%>, 5, 6,10],
+               data: [7, 5, 6,10],
                backgroundColor: [
                'rgb( 255, 160, 30, 0.3)',
                'rgb( 255, 160, 30, 0.6)',
