@@ -414,7 +414,7 @@
             </div>
          </footer>
       </div>
-      <!-- END WRAPPER -->
+      <!-- END WRAPPER2 -->
 
       <!-- END WRAPPER -->
       <!-- Javascript -->
