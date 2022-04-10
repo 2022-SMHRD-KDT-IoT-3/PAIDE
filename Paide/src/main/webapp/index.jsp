@@ -27,6 +27,8 @@
    <!-- MAIN CSS -->
    <link rel="stylesheet" href="assets/css/main.css">
    <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet" href="assets/css/style copy.css">
+
    <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
 
    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -34,17 +36,17 @@
 
    <!-- GOOGLE FONTS -->
    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" 교차 출처>
+   <link href="https: //fonts.googleapis.com/css2? family= 노토+산스+KR:wght@400;500;700;900 & display=swap"
+      rel="stylesheet">
+
    <!-- ICONS -->
    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-   <style>
-	#profile {
-		width: 20px;
-		height: 20px;
-		object-fit: cover;
-	}
-</style>
 </head>
+
+
 
 <body>
 <% MemberDTO info = (MemberDTO)session.getAttribute("info");
@@ -55,7 +57,7 @@
           <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-            <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+            <a href="index.jsp"><img src="assets/img/paidelogo.jpg" alt="piede Logo" style="width: 100%; height: 45px;"
                   class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -201,7 +203,7 @@
                      <div id="subPages" class="collapse ">
                         <ul class="nav">
                         <%if(farmlist.size()>0){ %>
-                           <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>" class=""><i class="lnr lnr-leaf"></i>내 농장</a></li>
+                         <li><a href="myFarm.jsp?seq=<%=farmlist.get(0).getF_seq()%>"><i class="lnr lnr-leaf"></i> <span>내 농장</span></a></li>
                         <%}%>
                            <li><a href="farmSelect.jsp" class=""><i class="lnr lnr-magnifier"></i>농장검색</a></li>
                            <li><a href="commuWrite.jsp" class=""><i class="lnr lnr-pencil"></i>글쓰기</a></li>
@@ -215,138 +217,188 @@
          </div>
       </div>
       <!-- END LEFT SIDEBAR -->
-      <!-- MAIN -->
+            <!-- MAIN -->
       <div class="main">
-          
          <!-- MAIN CONTENT -->
          <div class="main-content">
             <div class="container-fluid">
                <div class="panel panel-headline">
-                  <div class="panel-body">
-                     <div class="row">
-                        <div class="col-md-12">
-                           <h1 style="text-align: center;">
-                              Hello, world!
-                           </h1>
-                          
-                           <div class="jumbotron">
-                           
-                              <div>
-                                 <img id = "imgmain" style="width: 100%; text-align: center; height: auto;" src="assets/img/농산물직거래1.jpg" alt="숲"
-                                    class="img-responsive img-circle" >
-                                 <!--이미지를 둥글게-->
-                              </div>
+                  <div class="wrap">
+                     <div class="intro_bg">
+                        <div class="header">
+                           <div class="intro_text">
+                              <h1 style="font-weight: 600;"> 농업은 식량과 관련된 문제이기 때문에, </h1>
+                              <h1 style="font-weight: 600;"> 누구나 습득할 수 있는 보편적인 지식이 되어야 합니다 </h1>
                               <br>
-                              <p>
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                              </p>
-                              <img id = "imgmain" styld="width:100%" src="assets/img/농산물직거래1.jpg" alt="숲" class="img-responsive">
                               <br>
-                              <p>
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                                 This is a template for a simple marketing or informational website. It includes a large
-                                 callout called the hero unit and three supporting pieces of content. Use it as a
-                                 starting point to create something more unique.
-                              </p>
-                              <p>
-                                 <a id = "btnmain" class="btn btn-primary btn-large" href="#"> details </a>
-                              </p>
+                              <h4 style="font-weight: 400;"> 농사를 짓는 과정에서 상이한 농가시설환경의 정보 불균형을 해소하기 위해 </h4>
+                              <h4 style="font-weight: 400;"> 데이터의 축척하여 수치화된 객관적인 데이터를 기반으로 </h4>
+                              <h4 style="font-weight: 400;"> 농민들의 효율적인 농가운영을 가능하게 합니다. </h4>
+                              <h1 style="font-size: 55px; text-align: center; padding-top: 150px;">what&nbsp;?</h1>
                            </div>
                         </div>
                      </div>
-                     <div class="row">
-                        <div class="col-md-4">
-                           <h2>
-                              Heading
-                           </h2>
-                           <img style="width:100%; text-align: center;" src="assets/img/농산물직거래1.jpg" alt="숲" class="img-responsive">
-                           <p>
-                              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                              tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                              malesuada magna mollis euismod. Donec sed odio dui.
-                           </p>
-                           <p>
-                              <a class="btn" href="#">View details »</a>
-                           </p>
+                     <!-- amount 시작 -->
+                     <ul class="amount">
+                        <li>
+                           <div>
+                              <div class="content1"> 가이드 시스템 </div>
+                              <div> 환경 알람시스템 </div>
+                           </div>
+                        </li>
+                        <li>
+                           <div>
+                              <div class="content1"> 데이터 수집</div>
+                              <div> 사용자 맞춤화 데이터</div>
+                           </div>
+                        </li>
+                        <li>
+                           <div>
+                              <div class="content1"> 객관적데이터 </div>
+                              <div> 생산량 극대화</div>
+                           </div>
+                        </li>
+                        <li>
+                           <div>
+                              <div class="content1"> 농업 지식의 공유 </div>
+                              <div> 보편적 지식획득 </div>
+                           </div>
+                        </li>
+                     </ul>
+                     <!-- amount 끝 -->
+                     <!-- 솔루션 -->
+                     <div class="main_text0">
+                        <h1 style="font-size: 45px;">HOW&nbsp;?</h1>
+                        <ul class="icons">
+                           <li>
+                              <div class="icons_img">
+                                 <img style="width: 100px; height:100px;"
+                                    src="assets/img/데이터 시각화.png" alt="">
+                              </div>
+                              <div class="content1"> 농장데이터시각화</div>
+                              <div> 수집된 데이터를 일일차트, 평균차트 <br>각각의 데이터에 적합한 그래프로 
+                                 시각화하여 제공합니다. </div>
+                           </li>
+                           <li>
+                              <div class="icons_img">
+                                 <img style="width: 100px; height:100px;"
+                                    src="assets/img/데이터공유.png"
+                                    alt="데이터 시각화">
+                              </div>
+                              <div class="content1"> 데이터공유 </div>
+                              <div>자신 농장과 비슷한 조건의 농장을   
+                                 <br>검색할 수 있으며 게시판, 농장페이지에서 
+                                 <br>댓글로 의견을 교환할 수 있습니다.
+
+                                   </div>
+                           </li>
+                           <li>
+                              <div class="icons_img">
+                                 <img style="width: 100px; height:100px;"
+                                    src="assets/img/센서데이터.png" alt="센서데이터">
+                              </div>
+                              <div class="content1"> 센서데이터 </div>
+                              <div>센서로 온습도, 이산화탄소, 계도 등을 측정하여 <br>
+                                 온실 내 특이사항 발생시 LED점등으로 경고, <br>
+                                  LCD를 통한 실시간 데이터 값 확인 가능합니다. </div>
+                           </li>
+                        </ul>
+                     </div>
+                     <!-- 솔루션 끝  -->
+                     <h1 style="font-size: 45px; text-align: center;">Who&nbsp;?</h1>
+                     <div class="content1" style="margin-top: -30px; text-align: center;">이와 같은 솔루션을 농업 플랫폼인 '파이데'로 제공합니다.</div>
+                     <div class="row" ">
+                        <div class="col-md-6" style="text-align: right; ">
+                           <img style="border-radius: 50px;"
+                              src="assets/img/paidelogo.jpg" alt="파이데로고">
                         </div>
-                        <div class="col-md-4">
-                           <h2>
-                              Heading
-                           </h2>
-                           <img style="width:100%; text-align: center;" src="assets/img/농산물직거래1.jpg" alt="숲" class="img-responsive">
-                           <p>
-                              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                              tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                              malesuada magna mollis euismod. Donec sed odio dui.
-                              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                              tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                              malesuada magna mollis euismod. Donec sed odio dui.
-                              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                              tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                              malesuada magna mollis euismod. Donec sed odio dui.
-                              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                              tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                              malesuada magna mollis euismod. Donec sed odio dui.
-                           </p>
-                           <p>
-                              <a class="btn" href="#">View details »</a>
-                           </p>
-                        </div>
-                        <div class="col-md-4">
-                           <h2>
-                              Heading
-                           </h2>
-                           <img styld="width:100%" src="assets/img/농산물직거래1.jpg" alt="숲" class="img-responsive">
-                           <p>
-                              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                              tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                              malesuada magna mollis euismod. Donec sed odio dui.
-                           </p>
-                           <p>
-                              <a class="btn" href="#">View details »</a>
-                           </p>
+                        <div class="col-md-6">
+                           <!-- <h2>도전 오전 </h2> -->
+                           <div style="background-color: #3f7647; border-radius: 50px; height: 100px; width: 300px;">
+                              <p style="color: #fff; text-align: center;   font-size: 20px; font-weight: 700; padding-top: 2%;"> our
+                                 <br> Plant Guide
+                              <h4 style="color: #fff; text-align: center; font-size: 15px;">:&nbsp;&nbsp;농업인의 가이드</h4> 
+                           </div>
                         </div>
                      </div>
-                     <div class="row">
-                        <div class="col-md-12">
-                           <p style="text-align: center;">
-                              <br><br><br><br><br>
-                              <a class="btn btn-primary btn-large" href="#" > 맨위로 </a>
-                              <br>
-                           </p>
-                           <address>
-                               <br><strong>PAI:DE, Inc.</strong><br /> address : 광주광역시 동구 예술길 31-15 3, 4, 7층<br />  tel : (062) 123-1234
-                           </address>
-                          
-                         
-                        </div>
+                  </div>
+                  <!-- 설치 설명  1 -->
+                  <div class="row" style="margin-top: 10%;">
+                     <div class="col-md-4">
                         
+                        <img style="width:100%; text-align: center;" src="assets/img/설치1.png" alt="설치사진1"
+                           class="img-responsive">
+                           <h2 calss="step">
+                              step.1
+                           </h2>
+                        <p >
+                           농장의 중앙부 상단에 
+                        <br>데이터수집기를 달아주세요.
+                        
+                        </p>
+                     </div>
+                     <div class="col-md-4">
+                        <img style="width:100%; text-align: center;" src="assets/img/설치2.png" alt="설치사진2"
+                           class="img-responsive">
+                           <h2 calss="step">
+                              step.2
+                           </h2>
+                        <p>
+                           토양습도센서를 토양에 꼽아주세요
+                        </p>
+                     </div>
+                     <div class="col-md-4">
+                        <img style="width:100%; text-align: center;" src="assets/img/설치3.png" alt="설치사진3"
+                           class="img-responsive">
+                           <h2 calss="step">
+                              step.3
+                           </h2>
+                        <p>
+                           데이터 수집기내부의 연결선상태를 
+                           <br>확인후 전원을 켜주세요
+                        </p>
+                     </div>
+                  </div>
+                  <!-- 설치설명1 끝 -->
+                  <!-- 설치완료 -->
+                  <div class="row" style="margin-top: 3%; text-align: right; padding: 2%; " >
+                     <div class="col-md-6" >
+                        <img style="width:100%; padding-left: 25%;" src="assets/img/수집기.jpg" alt="수집기"
+                           class="img-responsive">
+                           
+                     </div>
+                     <div class="col-md-6" id="right" >
+                        <img style="width:100%; padding-right: 25%;" src="assets/img/LCD확인.png" alt="LCD확인"
+                           class="img-responsive">
+                           <h2 calss="step" >설치완료</h2>
+                        <p>
+                           수집기의 데이터는  파이데의 내농장 페이지에서 조회 가능하며,<br>
+                           수신기의 LCD와 LED의 상태알림으로 현장에서도 <br> 직관적으로 농장의 상태를 확인 할 수 있습니다.
+                        </p>
+                        <p style="padding-left : 25%;">
+                           <a class="btn btn-primary btn-large" href="page-join.jsp" > JOIN US &nbsp;<i class="lnr lnr-leaf"></i> </a>
+                        </p>
+                     </div>
+                  </div>
+                  <div class="row" style="padding-left: 3%;">
+                     <div class="col-md-12" >
+                        <p style="text-align: center;">
+                           <br><br><br><br><br><br><br>
+                           <a class="btn" href="#"> 맨위로 </a>
+                           <br>
+                        </p>
+                        <address>
+                            <br><strong>PAI:DE, Inc.</strong><br /> address : 광주광역시 동구 예술길 31-15 3, 4, 7층<br />  tel : (062) 123-1234
+                        </address>
                      </div>
                   </div>
                </div>
             </div>
          </div>
-         <!-- END MAIN CONTENT -->
-         <!-- END MAIN -->
+      </div>
+      <!-- END MAIN CONTENT -->
+      <!-- END MAIN -->
+    
          <div class="clearfix"></div>
          <footer>
             <div class="container-fluid">
@@ -367,125 +419,7 @@
       <script src="assets/vendor/chartist/js/chartist.min.js"></script>
       <script src="assets/scripts/klorofil-common.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-      <script>
-         $(function () {
-            var data, options;
-
-            // headline charts
-            data = {
-               labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-               series: [
-                  [23, 29, 24, 40, 25, 24, 35],
-                  [14, 25, 18, 34, 29, 38, 44],
-               ]
-            };
-
-            options = {
-               height: 300,
-               showArea: true,
-               showLine: false,
-               showPoint: false,
-               fullWidth: true,
-               axisX: {
-                  showGrid: false
-               },
-               lineSmooth: false,
-            };
-
-            new Chartist.Line('#headline-chart', data, options);
-
-
-            // visits trend charts
-            data = {
-               labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-               series: [{
-                  name: 'series-real',
-                  data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
-               }, {
-                  name: 'series-projection',
-                  data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
-               }]
-            };
-
-            options = {
-               fullWidth: true,
-               lineSmooth: false,
-               height: "270px",
-               low: 0,
-               high: 'auto',
-               series: {
-                  'series-projection': {
-                     showArea: true,
-                     showPoint: false,
-                     showLine: false
-                  },
-               },
-               axisX: {
-                  showGrid: false,
-
-               },
-               axisY: {
-                  showGrid: false,
-                  onlyInteger: true,
-                  offset: 0,
-               },
-               chartPadding: {
-                  left: 20,
-                  right: 20
-               }
-            };
-
-            new Chartist.Line('#visits-trends-chart', data, options);
-
-
-            // visits chart
-            data = {
-               labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-               series: [
-                  [6384, 6342, 5437, 2764, 3958, 5068, 7654]
-               ]
-            };
-
-            options = {
-               height: 300,
-               axisX: {
-                  showGrid: false
-               },
-            };
-
-            new Chartist.Bar('#visits-chart', data, options);
-
-
-            // real-time pie chart
-            var sysLoad = $('#system-load').easyPieChart({
-               size: 130,
-               barColor: function (percent) {
-                  return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
-               },
-               trackColor: 'rgba(245, 245, 245, 0.8)',
-               scaleColor: false,
-               lineWidth: 5,
-               lineCap: "square",
-               animate: 800
-            });
-
-            var updateInterval = 3000; // in milliseconds
-
-            setInterval(function () {
-               var randomVal;
-               randomVal = getRandomInt(0, 100);
-
-               sysLoad.data('easyPieChart').update(randomVal);
-               sysLoad.find('.percent').text(randomVal);
-            }, updateInterval);
-
-            function getRandomInt(min, max) {
-               return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
-         });
-   // 끝
-      </script>
+     
 </body>
 
 </html>

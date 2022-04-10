@@ -79,8 +79,8 @@
       <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-             <a href="index.html"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
-                     class="img-responsive logo"></a>
+           <a href="index.jsp"><img src="assets/img/paidelogo.jpg" alt="piede Logo" style="width: 100%; height: 45px;"
+                  class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
              <div class="navbar-btn">
@@ -211,11 +211,11 @@
          <div class="sidebar-scroll">
             <nav>
                <ul class="nav">
-                  <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-                  <li><a href="commu_D.html" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
-                  <li><a href="commu_E.html" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-                  <li><a href="commu_W.html" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
-                  <li><a href="commu_F.html" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+                  <li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+                  <li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+                  <li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+                  <li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+                  <li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
 
                   <!-- 로그아웃시 삭제2 start -->
                   <% if(info != null){%>
@@ -410,24 +410,29 @@
                               	%>
                                  <!-- 변경 댓글   -->
                                  <li>
-                                    <img src="assets/img/user1.png" alt="Avatar" class="img-circle pull-left avatar">
+                                    <img src="assets/img/<%= info.getM_profile() %>" alt="Avatar" class="img-circle pull-left avatar">
                                     <p>
                                     	<a href="#" id="fcmt_writer<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getM_id() %></a> 
                                     	<span id="fcmt_content<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_content() %></span>
                                     	<span class="timestamp" id=""><%= fcmtList.get(i).getFcmt_date() %></span>
+                                    	
+                                    <div  style ="text-align: right; padding-right: 5%;">
                                     	<span id="flikeNum<%= fcmtList.get(i).getFcmt_seq() %>"><%= fcmtList.get(i).getFcmt_like() %></span>
                                     	<span>
+                                    
                                     	<% if(fcmt.isfLike(fcmtList.get(i).getFcmt_seq(), info.getM_id()) == 0){ %>
 											<button class="heartbtn" id="flike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="flikes(<%= fcmtList.get(i).getFcmt_seq() %>)"><img id="heart" src="img/heart.png"></button> 
 											<%} else{ %> <!-- 로그인한 회원이 해당 댓글을 좋아요 누른 경우 기본적으로 좋아요 취소 버튼 -->
 											<button class="heartbtn" id="fdislike<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fdislikes(<%= fcmtList.get(i).getFcmt_seq() %>)"><img id="heart" src="img/heartfull.png"></button>
 											<%} %> <!-- 댓글의 작성자만 수정/삭제 가능하도록 조건문 추가 --> 
 											<% if(info.getM_id().equals(fcmtList.get(i).getM_id())) {%>
-											<button id="fcmt_edit<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtEdit(<%= fcmtList.get(i).getFcmt_seq() %>)">수정</button>
-											<button id="fcmt_delete<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtDelete(<%= fcmtList.get(i).getFcmt_seq() %>)">삭제</button> 
+											<button id="fcmt_edit<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtEdit(<%= fcmtList.get(i).getFcmt_seq() %>)"  class="btn btn-default" style="font-size : 13px">수정</button>
+											<button id="fcmt_delete<%= fcmtList.get(i).getFcmt_seq() %>" onClick="fcmtDelete(<%= fcmtList.get(i).getFcmt_seq() %>)"  class="btn btn-default" style="font-size : 13px">삭제</button> 
 											<%} %>
+                                   	</div>
                                     	</span>
                                     </p>
+                                    
                                  </li>
                           		<%} %>
                               </ul>

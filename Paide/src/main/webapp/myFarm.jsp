@@ -142,7 +142,7 @@
           <!-- NAVBAR -->
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="brand">
-            <a href="index.jsp"><img src="assets/img/pidelogoSmall.png" alt="piede Logo"
+           <a href="index.jsp"><img src="assets/img/paidelogo.jpg" alt="piede Logo" style="width: 100%; height: 45px;"
                   class="img-responsive logo"></a>
          </div>
          <div class="container-fluid">
@@ -320,7 +320,7 @@
                            <div class="profile-info">
                               <!-- 변경 선택한 농장의 정보로 변경 -->
                               <% FarmDTO Farminfo = new FarmDAO().myFarm(f_seq); %>
-                              <h4 class="heading">회원정보</h4>
+                              <h4 class="heading">농장정보</h4>
                               <ul class="list-unstyled list-justify">
                                  <li>농장지역 <span><%= Farminfo.getF_region() %></span></li>
                                  <li>재배작목 <span><%= Farminfo.getF_crops() %></span></li>
