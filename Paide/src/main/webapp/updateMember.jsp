@@ -309,9 +309,11 @@
                                     농장정보수정서비스로 -->
                               <form>
                                  <div class="panel-body">
-                                    농장이름<input type="text" name="fu_name" class="form-control" value="선택한 농장이름">
-                                    <button type="button" class="btn btn-primary btn-sm" onClick="checkfu()">중복확인</button>
-                                    <br>
+                                    <div class="input-group">
+     										 농장이름 &nbsp; &nbsp;&nbsp; &nbsp;<input type="text"  name="fu_name" value="선택한농장이름" class="form-control" placeholder=""  style="margin-top: 7px; " >
+    											  <button type="button" class="btn btn-default" onClick="checkf()">중복확인</button>   
+  									 </div>
+  									 <br>
                                     지역선택
                                     <select name="fu_region" id="region" class="form-control">
                                        <!-- 변경 : 선택한 농장 지역으로 위에서 선택한 농장정보가 들어가야합니다.-->
@@ -357,11 +359,12 @@
                                  </div>
                            </div>
                            <center>
-                              <button type="button" class="btn btn-primary" onClick = "fupdate()">수정완료</button>
+                              
                               <!-- 변경 
                                  농장삭제서비스 현재 선택한 농장의 값을 가지고 농장삭제메소드로 가기-->
                               <a href="#">
-                                 <button type="button" class="btn btn-primary" onClick = "fdelete()">농장삭제</button></a>
+                                 <button type="button" class="btn btn-primary" onClick = "fdelete()">농장삭제 <i class="fa fa-trash-o"></i></button></a>
+                                 <button type="button" class="btn btn-primary" onClick = "fupdate()">수정완료</button>
                            </center>
                            <br>
                         </div>
@@ -376,8 +379,8 @@
                               <div class="panel-body">
 
                                     <div class="input-group">
-                                       농장이름<input type="text" id="fnameCheck" name="f_name" class="form-control" placeholder="농장이름을 입력해주세요."  style="margin-top: 7px;" >
-                                       <button type="button" class="btn btn-primary btn-sm" onClick="checkf()">중복확인</button>   
+                                       농장이름&nbsp; &nbsp;&nbsp; &nbsp;  <input type="text" id="fnameCheck" name="f_name" class="form-control" placeholder="농장이름을 입력해주세요."  style="margin-top: 7px;" >
+                                       <button type="button" class="btn btn-default" onClick="checkf()">중복확인</button>   
                                     </div>
                                        <br>
 
@@ -419,8 +422,8 @@
                                  </div>
                            </div>
                            <center>
-                              <button type="button" class="btn btn-primary" onClick="addf()">농장추가</button>
                               <input class="btn btn-primary" type="reset">
+                              <button type="button" class="btn btn-primary" onClick="addf()">농장추가</button>
                            </center>
                            <br>
                         </div>
