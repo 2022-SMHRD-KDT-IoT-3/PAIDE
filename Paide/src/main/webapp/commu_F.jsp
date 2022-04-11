@@ -279,7 +279,6 @@
 												<td><i class="lnr lnr-link"></i></td>
 											</tr>
 											<%} %>
-											</tr>
 										</tbody>
 									</table>
 								</div>
