@@ -205,8 +205,8 @@
 				<nav>
 					<ul class="nav">
 						<!--변경 active-> 게시글의 카테고리에 active를 넣어줘야한다   -->
-						<li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
-						<li><a href="commu_D.jsp" class="active"><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+						<li><a href="index.jsp" class="active"><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+						<li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
 						<li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
 						<li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
 						<li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
