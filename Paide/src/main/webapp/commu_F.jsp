@@ -303,8 +303,6 @@
 								</div>
 							</div>
 						<!--  페이지 넘기기 END-->
-
-
 					</div>
 				</div>
 			</div>
@@ -318,7 +316,6 @@
 			<span> Copyright © PAIDE Corp. All Rights Reserved.</span>
 		</div>
 	</footer>
-	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
