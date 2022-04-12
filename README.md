@@ -28,10 +28,18 @@
 <br>
 ### 데이터 수신기
 ![회로도2](https://user-images.githubusercontent.com/101301693/162860728-3c3242cc-ce8a-4601-9878-cae94b18c1d2.png)
-<
-# 7. 시연 영상
+<br>
+# 7. 활용 예시
+### IoT
+![사진1](https://user-images.githubusercontent.com/101301693/162862482-a39d1dd2-c426-4043-b9a9-3b12ee1fa413.jpg)
+![사진2](https://user-images.githubusercontent.com/101301693/162862502-b1b54349-ef13-467f-8566-8b5747a35de6.png)
+![사진3](https://user-images.githubusercontent.com/101301693/162862528-a5a116b3-6a2a-47e6-91c4-3aa71939071c.png)
+
+
+### Web Page
+# 8. 시연 영상
 Youtube : https://www.youtube.com/watch?v=3erxwvWBxT4&t=9
-# 8. 제작 일정
+# 9. 제작 일정
 ![schedule](https://user-images.githubusercontent.com/101301693/162860278-dc90e92c-e205-402b-8217-68149ea281b6.png)
-# 9. 팀원 단위 업무 분장
+# 10. 팀원 단위 업무 분장
 ![팀원](https://user-images.githubusercontent.com/101301693/162861045-6e0df630-61c0-486f-a612-7d0ebfc4ce41.png)
