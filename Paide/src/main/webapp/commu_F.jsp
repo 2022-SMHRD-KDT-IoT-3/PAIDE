@@ -245,7 +245,7 @@
 
 							<!-- 변경           article_seq  게시글의 개수  -->
 							<div style="text-align: center;">
-								총 <strong class="text-success"><%= list.size() %></strong>개의 게시글이 있습니다.
+								총 <strong class="text-success"><%= dao.getNext2(category) - 1 %></strong>개의 게시글이 있습니다.
 							</div>
 							<br>
 							<div class="row">
@@ -270,7 +270,7 @@
                                     </tr> -->
 											<% for(int i = 0; i < list.size(); i++){ %>
 											<tr>
-												<td><%= i + 1 %></td>
+												<td><%= (pageNumber - 1) * 10 + i + 1 %></td>
 												<!-- 선택한 제목(article_title)을 가지고 게시글페이지로이동 -->
 												<td><a href="boardSelect.jsp?article_seq=<%= list.get(i).getArticle_seq()%>"><%= list.get(i).getArticle_title().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></a></td>
 												<!-- m_id -->
@@ -279,7 +279,6 @@
 												<td><i class="lnr lnr-link"></i></td>
 											</tr>
 											<%} %>
-											</tr>
 										</tbody>
 									</table>
 								</div>
@@ -304,8 +303,6 @@
 								</div>
 							</div>
 						<!--  페이지 넘기기 END-->
-
-
 					</div>
 				</div>
 			</div>
@@ -319,7 +316,6 @@
 			<span> Copyright © PAIDE Corp. All Rights Reserved.</span>
 		</div>
 	</footer>
-	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
 	<script src="assets/vendor/jquery/jquery.min.js"></script>

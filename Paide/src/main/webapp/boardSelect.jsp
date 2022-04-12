@@ -78,6 +78,8 @@
 		}
 		
 		String article_category = request.getParameter("article_category");
+		
+		CommunityDTO dto = new CommunityDAO().getArticle(article_seq);
 	%>
 
 	<!-- WRAPPER -->
@@ -206,10 +208,27 @@
 					<ul class="nav">
 						<!--변경 active-> 게시글의 카테고리에 active를 넣어줘야한다   -->
 						<li><a href="index.jsp" class=""><i class="lnr lnr-home"></i> <span>Home</span></a></li>
+						<% if(dto.getArticle_category().equals("D")){ %>
 						<li><a href="commu_D.jsp" class="active"><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
 						<li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
-						<li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+						<li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>	
+						<li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>											
+						<%} else if(dto.getArticle_category().equals("E")){ %>
+						<li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+						<li><a href="commu_E.jsp" class="active"><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+						<li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>	
 						<li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+						<%} else if(dto.getArticle_category().equals("W")){ %>
+						<li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+						<li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+						<li><a href="commu_W.jsp" class="active"><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+						<li><a href="commu_F.jsp" class=""><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+						<%} else if(dto.getArticle_category().equals("F")){ %>
+						<li><a href="commu_D.jsp" class=""><i class="lnr lnr-list"></i> <span>농산물 직거래</span></a></li>
+						<li><a href="commu_E.jsp" class=""><i class="lnr lnr-list"></i> <span>체험농장</span></a></li>
+						<li><a href="commu_W.jsp" class=""><i class="lnr lnr-list"></i> <span>농촌일자리</span></a></li>
+						<li><a href="commu_F.jsp" class="active"><i class="lnr lnr-list"></i> <span>자유게시판</span></a></li>
+						<%} %>
 						 <% if(info != null){
                  		 ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(info.getM_id());%>
 						<li>
@@ -232,7 +251,6 @@
 		</div>
 		<!-- END LEFT SIDEBAR -->
 		<%
-		CommunityDTO dto = new CommunityDAO().getArticle(article_seq);
 		ArrayList<FarmDTO> farmlist = new FarmDAO().myfarm(dto.getM_id());
 		%>
 
@@ -288,7 +306,7 @@
 															</tr>
 															<tr>
 																<td colspan="2">
-																<a href="commu_<%= article_category %>" class="btn btn-primary" style="float:right; margin-left:5px;">목록</a>
+																<a href="commu_<%= dto.getArticle_category() %>.jsp" class="btn btn-primary" style="float:right; margin-left:5px;">목록</a>
 																<%
 																	if(dto.getM_id().equals(userID)){
 																%>
