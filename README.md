@@ -9,10 +9,10 @@
 * 웹페이지의 게시판 기능을 통한 농업관련 공유 커뮤니티 형성
 
 # 3. 개발환경
-* 사용언어 : Java / HTML / CSS / Javascript
-* 개발도구 : eclipse / VS Code / Arduino
-* 서버환경 :  Tomcat 9.0
-* 데이터베이스 : Oracle 11g
+* 사용언어 : <img alt="java" src ="https://img.shields.io/badge/Java-007396.svg?&style=for-the-badge&logo=java&logoColor=white"/> <img alt="HTML5" src ="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/> <img alt="CSS3" src ="https://img.shields.io/badge/CSS3-1572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/> <img alt="javascript" src ="https://img.shields.io/badge/JavaScript-F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black"/>
+* 개발도구 : <img alt="eclipse" src ="https://img.shields.io/badge/Eclipse IDE-2C2255.svg?&style=for-the-badge&logo=eclipse ide&logoColor=white"/> <img alt="visual studio code" src ="https://img.shields.io/badge/visual studio code-007ACC.svg?&style=for-the-badge&logo=visual studio code&logoColor=white"/> <img alt="Arduino" src ="https://img.shields.io/badge/Arduino-00979D.svg?&style=for-the-badge&logo=Arduino&logoColor=white"/> 
+* 서버환경 :  <img alt="Apache Tomcat" src ="https://img.shields.io/badge/Apache Tomcat-F8DC75.svg?&style=for-the-badge&logo=Apache Tomcat&logoColor=black"/>
+* 데이터베이스 :  <img alt="Oracle" src ="https://img.shields.io/badge/Oracle-F80000.svg?&style=for-the-badge&logo=Oracle&logoColor=white"/>
 
 # 4. 대표 이미지
 ![KakaoTalk_20220412_102204334](https://user-images.githubusercontent.com/101301693/162859738-27071389-cdd5-4caf-a060-f37e30e738f9.png)
@@ -44,8 +44,11 @@
 ![웹4](https://user-images.githubusercontent.com/101301693/162864572-270dc17e-a0ba-44f7-88d7-58631171843e.png)
 <br>
 # 8. 시연 영상
-Youtube : https://www.youtube.com/watch?v=3erxwvWBxT4&t=9
+<img alt="YouTube" src ="https://img.shields.io/badge/YouTube-FF0000.svg?&style=for-the-badge&logo=YouTube&logoColor=white"/> https://www.youtube.com/watch?v=3erxwvWBxT4&t=9
+
 # 9. 제작 일정
 ![schedule](https://user-images.githubusercontent.com/101301693/162860278-dc90e92c-e205-402b-8217-68149ea281b6.png)
+<br>
+
 # 10. 팀원 단위 업무 분장
 ![팀원](https://user-images.githubusercontent.com/101301693/162861045-6e0df630-61c0-486f-a612-7d0ebfc4ce41.png)
