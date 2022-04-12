@@ -402,7 +402,7 @@
             </div>
          </div>
       </div>
-      <!-- END MAIN CONTENT -->
+      <!-- END MAIN CONTENT2 -->
       <!-- END MAIN -->
     
          <div class="clearfix"></div>
