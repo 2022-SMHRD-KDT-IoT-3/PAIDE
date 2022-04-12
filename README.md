@@ -1,5 +1,5 @@
 ![KakaoTalk_20220412_0923752887](https://user-images.githubusercontent.com/101301693/162855362-d518edf8-bf17-48cc-a4fa-0540d8dc1127.png)
-# 1.프로젝트명
+# 1. 프로젝트명
 ### { PAI:DE }
 >     Our Plant Guide
 🌲웹서버와 IoT를 활용한 농장데이터 시각화 및 공유 서비스🌲
