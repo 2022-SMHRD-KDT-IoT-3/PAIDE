@@ -9,7 +9,7 @@ public class SendMailToCustomers extends Authenticator{
 	
 	public SendMailToCustomers() {
 		String mail_id = "paide0411@gmail.com";
-		String mail_pw = "tjfal1004^^";
+		String mail_pw = "";
 		
 		pa = new PasswordAuthentication(mail_id, mail_pw);
 		
