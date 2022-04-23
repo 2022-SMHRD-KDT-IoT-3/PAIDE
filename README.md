@@ -1,3 +1,4 @@
+![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=300&section=header&text=capsule%20render&fontSize=90)
 ![KakaoTalk_20220412_0923752887](https://user-images.githubusercontent.com/101301693/162855362-d518edf8-bf17-48cc-a4fa-0540d8dc1127.png)
 # 1. 프로젝트명
 ### { PAI:DE }
