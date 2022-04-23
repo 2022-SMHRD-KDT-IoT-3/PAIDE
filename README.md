@@ -1,5 +1,5 @@
 ![header](https://capsule-render.vercel.app/api?type=Rounded&color=357653&height=120&section=header&text=Welcome!%20This%20is%20PAI:DE&fontSize=35&fontColor=FFFFFF)
-<div align="center">
+<div align=center>
 ![KakaoTalk_20220412_0923752887](https://user-images.githubusercontent.com/101301693/162855362-d518edf8-bf17-48cc-a4fa-0540d8dc1127.png)
 </div>
 # 1. 프로젝트명
