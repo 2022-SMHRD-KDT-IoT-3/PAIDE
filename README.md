@@ -52,4 +52,4 @@
 
 ## 10. 팀원 단위 업무 분장
 ![팀원](https://user-images.githubusercontent.com/101301693/162861045-6e0df630-61c0-486f-a612-7d0ebfc4ce41.png)
-하이
+하이하이
