@@ -15,33 +15,38 @@
 * 데이터베이스 :  <img alt="Oracle" src ="https://img.shields.io/badge/Oracle-F80000.svg?&style=for-the-badge&logo=Oracle&logoColor=white"/>
 
 ## 4. 대표 이미지
-<img width="672" alt="main" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/b11e6f48-c556-437a-b214-a0939e373714"/>
+<img width="800" alt="main" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/b11e6f48-c556-437a-b214-a0939e373714"/>
 <br>
 
 ## 5. 기능 흐름도
-![기능흐릅도](https://user-images.githubusercontent.com/101301693/162859826-246cac24-fb5f-4f5c-8326-1109aff5fb4b.png)
+<img width="650" alt="image7" src="https://user-images.githubusercontent.com/101301693/162859826-246cac24-fb5f-4f5c-8326-1109aff5fb4b.png"/>
 <br>
 <br>
 
 ## 6. 회로도
 ### 데이터 수집기
-![회로도1](https://user-images.githubusercontent.com/101301693/162860704-f89fa83a-b3b3-4469-a3b5-23da6d052792.png)
+<img width="400" alt="image6" src="https://user-images.githubusercontent.com/101301693/162860704-f89fa83a-b3b3-4469-a3b5-23da6d052792.png"/>
 <br>
+
 ### 데이터 수신기
-![회로도2](https://user-images.githubusercontent.com/101301693/162860728-3c3242cc-ce8a-4601-9878-cae94b18c1d2.png)
+<img width="350" alt="image7" src="https://user-images.githubusercontent.com/101301693/162860728-3c3242cc-ce8a-4601-9878-cae94b18c1d2.png"/>
 <br>
+
 ## 7. 활용 예시
 ### IoT
-![사진1](https://user-images.githubusercontent.com/101301693/162862482-a39d1dd2-c426-4043-b9a9-3b12ee1fa413.jpg)
-![사진2](https://user-images.githubusercontent.com/101301693/162862502-b1b54349-ef13-467f-8566-8b5747a35de6.png)
-![사진3](https://user-images.githubusercontent.com/101301693/162862528-a5a116b3-6a2a-47e6-91c4-3aa71939071c.png)
+<img width="400" alt="image8" src="https://user-images.githubusercontent.com/101301693/162862482-a39d1dd2-c426-4043-b9a9-3b12ee1fa413.jpg"/>
 <br>
+<img width="400" alt="image9" src="https://user-images.githubusercontent.com/101301693/162862502-b1b54349-ef13-467f-8566-8b5747a35de6.png"/>
 <br>
+<img width="400" alt="image10" src="https://user-images.githubusercontent.com/101301693/162862528-a5a116b3-6a2a-47e6-91c4-3aa71939071c.png"/>
+<br>
+
 ### Web Page
-<img width="672" alt="image1" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/7d52caa1-05be-4f8f-8251-0b2437c6d373"/>
-<img width="672" alt="image2" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/453bce43-caa6-4b7f-b72a-107e9e6e47f5"/>
-<img width="672" alt="image3" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/c3b7314f-be9c-4721-b6e0-99263dcf1fcc"/>
-<img width="672" alt="image4" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/95efb302-6d1b-4423-ad42-c9754cea2fcb">
+<br>
+<img width="800" alt="image1" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/7d52caa1-05be-4f8f-8251-0b2437c6d373"/>
+<img width="800" alt="image2" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/453bce43-caa6-4b7f-b72a-107e9e6e47f5"/>
+<img width="800" alt="image3" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/c3b7314f-be9c-4721-b6e0-99263dcf1fcc"/>
+<img width="800" alt="image4" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/95efb302-6d1b-4423-ad42-c9754cea2fcb">
 <br>
 <img width="275" alt="image5" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/5425f56f-b6a6-4ac9-92bc-517ebd7f6ba5"/>
 <br>
