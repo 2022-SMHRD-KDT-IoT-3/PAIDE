@@ -15,7 +15,7 @@
 * 데이터베이스 :  <img alt="Oracle" src ="https://img.shields.io/badge/Oracle-F80000.svg?&style=for-the-badge&logo=Oracle&logoColor=white"/>
 
 ## 4. 대표 이미지
-![KakaoTalk_20220412_102204334](https://user-images.githubusercontent.com/101301693/162859738-27071389-cdd5-4caf-a060-f37e30e738f9.png)
+<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/b11e6f48-c556-437a-b214-a0939e373714">
 <br>
 <br>
 ## 5. 기능 흐름도
@@ -37,11 +37,12 @@
 <br>
 <br>
 ### Web Page
-![웹1](https://user-images.githubusercontent.com/101301693/162864499-aef2ca9d-eee6-477f-9dde-13bb6a307a87.png)
-![웹2](https://user-images.githubusercontent.com/101301693/162864525-7fb8ee3a-ef72-45ba-adb6-323c3c637869.png)
-![웹3](https://user-images.githubusercontent.com/101301693/162864531-02093c55-6e3f-4bf3-8ba7-e485209d0ef1.png)
-![웹5](https://user-images.githubusercontent.com/101301693/162864562-8d80b37b-fcf5-4be6-81ec-32e5f9c72535.png)
-![웹4](https://user-images.githubusercontent.com/101301693/162864572-270dc17e-a0ba-44f7-88d7-58631171843e.png)
+<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/7d52caa1-05be-4f8f-8251-0b2437c6d373">
+<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/453bce43-caa6-4b7f-b72a-107e9e6e47f5">
+<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/c3b7314f-be9c-4721-b6e0-99263dcf1fcc">
+<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/f9447081-6443-4b4b-b7e6-78b62850ad28">
+<img width="275" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/5425f56f-b6a6-4ac9-92bc-517ebd7f6ba5">
+
 <br>
 ## 8. 시연 영상
 <img alt="YouTube" src ="https://img.shields.io/badge/YouTube-FF0000.svg?&style=for-the-badge&logo=YouTube&logoColor=white"/> https://www.youtube.com/watch?v=3erxwvWBxT4&t=9
