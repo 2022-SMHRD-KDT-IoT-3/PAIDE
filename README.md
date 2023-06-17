@@ -17,7 +17,6 @@
 ## 4. 대표 이미지
 <img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/b11e6f48-c556-437a-b214-a0939e373714">
 <br>
-<br>
 ## 5. 기능 흐름도
 ![기능흐릅도](https://user-images.githubusercontent.com/101301693/162859826-246cac24-fb5f-4f5c-8326-1109aff5fb4b.png)
 <br>
