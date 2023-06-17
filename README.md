@@ -15,12 +15,14 @@
 * 데이터베이스 :  <img alt="Oracle" src ="https://img.shields.io/badge/Oracle-F80000.svg?&style=for-the-badge&logo=Oracle&logoColor=white"/>
 
 ## 4. 대표 이미지
-<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/b11e6f48-c556-437a-b214-a0939e373714">
+<img width="672" alt="main" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/b11e6f48-c556-437a-b214-a0939e373714"/>
 <br>
+
 ## 5. 기능 흐름도
 ![기능흐릅도](https://user-images.githubusercontent.com/101301693/162859826-246cac24-fb5f-4f5c-8326-1109aff5fb4b.png)
 <br>
 <br>
+
 ## 6. 회로도
 ### 데이터 수집기
 ![회로도1](https://user-images.githubusercontent.com/101301693/162860704-f89fa83a-b3b3-4469-a3b5-23da6d052792.png)
@@ -36,13 +38,14 @@
 <br>
 <br>
 ### Web Page
-<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/7d52caa1-05be-4f8f-8251-0b2437c6d373">
-<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/453bce43-caa6-4b7f-b72a-107e9e6e47f5">
-<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/c3b7314f-be9c-4721-b6e0-99263dcf1fcc">
-<img width="672" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/f9447081-6443-4b4b-b7e6-78b62850ad28">
-<img width="275" alt="image" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/5425f56f-b6a6-4ac9-92bc-517ebd7f6ba5">
-
+<img width="672" alt="image1" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/7d52caa1-05be-4f8f-8251-0b2437c6d373"/>
+<img width="672" alt="image2" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/453bce43-caa6-4b7f-b72a-107e9e6e47f5"/>
+<img width="672" alt="image3" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/c3b7314f-be9c-4721-b6e0-99263dcf1fcc"/>
+<img width="672" alt="image4" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/95efb302-6d1b-4423-ad42-c9754cea2fcb">
 <br>
+<img width="275" alt="image5" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/5425f56f-b6a6-4ac9-92bc-517ebd7f6ba5"/>
+<br>
+
 ## 8. 시연 영상
 <img alt="YouTube" src ="https://img.shields.io/badge/YouTube-FF0000.svg?&style=for-the-badge&logo=YouTube&logoColor=white"/> https://www.youtube.com/watch?v=3erxwvWBxT4&t=9
 
