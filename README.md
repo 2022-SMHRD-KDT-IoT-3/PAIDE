@@ -48,7 +48,7 @@
 <img width="800" alt="image3" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/c3b7314f-be9c-4721-b6e0-99263dcf1fcc"/>
 <img width="800" alt="image4" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/95efb302-6d1b-4423-ad42-c9754cea2fcb">
 <br>
-<img width="275" alt="image5" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/5425f56f-b6a6-4ac9-92bc-517ebd7f6ba5"/>
+<img width="275" alt="image5" src="https://github.com/2022-SMHRD-KDT-IoT-3/PAIDE/assets/101301693/438c7fd7-7da3-4f29-9a45-1fecc0b0a4f3">
 <br>
 
 ## 8. 시연 영상
